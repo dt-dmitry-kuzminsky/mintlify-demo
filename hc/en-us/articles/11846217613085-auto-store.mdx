@@ -1,0 +1,68 @@
+---
+title: "Auto Store"
+---
+
+Auto Store allows DSPs to enhance DT Exchange ads and show a store modal on top of a VAST video end card or a full-screen non-video ad. The Auto Store improves the performance of app-install-driven campaigns, increases conversions to impression rates, and reduces CPIs.
+
+## What is Auto Store?
+
+Auto Store is an iOS store modal supported by the `SKStoreProductViewController` object, which allows DT Exchange to show the advertised app’s store listing directly within the ad. This allows users to install an app without interrupting their engagement on the running app and skip the App Store.
+
+DSPs determine when DT Exchange automatically triggers the Store Kit as part of the ad creative experience after the full-screen ad is over or skipped and overlays the modal on the end card or the full-screen ad.
+
+## How Does it Work?
+
+DT Exchange supports the following extensions, which include the `autostore` attribute, and sends it for eligible traffic:
+
+* Video ads: `BidRequest.imp.video.ext`
+* Display ads: `BidRequest.imp.banner.ext`
+
+## BidRequest.imp.video.ext
+
+| ATTRIBUTE   | DESCRIPTION                                                                                     | TYPE    |
+| ----------- | ----------------------------------------------------------------------------------------------- | ------- |
+| `autostore` | Determines whether the inventory is eligible for Auto Store. (1 = true, 0 = false; default: 1) | Integer |
+
+## BidRequest.imp.banner.ext
+
+| ATTRIBUTE   | DESCRIPTION                                                                                    | TYPE    |
+| ----------- | ---------------------------------------------------------------------------------------------- | ------- |
+| `autostore` | Determines whether the inventory is eligible for Auto Store. (1 = true, 0 = false; default: 1) | Integer |
+
+The DT backend digests two custom extension fields under `BidResponse.seatbid.bid.ext`:
+
+* `autostore`
+* `autostoreclick`
+
+Both receive a boolean value of either 1 or 0, which determines whether the DT Exchange SDK enables the Auto Store feature and fires the relevant click trackers when the Auto Store modal appears.
+
+## BidResponse.seatbid.bid.ext
+
+| ATTRIBUTE        | DESCRIPTION                                                                                                                  | TYPE    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `autostore`      | Determines whether DT Exchange automatically enables the Auto Store. (1 = true, 0 = false)                                   | Integer |
+| `autostoreclick` | Determines whether DT Exchange fires click trackers when the Auto Store Kit appears. (1 = true, 0 = false)                   | Integer |
+| `clicktrackers`  | Lists click trackers that the DT Exchange SDK fires when the autoclick feature is active. This is not relevant for VAST ads. | Array   |
+
+#### Important
+
+To support firing click trackers for display ads, DSPs must provide a list of trackers in `BidResponse.seatbid.bid.ext.clicktrackers`.\
+DT Exchange fires these trackers only if the `autostoreclick` is set to `1`.
+
+## FAQs
+
+**How does DT Exchange know which store product to show?**
+
+DT Exchanges requires bid responses that activate Auto Store must also include the Store Listing ID under the `skadn` object:
+
+* `BidResponse.seatbid.bid.skadn.itunesitem` (preferred)
+* `BidResponse.seatbid.bid.bundle`
+
+**How does DT Exchange manage Click Tracker Firing?**
+
+The DT Exchange SDK fires all relevant click trackers when both `BidResponse.seatbid.bid.ext.autostore` and `BidResponse.seatbid.bid.ext.autostoreclick` values are set to 1, and the Auto Store Kit appears:
+
+* Video ads: DT fires companion trackers under the store modal if the displayed companion contains trackers. The tracker does not fire when the displayed companion fields are empty.
+* Display ads: DT fires the list of trackers from `BidResponse.seatbid.bid.ext.clicktrackers` if the displayed companion contains trackers.
+
+[Back to Top ⇧](#top)

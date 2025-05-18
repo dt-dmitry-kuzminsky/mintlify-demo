@@ -1,0 +1,265 @@
+---
+title: "User Level Reporting API"
+---
+
+User Level Reporting API Metrics and Dimensions
+
+The User Level Revenue Reporting API enables you to access reporting data to measure all revenue generated from individual users. This information can be used to optimize retargeting campaigns and accurately measure user lifetime value.
+
+You can query revenue, impressions, clicks and conversion metrics across the available dimensions. For all supported metrics and dimensions for the User Level Reporting API, click the Metrics and Dimensions tab above.
+
+## Reporting API Workflow
+
+The publisher makes a POST request using the Client ID and Client Secret to receive the Access Token, as described in Step 1.
+
+Once the request is successful and the Access Token is received, an API Request is made to get a custom report as described in Step 2. A successful response will contain a URL leading to a file containing the custom report. More details can be found in Step 3.
+
+## Step 1: Obtaining the Access Token
+
+Digital Turbine's Reporting API uses Access Tokens for authentication purposes. To obtain your Access Token, you must first get your Client ID and Client Secret.
+
+Obtaining your Client ID and Client Secret
+
+1. Sign-In to the Console, [here](https://console.fyber.com/login)
+
+   [<Frame caption="ULRAPI1.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/10215612162717" />
+   </Frame>](/hc/article_attachments/10215612162717)
+
+2. On the top-left side of the screen, click your User ID
+
+3. Click User Profile to display the Reporting API Keys
+
+   [<Frame caption="ULRAPI2.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/10215643951005" />
+   </Frame>](/hc/article_attachments/10215643951005)
+
+4. If necessary, you can click Revoke to delete the current credentials.\
+   You are returned to the API Keys window.
+
+   [<Frame caption="ULRAPI3.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/10215684163613" />
+   </Frame>](/hc/article_attachments/10215684163613)
+
+5. Click **Generate New Keys** again, to receive new credentials.
+
+Keep your Client ID and Client Secret safe, as they can be reused in the future. Using your Client ID and Client Secret make a POST request to receive your Access Token.
+
+The base End Point for the entire process is: `https://reporting.fyber.com`
+
+### Authentication Token
+
+```bash
+POST /auth/v1/token
+```
+
+### Headers
+
+```python
+Content-Type    application/json
+```
+
+### Sample Request
+
+```ruby
+https://reporting.fyber.com/auth/v1/token
+```
+
+### Params
+
+```python
+format  csv
+```
+
+### Body: raw (application/JSON)
+
+```php
+{
+    "grant_type": "client_credentials",
+    "client_id": "3ce66d885XXXXXXXXXXa3b752bb9058",
+    "client_secret": "YtMvC7VYTQMQ7w9UCUaFXXXJnwVZnQqqN02XNyt8IIh2h8XFDu
+XXXXXXXXSS6XTrFWW4TkebCcMLJkrXSw5IurkearTJIDzUxsbiMXv8hb4T23MwN6eE7DDIthR
+FqDnhnuhiDlY2oPeaOjsMbzE8joZ5cs6tsySJz6uZXwJ-x3lcYaYbgXXXXXXXX3_hFeuXm-C7
+-me2V1MMs-ftJxTd5QbHoUhG3Q5anCWCW_pg8x3CL4yPGCbpWUDZfpdNPyyCT4rxCEb-VC0Bd
+qwe8N2GGn_VSFOwQYxa-yap2JuNSGJfl_ZURXXXXXXXXFe1GpHDn8pk7yYwQYIGAg"
+}
+```
+
+The credentials are sent according to the OAuth 2.0 Protocol
+
+## Sample Authentication Response
+
+When an authentication request is successful, you receive the following response in JSON format:
+
+## Successful Response
+
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXXXJ9.eyJpYXQiOjE1NzAwMTY5MDAsImV4cCI6MTU3MDAyMDUwMCwiYXVkIjoic3BlZWRiYWxsIiwic3ViIjoiMjEwMjYzIn0.hDo1waTytSys_oRhFNUPqZPom26bL05rxgtSt3XYHqI",
+  "tokenType": "bearer",
+  "expiresIn": 3600
+}
+```
+
+**accessToken:**The token required to continue the process
+
+**tokenType:**Bearer
+
+**expiresIn:**3600 seconds (1 hour)
+
+## Unsuccessful Response
+
+When a request is unsuccessful, you receive the following response:
+
+```json
+{
+  "error": "internal_server_error"
+}
+```
+
+## Possible Authentication Errors
+
+Set out in the table are a list of possible errors which resulted in an unsuccessful response.
+
+| HTTP Status Code | Error                    | Scenario                                                                                                                                                  |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 400              | unsupported\_grant\_type | N/A                                                                                                                                                       |
+| 400              | invalid\_request         | When there are missing credentials                                                                                                                        |
+| 400              | invalid\_client          | When the credentials are incorrect or cannot be recognized. Can also occur when your account has been disabled or when the credentials have been revoked. |
+| 500              | internal\_server\_error  | Unexpected errors in DT's servers                                                                                                                         |
+
+## Step 2: Reporting API Request
+
+Use the access token you received in Step 1 to request your custom report.
+
+The only dimension you can query in your Request ID:
+
+Date
+
+All other dimensions always appear in the report.
+
+## Request Example
+
+Below is an example from the User Level Report.
+
+Date:2023-03-28
+
+For a full list of supported Metrics and Dimensions per report, click here.
+
+For further descriptions about the terms used in this article, click here.
+
+Make a POST request to receive your report.
+
+### URL
+
+```ruby
+https://reporting.fyber.com/api/v1/report/ofw-user-level-data
+```
+
+### Headers
+
+```python
+Content-Type:   application/json
+Authorization: Bearer [Access Token from Authentication Response]
+```
+
+### Body.raw (application/JSON)
+
+```bash
+{
+    “date”: "2023-03-28",
+}
+```
+
+## Responses
+
+Set out below are examples of both successful and unsuccessful responses.
+
+### Response: Successful
+
+```json
+{
+  "id": "4b01ca5d-b621-480a-9c67-1068cc5a0193",
+  "url": "https://offerwall-user-level-report.s3.eu-west-1.amazonaws.com/group_id%3D213976/date%3D2023-03-28/part-00000-f72e84ea-6412-41dd-89d2-183fe677059d.c000.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3FO3HJ72PZSDE2XV%2F20230329%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20230329T103114Z&X-Amz-Expires=10800&X-Amz-Signature=a5c10cdd7bd69a8fab3b38aef152b0d68c82c5e9383eeea36a979cdd18bc0ce7&X-Amz-SignedHeaders=host"
+}
+```
+
+The "id" field holds an identifier of the reuest for later troubleshooting, if required.
+
+The "url" field holds the URL to be polled (GET request) to download the custom report
+
+### Response: Unsuccessful
+
+```json
+{
+  "error": "invalid_token"
+}
+```
+
+## Possible Errors
+
+The table below shows the main errors indicating an unsuccessful response.
+
+| HTTP Status Code | Error                   | Description (Optional)                                                                                              | Scenario                                                                                                                              |
+| ---------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 401              | invalid\_token          | N/A                                                                                                                 | Authorization header is empty Authorization header not sent or token is not present in the header Unrecognized token Disabled account |
+| 400              | invalid\_query          | For example: Invalid value undefined supplied to : Query/ Date -or- Invalid value "XXXXX" supplied to : Query/ Date | If the query sent is not in the expected schema Date range is not sent in the ISO 8601 format                                         |
+| 500              | internal\_server\_error | N/A                                                                                                                 | Error in DT's servers                                                                                                                 |
+
+## Step 3: Receiving the Custom Report
+
+To obtain the Custom Report, follow the steps below:
+
+1. Receive the URL from the successful response in Step 2
+2. Click the link. You are reidrected to a CSV file which contains your report.
+
+The URL is valid for three hours.
+
+## Additional Information and Restrictions
+
+It is important to take note of the information, restrictions and rules to ensure the reports provided to ensure a successful response.
+
+## General
+
+* All reports are presented in US dollars
+* The time zone used is UTC
+* The data is available by 12:00 UTC (noon) for the previous 12 days
+
+## Query Restrictions
+
+All dimensions are mandatory
+
+## Date Information
+
+There are a number of rules that must be observed with regard to the date:
+
+* The date must be in the format of ISO 8601. For example, 2019-10-03
+* The date is included in the report
+
+## Metrics and Dimensions
+
+Set out in the tables below are the supported metrics and dimensions available in the User Level Reporting API.
+
+### Metrics
+
+| Source     | Supported Metrics  | Description                                                    |
+| ---------- | ------------------ | -------------------------------------------------------------- |
+| User Level | offer\_impressions | Number of times the ad is displayed to the user                |
+|            | offer\_clicks      | Number of times the use clicked on the offer to complete       |
+|            | offer\_conversions | The number of times the user completed the offer               |
+|            | publisher\_revenue | The total revenue of the publisher in USD coming from the user |
+
+### Dimensions
+
+| Source     | Supported Dimensions  | Description                                          |
+| ---------- | --------------------- | ---------------------------------------------------- |
+| User Level | Publisher\_id         | Unique ID in the internal db for the publisher       |
+|            | Application\_id       | Unique ID of the application in the DT system        |
+|            | placement\_identifier | Unique ID of the identifier in the DT system         |
+|            | User\_country\_code   | Original country code of the user                    |
+|            | application\_user\_id | The identifier of the user supplied by the publisher |
+|            | device\_id            | IDFA/Android\_ID                                     |
+
+
+
+[Back to Top ⇧](#top)

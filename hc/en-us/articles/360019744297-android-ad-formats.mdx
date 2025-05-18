@@ -1,0 +1,473 @@
+---
+title: "Android Ad Formats"
+---
+
+Banner/MREC Ads Interstitial Ads Rewarded Ads
+
+## Integrating Banner/MREC Ads
+
+Integrating an Ad Placement allows you to integrate different ad types into your SDK. Each option is detailed in the tabs above.
+
+Follow the steps below to integrate Banner/MRECads into your SDK.
+
+## Step 1: Adding the Ad Placement
+
+Add the Ad Placement integration for the `display` as well as the `Adview Controller`:
+
+```java
+// Spot integration for display square
+InneractiveAdSpot mSpot = InneractiveAdSpotManager.get().createSpot();
+
+// Adding the adview controller
+InneractiveAdViewUnitController controller = new
+InneractiveAdViewUnitController();
+
+mSpot.addUnitController(controller);
+```
+
+## Step 2: Making the Ad Request
+
+The request and display steps are separate for the Ad Placement. It's time to set up the ad request.
+
+```java
+InneractiveAdRequest adRequest = new
+InneractiveAdRequest("add_your_spot_id"); 
+
+// To perform the ad request
+mSpot.requestAd(adRequest);
+```
+
+### Step 2a: Listening to Request Events
+
+The following example illustrates how a RequestListener is used:
+
+```typescript
+InneractiveAdSpot.RequestListener mSpotListener = new
+InneractiveAdSpot.RequestListener() 
+{
+        @Override
+        // When the ad request sends successfully.
+        public void onInneractiveSuccessfulAdRequest(InneractiveAdSpot inneractiveAdSpot) {
+            
+            }
+        @Override
+        // When the ad request fails to send.
+        public void onInneractiveFailedAdRequest(InneractiveAdSpot inneractiveAdSpot, InneractiveErrorCode inneractiveErrorCode) {
+
+            }
+};
+
+mSpot.setRequestListener(mSpotListener);
+```
+
+## Step 3: Displaying the Ad
+
+Once you've set up the request, it's time to set up displaying the ad.
+
+### Step 3a: Define Your Ad Layout
+
+Use the code in your XML layout to define your ad layout.
+
+```python
+<LinearLayout
+ android:id="@+id/inneractive_ad_layout"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content" />
+```
+
+### Step 3b: Setting-Up Displaying an Ad
+
+After a successful Ad Request, use the code below for Setting Up Displaying the Ad.
+
+```java
+// Check if we have ad content
+if (mSpot.isReady()) {
+
+// Getting the spot's controller
+    InneractiveAdViewUnitController controller = (InneractiveAdViewUnitController)mSpot.getSelectedUnitController();
+ 
+// Getting the ad view container
+    ViewGroup layout = (ViewGroup)findViewById(R.id.inneractive_ad_layout);
+ 
+// Showing the ad
+    controller.bindView(layout);
+}
+```
+
+## Step 4: Listening to the Events
+
+In addition, it shows how to add an event listener properly for receiving Banner/MRECad callbacks.
+
+```typescript
+controller.setEventsListener(new InneractiveAdViewEventsListener() {
+       @Override
+       public void onAdImpression(InneractiveAdSpot adSpot) {
+           Log.i(TAG, "onAdImpression");
+       }
+       @Override
+       public void onAdClicked(InneractiveAdSpot adSpot) {
+           Log.i(TAG, "onAdClicked");
+       }
+       @Override
+       public void onAdWillCloseInternalBrowser(InneractiveAdSpot adSpot) {
+           Log.i(TAG, "onAdWillCloseInternalBrowser");
+       }
+       @Override
+       public void onAdWillOpenExternalApp(InneractiveAdSpot adSpot) {
+            Log.i(TAG, "onAdWillOpenExternalApp");
+       }
+       @Override //Since VAMP 7.2.0
+       public void onAdEnteredErrorState(InneractiveAdSpot adSpot, AdDisplayError error) {
+            Log.i(TAG, "onAdEnteredErrorState");
+       }
+});
+```
+
+#### **Caution**
+
+onAdEnteredErrorState Starting from Android DT Exchange SDK version 7.5.4, this callback is also invoked in cases where the WebView renderer process has crashed. In such cases, the instance of the AdDisplayError appears as `WebViewRendererProcessHasGoneError`. If this error was triggered for a banner/mrec, we recommend to destroy the banner/mrec and request a new one. No additional steps are required for interstitial ad units.
+
+You have now completed the process of adding your Ad Placement!
+
+## Releasing an Ad Placement
+
+Click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010934178) for details of how to release an Ad Placement.
+
+## Integrating Interstitial Ads
+
+Follow the steps below to integrate Interstitial ads into your SDK.
+
+## Step 1: Building the Ad Spot
+
+Setting Up Your Ad Placement (previously known as Ad Spot)
+
+```java
+// Spot integration for fullscreen ad
+InneractiveAdSpot mSpot =
+InneractiveAdSpotManager.get().createSpot();
+ 
+// Adding the fullscreen controller
+InneractiveFullscreenUnitController controller = new 
+InneractiveFullscreenUnitController();
+
+// Adding the video fullscreen controller
+InneractiveFullscreenVideoContentController
+videoContentController = new
+InneractiveFullscreenVideoContentController();
+
+// Adding the video fullscreen controller to the adview controller
+controller.addContentController(videoContentController);
+
+mSpot.addUnitController(controller);
+```
+
+## Step 2: Make the Ad Request
+
+The request and display steps are separate for the Ad Placement.
+
+Setting Up Your Ad Request
+
+```java
+InneractiveAdRequest adRequest = new 
+InneractiveAdRequest("add_your_interstitial_spot_id");
+
+ 
+// To perform the ad request
+mSpot.requestAd(adRequest);
+```
+
+Muting Interstitial Ads
+
+You can opt to mute interstitial ads by adding:
+
+```javascript
+InneractiveAdManager.setMuteVideo(true);
+```
+
+
+
+### Step 2a: Listening to Request Events
+
+The following example illustrates how a RequestListener is used.
+
+```typescript
+InneractiveAdSpot.RequestListener mSpotListener = new InneractiveAdSpot.RequestListener() 
+{
+        @Override
+        // When the ad request sends successfully
+        public void onInneractiveSuccessfulAdRequest(InneractiveAdSpot inneractiveAdSpot) {
+           
+            }
+        @Override
+        // When the ad request fails to send
+        public void onInneractiveFailedAdRequest(InneractiveAdSpot inneractiveAdSpot, InneractiveErrorCode inneractiveErrorCode) {
+
+            }
+};
+
+mSpot.setRequestListener(mSpotListener);
+```
+
+## Step 3: Displaying the Ad
+
+Once you've set up the request, it's time to set up displaying the ad.
+
+```java
+// Checking if we have ad content
+if (mSpot.isReady()) {
+
+ // Getting the spot's controller
+    InneractiveFullscreenUnitController controller = 
+(InneractiveFullscreenUnitController)mSpot.getSelectedUnitController();
+ 
+ // Showing the ad using the Activity's context
+    controller.show(this);
+}
+```
+
+## Step 4: Listening to the Event
+
+The following example demonstrates how an EventListener should be used properly for receiving Interstitial ad callbacks.
+
+### Step 4a: Listening to the Events
+
+```typescript
+controller.setEventsListener(new InneractiveFullscreenAdEventsListener() {
+          @Override
+          public void onAdImpression(InneractiveAdSpot inneractiveAdSpot) {
+
+                        }
+
+          @Override
+          public void onAdClicked(InneractiveAdSpot inneractiveAdSpot) {
+
+                        }
+
+          @Override
+          public void onAdWillOpenExternalApp(InneractiveAdSpot inneractiveAdSpot) {
+
+                        }
+
+           @Override
+           public void onAdEnteredErrorState(InneractiveAdSpot inneractiveAdSpot, InneractiveUnitController.AdDisplayError adDisplayError) {
+
+                        }
+
+           @Override
+           public void onAdWillCloseInternalBrowser(InneractiveAdSpot inneractiveAdSpot) {
+
+                        }
+
+            @Override
+            public void onAdDismissed(InneractiveAdSpot inneractiveAdSpot) {
+                            
+                        }
+ });
+```
+
+### Step 4b: Listening to the Video Events
+
+```typescript
+videoContentController.setEventsListener(new 
+VideoContentListener() {
+   @Override
+   public void onProgress(int totalDurationInMsec, int positionInMsec) {
+
+   }
+
+   @Override
+   public void onCompleted() {
+
+   }
+
+   @Override
+   public void onPlayerError() {
+       /**
+          * Note: onPlayerError callback method is deprecated starting from VAMP v7.3.0,
+          and won't be trigged when an error is occurred. 
+          * Note: The SDK handles such errors internally and no further action is required.
+             */
+   }
+});
+```
+
+You have now completed the process of adding your Interstitial ad Placement.
+
+## Releasing an Ad Placement
+
+Click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010934178) for details of how to release an Ad Placement.
+
+## Integrating Rewarded Ads
+
+Follow the steps below to integrate Rewarded Ads into your SDK:
+
+## Step 1: Building the Ad Placement
+
+Setting Up Your Ad Placement (previously known as Ad Spot)
+
+```java
+// Spot integration for Rewarded Ads
+InneractiveAdSpot mSpot = InneractiveAdSpotManager.get().createSpot();
+ 
+// Adding the adview controller
+InneractiveFullscreenUnitController controller = new
+InneractiveFullscreenUnitController();
+
+// Adding the Video adview controller
+InneractiveFullscreenVideoContentController 
+videoContentController = new 
+InneractiveFullscreenVideoContentController();
+
+controller.addContentController(videoContentController);
+
+mSpot.addUnitController(controller);
+```
+
+## Step 2: Make the Ad Request
+
+The request and display steps are separate for the Ad Placement.
+
+Setting Up Your Ad Request
+
+```java
+InneractiveAdRequest adRequest = new 
+InneractiveAdRequest("your_rewarded_spot_id");
+ 
+ 
+// When ready to perform the ad request
+mSpot.requestAd(adRequest);
+```
+
+Muting Rewarded Ads
+
+You can opt to mute rewarded ads by adding:
+
+```javascript
+InneractiveAdManager.setMuteVideo(true);
+```
+
+### Step 2a: Setting up Listening Events
+
+The following example illustrates how a RequestListener should be used.
+
+```typescript
+InneractiveAdSpot.RequestListener mSpotListener = new 
+InneractiveAdSpot.RequestListener() 
+{
+        @Override
+//when the ad request sends successfully.
+        public void onInneractiveSuccessfulAdRequest(InneractiveAdSpot inneractiveAdSpot) {
+            
+            }
+
+        @Override
+        public void onInneractiveFailedAdRequest(InneractiveAdSpot inneractiveAdSpot, InneractiveErrorCode inneractiveErrorCode) {
+
+            }
+};
+
+mSpot.setRequestListener(mSpotListener);
+```
+
+## Step 3: Displaying the Ad
+
+Once you've set up the request, it's time to set-up displaying the ad.
+
+Setting Up Displaying Your Ad
+
+```java
+// Check if we have ad content
+if (mSpot.isReady()) {
+    
+// Get the spot's controller
+    InneractiveFullscreenUnitController controller =
+(InneractiveFullscreenUnitController)mSpot.getSelectedUnitController();
+ 
+// Show the ad using the Activity's context
+    controller.show(this);
+}
+```
+
+## Step 4: Listening to the Event
+
+Use the following code example below for receiving Rewarded ads callbacks.
+
+### Step 4a: Listening to the Events
+
+```typescript
+controller.setEventsListener(new InneractiveFullscreenAdEventsListener() {
+       @Override
+       public void onAdImpression(InneractiveAdSpot inneractiveAdSpot) {
+
+       }
+
+       @Override
+       public void onAdClicked(InneractiveAdSpot inneractiveAdSpot) {
+
+       }
+
+       @Override
+       public void onAdWillOpenExternalApp(InneractiveAdSpot inneractiveAdSpot) {
+
+       }
+
+       @Override
+       public void onAdEnteredErrorState(InneractiveAdSpot inneractiveAdSpot, InneractiveUnitController.AdDisplayError adDisplayError) {
+
+       }
+
+       @Override
+       public void onAdWillCloseInternalBrowser(InneractiveAdSpot inneractiveAdSpot) {
+
+       }
+
+       @Override
+       public void onAdDismissed(InneractiveAdSpot inneractiveAdSpot) {
+                            
+       }
+});
+```
+
+### Step 4b: Listening to the Video Events
+
+```typescript
+videoContentController.setEventsListener(new VideoContentListener() {
+   @Override
+   public void onProgress(int totalDurationInMsec, int positionInMsec) {
+
+   }
+
+   @Override
+   public void onCompleted() {
+
+   }
+
+   @Override
+   public void onPlayerError() {
+       /**
+        * Note: onPlayerError callback method is deprecated starting from Marketplace v7.3.0,
+          and won't be trigged when an error is occurred. 
+        * Note: The SDK handles such errors internally and no further action is required.
+       */
+   }
+});
+```
+
+### Step 4c: Listening to the Rewarded Events
+
+The `InneractiveFullScreenAdRewardedListener` can be optionally used to receive Rewarded Ad callbacks.
+
+```typescript
+controller.setRewardedListener(new InneractiveFullScreenAdRewardedListener() {
+      @Override
+      public void onAdRewarded(InneractiveAdSpot inneractiveAdSpot) {
+                        
+      }
+});
+```
+
+## Releasing an Ad Placement
+
+Click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010934178) for details of how to release an Ad Placement.
+
+[Back to Top ⇧](#top)

@@ -1,0 +1,36 @@
+---
+title: "Placement Experiments"
+---
+
+Experimenting with placements allows you to try out proposed placement settings on a subset of your traffic in order to understand the effects of configuration change. Once you analyze the results of your experiments, you can then decide to either save the variant settings as your official placement settings or stay with the original settings.
+
+## What Can I Test?
+
+Experiments can help you determine how the following changes might affect your placement performance:
+
+* Introducing a new network instance to your waterfall.
+* Using instances with Auto CPM versus Fixed CPM.
+* Adding bidding instances versus traditional mediation instances.
+* Setting different price floors.
+* Changing the number of ads each user is receiving.
+* Changing the frequencyof ads each user receives.
+* Changing country targeting.
+* Changing different banner refresh rates.
+
+For more information about how to set up experiments and analyze results, see [ExperimentingwithPlacements](https://developer.digitalturbine.com/hc/en-us/articles/14964194419484-Experimenting-with-Placements).
+
+## Multi-Testing Best Practices
+
+### Test one configuration change at a time
+
+Although technically you can configure any placement change in a variant, it's a good idea stick to testing one configuration aspect at a time. Since some placement configurations could affect others, it is possible that some users will see the configurations for multiple variants, thereby affecting the results of the experiment.
+
+For example, if you set up two variants: one to test the impact of introducing a new network to your interstitial placement, and one to test a higher ad pacing frequency, there may be difficulty in understanding which variant is responsible for the changes you observe in your results. Instead, run one experiment to test the new network, and a subsequent experiment to test the pacing change.
+
+### Consider your test sample size
+
+If you do not perform your test on enough daily engaged users (DEUs), the experiment results are likely to be unreliable.
+
+For example, if a variant receives 150% more average revenue per DEU (ARPDEU), but only 5DEUs account for this change, then the results are statistically insignificant.
+
+[Back to Top ⇧](#top)

@@ -1,0 +1,101 @@
+---
+title: "AppLovin"
+---
+
+The purpose of this article is to guide publishers who want to use the DT FairBid SDK to load and display ads from AppLovin via DT FairBid Mediation.
+
+AppLovin currently supports the following [ad types](https://developer.digitalturbine.com/hc/en-us/articles/360010915358-Ad-Types-and-Placement-ID):
+
+* Banner
+
+  #### Note
+
+  AppLovin banner heights may vary. Devices with larger screens may receive banners with 90 px height. If the banner must be 50 px in height, contact the AppLovin creative team to resize the banner.
+
+* Interstitial
+
+* Rewarded (with Google Play Services version 9.0.2+ integrated in your app)
+
+To integrate AppLovin as a DT mediated network:
+
+* [Step 1: Retrieve AppLovin parameters](#step-1%3A-retrieve-applovin-parametersK).
+* [Step 2: Add AppLovin as a DT mediated network](#step-2%3A-add-applovin-as-a-dt-mediated-network).
+* [Step 3: Add the AppLovin SDK to your DT integration](#step-3%3A-add-the-applovin-sdk-to-your-integration).
+* [Step 4: Test your integration](#step-4%3A-test-your-integration).
+
+## Step 1: Retrieve AppLovin Parameters
+
+Before retrieving AppLovin parameters, ensure that you have AppLovin ad unit inventory that you want to mediate with DT. For more information about creating AppLovin inventory, see the following AppLovin articles:
+
+1. [Create](https://www.applovin.com/signup) an AppLovin account.
+2. [Add](https://developers.applovin.com/en/max/getting-started/#add-your-app) your app in AppLovin.
+3. [Create](https://developers.applovin.com/en/max/getting-started/#add-your-ad-unit) inventory for your app in AppLovin.
+
+To add AppLovin as a DT mediated network, retrieve the following parameters from your AppLovin account. Store these parameters in a text file for later use in [Step 2](#h_01J50NKB5E26QXDPST5GZ1YSPP).
+
+| PARAMETER    | DESCRIPTION                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SDK Key`    | Unique identifier for your AppLovin account. DT uses this key to initialize the AppLovin Adapter for your apps.                             |
+| `Report Key` | Unique identifier for your AppLovin account for reporting purposes. DT uses this key to import performance data from your AppLovin account. |
+| `Bundle ID`  | Unique identifier for your app in the app store.                                                                                            |
+| `Zone ID`    | Unique identifier for the AppLovin ad unit you want DT to mediate.                                                                          |
+
+### Obtaining the SDKKey and ReportKey
+
+To obtain the `SDK Key` and `Report Key`:
+
+1. On the AppLovin Dashboard, go to [**Account→General→Keys**](https://dash.applovin.com/o/account#keys).\
+   The `SDK Key` and `Report Key` display.
+
+<Frame caption="AppLovin Dashboard Keys page">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360010848958" />
+</Frame>
+
+2. Copy the keys, and store the values in a text file. These values are required later in [Step2](#h_01J50NKB5E26QXDPST5GZ1YSPP) to add AppLovin as a DT mediated network.
+
+### Obtaining the Zone ID
+
+To obtain the `Zone ID`:
+
+1. On the [AppLovin dashboard](https://dash.applovin.com/), go to **AppDiscovery→ Monetization→ Manage→Zones**\
+   The Zones you created for your app display.
+
+<Frame caption="AppLovin Dashboard Zones page">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360010774997" />
+</Frame>
+
+2. For each zone you want DT to mediate, copy the associated `Zone ID`, and store the values in a text file. These values are required later in [Step2](#h_01J50NKB5E26QXDPST5GZ1YSPP) to add AppLovin as a DT mediated network.
+
+## Step 2: Add AppLovin as a DT Mediated Network
+
+Before you add AppLovin as a mediated network in DT FairBid:
+
+* Ensure that you have access to parameters you retrieved from AppLovin in [Step1](#h_01J50NKB5EYMZKNFBN6S3ZFQCK).
+* [Add your App](https://developer.digitalturbine.com/hc/en-us/articles/14755391313308-Adding-an-App) using the DT Console.
+* Ensure that you set up a [DT Placement](/hc/en-us/articles/15005035293468 "Create a DT placement") for each AppLovin Zone you want to mediate with DT.
+
+To add AppLovin as a DT mediated network:
+
+1. Log in to the [DT Console](https://console.fyber.com/), and click**App Management**.
+
+2) [Set up](/hc/en-us/articles/15005016082972) AppLovin as a mediated network using the parameters you retrieved in [Step1](#h_01J50NKB5EYMZKNFBN6S3ZFQCK).
+
+<Frame caption="AppLovin parameters for DT integration">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/9411710992285" />
+</Frame>
+
+3. [Set up an ad network instance](/hc/en-us/articles/15111147606428-Setting-Up-Instances) for each placement you want DT to mediate. Use the AppLovin `ZoneID` you retrieved in [Step1](#h_01J50NKB5EYMZKNFBN6S3ZFQCK) as the **Instance ID**.
+
+## Step 3: Add the AppLovin SDK to your Integration
+
+To integrate the AppLovin SDK, follow the instructions on the [Supported Networks](https://developer.digitalturbine.com/hc/en-us/articles/360010077777-Supported-Networks) page.
+
+## Step 4: Test Your Integration
+
+Use the DT Test Suite to verify that you have set up your app properly for FairBid mediation. The DT Test Suite is available for Android, iOS, and Unity apps. For more information about using the DT Test Suite, see [Test Suite](https://developer.digitalturbine.com/hc/en-us/articles/16840582428316-Test-Suite "Using the DT Test Suite").
+
+<Frame caption="DT Test Suite screen showing app is ready for mediation">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17017418803868" />
+</Frame>
+
+[Back to Top ⇧](#top)

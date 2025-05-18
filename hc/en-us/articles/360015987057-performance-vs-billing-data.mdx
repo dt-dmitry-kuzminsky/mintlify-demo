@@ -1,0 +1,66 @@
+---
+title: "Performance Vs Billing Data"
+---
+
+Digital Turbine provides two different methods to analyze DT Offer Wall event data and capture user actions such as clicks, installs, and conversions:
+
+* Performance Data: Aggregates data to the time of the user's click.
+* Billing Data: Aggregates data in chronological order and supports billing purposes.
+
+## Example
+
+An offer requires a user to install an app and reach level 10 to complete the conversion. The advertiser defines the conversion when the user reaches level 10.
+
+<Frame caption="2025-03-13_15-49-41.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19011989226140" />
+</Frame>
+
+## Performance Data
+
+DT attributes the click, install, conversion, and the in-app purchase data to the first touchpoint the user has with the offer, which is the click on 1 October.
+
+## Billing Data
+
+DT attributes the click, install, conversion, and the in-app purchase data to the time each event occurs:
+
+* Click: 1 October
+* Install: 1 October
+* Conversion (level 10): 5 October
+* In-app purchase: 10 October
+
+## When Should I View Performance Data?
+
+DT recommends that you view performance data to:
+
+* Optimize campaign performance and analyze the impact of changes, such as updated bids, offer titles, or customized icons on your offer's CTR and CR.
+* Assess the value of users acquired from a specific source based on the cost of acquisition and revenue generated post install (ROAS).
+* Analyze the full user funnel with Performance Data, which is attributed to the user's first interaction with the offer. This allows you to optimize your campaign based on user behavior and source quality.
+
+## When Should I View Billing Data?
+
+DT recommends that you view billing data to:
+
+* To track daily and monthly spend.
+* Troubleshoot problems, such as implementing tracking changes and verifying that conversions continue to record.
+
+## Available Data Types on DT's Reporting Tools
+
+| REPORTING TOOL          | PERFORMANCE DATA                                                                                                                                           | BILLING DATA                                                                                                                                               |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Edge Reports            | <Frame caption="Screen_Shot_2020-12-02_at_16.09.12.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014605738" />
+</Frame> | <Frame caption="Screen_Shot_2020-12-02_at_16.09.12.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014605738" />
+</Frame> |
+| Reporting API           | <Frame caption="Screen_Shot_2020-12-02_at_16.09.12.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014605738" />
+</Frame> | <Frame caption="Screen_Shot_2020-12-02_at_16.09.12.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014605738" />
+</Frame> |
+| ACP Edge Dashboard KPIs | <Frame caption="Screen_Shot_2020-12-02_at_16.09.12.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014605738" />
+</Frame> | <Frame caption="Screen_Shot_2020-12-02_at_16.09.02.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360014533777" />
+</Frame> |
+
+[Back to Top ⇧](#top)

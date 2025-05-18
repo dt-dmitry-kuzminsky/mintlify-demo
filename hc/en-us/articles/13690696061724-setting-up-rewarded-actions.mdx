@@ -1,0 +1,18 @@
+---
+title: "Setting Up Rewarded Actions"
+---
+
+RewardedActions is a single‑offer OfferWall format that can help retain user engagement at points in your game where users tend to disengage. RewardedActions provides opportunities to earn virtual currency in exchange for completing easy‑rated tasks such as downloading an app or completing a survey. Implement RewardedActions using the Offer Wall REST API as an alternative to or in conjunction with an [SDKimplementation of DTOfferWall](https://developer.digitalturbine.com/hc/en-us/articles/4404313469201-Setting-Up-DT-Offer-Wall) or the [RewardedVideo](https://developer.digitalturbine.com/hc/en-us/articles/360010915358-Ad-Types-and-Specifications#h_01HFMPJMXY17HQCFP3NMHR53QZ) ad format.
+
+To integrate Rewarded Actions in your app:
+
+1. Implement the OfferWall RESTAPI. For more information, see[OfferWall RESTAPIIntegration](/hc/en-us/articles/360011061718).
+
+2. When calling the [`feed/v1/offers`](https://developer.digitalturbine.com/hc/en-us/articles/16898997163676-feed-v1-offers) endpoint, use **one** of the following methods to request easy‑rated offers:
+
+   * In the [DTConsole](https://console.fyber.com/), configure a placement that blocks medium- and hard‑rated offers and then use the `placement_id`parameter to specify the filtered placement when calling the `feed/v1/offers` endpoint. For more information about filtering a placement, see[Content Filters for Placements](/hc/en-us/articles/360011433418), and for information about the `placement_id`parameter, see[`placement_id`](/hc/en-us/articles/16898997163676#PlacementID) for the `feed/v1/offers`endpoint.
+   * Include OfferTypeID `114` in the `offer_types` parameter when calling the `feed/v1/offers` endpoint. This limits the returned list of offers to easy‑rated offers especially curated for RewardedActions. For more information, see[`offer_types`](/hc/en-us/articles/16898997163676-feed-v1-offers#offer_types) for the `feed/v1/offers`endpoint.
+
+3. Render an offer from the returned list of offers.
+
+[Back to Top ⇧](#top)

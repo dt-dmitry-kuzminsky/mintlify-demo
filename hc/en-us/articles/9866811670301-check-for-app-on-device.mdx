@@ -1,0 +1,57 @@
+---
+title: "Check For App On Device"
+---
+
+Use the following method to check whether an app is installed on the device:
+
+```javascript
+void getApplicationDetails(String data, in Bundle metadata, in Bundle action, IIgniteServiceCallback callback);
+```
+
+## Type
+
+Asynchronous
+
+## Description
+
+Retrieves details about an application. Currently, this method only returns details about app installation status.
+
+## Parameters
+
+* data
+
+  a JSON object that contains the application ID/package name.
+
+* metadata
+
+  metadata that may be needed for additional processing
+
+* action
+
+  contains information for a custom broadcast to be triggered on task completion.
+
+* callback
+
+  provide a callback to track the response
+
+## Sample
+
+```typescript
+    // Initialization
+
+// ...
+
+IgniteServiceSdk.instance().getApplicationDetails(packageName, object: IResponseCallback<AppDetailsResponse, Error, Progress> {
+    override fun onSuccess(result: AppDetailsResponse) {
+        Log.i(TAG, “Package Installed Status: ${result.appSummary?.isAppInstalled}”)
+    }
+
+    override fun onError(error: Error) {
+        Log.e(TAG, “Package Installed Status Error: ${error.message}”)
+    }
+})
+
+// ...
+```
+
+[Back to Top ⇧](#top)

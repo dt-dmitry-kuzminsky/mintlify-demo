@@ -1,0 +1,1208 @@
+{
+  "navigation": [
+    {
+      "group": "Getting Started with DT FairBid",
+      "pages": [
+        "hc/en-us/articles/360009975338-getting-started-with-dt-fairbid"
+      ]
+    },
+    {
+      "group": "Setting Up DT FairBid",
+      "pages": [
+        "hc/en-us/articles/360009974718-setting-up-dt-fairbid"
+      ]
+    },
+    {
+      "group": "SDK Bidding",
+      "pages": [
+        "hc/en-us/articles/360009975398-sdk-bidding"
+      ]
+    },
+    {
+      "group": "DT FairBid Management API",
+      "pages": [
+        "hc/en-us/articles/4409541086993-dt-fairbid-management-api"
+      ]
+    },
+    {
+      "group": "Placement Experiments",
+      "pages": [
+        "hc/en-us/articles/360012606718-placement-experiments"
+      ]
+    },
+    {
+      "group": "app-ads.txt",
+      "pages": [
+        "hc/en-us/articles/360010858817-app-ads-txt"
+      ]
+    },
+    {
+      "group": "Server Side Rewarding",
+      "pages": [
+        "hc/en-us/articles/360009923657-server-side-rewarding"
+      ]
+    },
+    {
+      "group": "User Management",
+      "pages": [
+        "hc/en-us/articles/360014033837-user-management"
+      ]
+    },
+    {
+      "group": "Payment and Billing",
+      "pages": [
+        "hc/en-us/articles/5856765915281-payment-and-billing"
+      ]
+    },
+    {
+      "group": "Ad Format Behavior",
+      "pages": [
+        "hc/en-us/articles/360009923697-ad-format-behavior"
+      ]
+    },
+    {
+      "group": "GDPR",
+      "pages": [
+        "hc/en-us/articles/360010964158-gdpr"
+      ]
+    },
+    {
+      "group": "CCPA and CPRA",
+      "pages": [
+        "hc/en-us/articles/10377107424157-ccpa-and-cpra"
+      ]
+    },
+    {
+      "group": "LGPD",
+      "pages": [
+        "hc/en-us/articles/5541189181841-lgpd"
+      ]
+    },
+    {
+      "group": "COPPA",
+      "pages": [
+        "hc/en-us/articles/9577916674333-coppa"
+      ]
+    },
+    {
+      "group": "Apple's App Privacy Details",
+      "pages": [
+        "hc/en-us/articles/360015807178-apple-s-app-privacy-details"
+      ]
+    },
+    {
+      "group": "Google's Data Safety Form",
+      "pages": [
+        "hc/en-us/articles/10988523364508-google-s-data-safety-form"
+      ]
+    },
+    {
+      "group": "Flag End-Users as a Child",
+      "pages": [
+        "hc/en-us/articles/6995888598813-flag-end-users-as-a-child"
+      ]
+    },
+    {
+      "group": "Mediation Regulatory Compliance",
+      "pages": [
+        "hc/en-us/articles/360013311257-mediation-regulatory-compliance"
+      ]
+    },
+    {
+      "group": "Supported Networks",
+      "pages": [
+        "hc/en-us/articles/360010077777-supported-networks"
+      ]
+    },
+    {
+      "group": "AdMob/Google Bidding",
+      "pages": [
+        "hc/en-us/articles/360010078317-admob-google-bidding"
+      ]
+    },
+    {
+      "group": "Amazon Publisher Services",
+      "pages": [
+        "hc/en-us/articles/8293190608913-amazon-publisher-services"
+      ]
+    },
+    {
+      "group": "AppLovin",
+      "pages": [
+        "hc/en-us/articles/360010170338-applovin"
+      ]
+    },
+    {
+      "group": "BIGO Ads",
+      "pages": [
+        "hc/en-us/articles/11546060390684-bigo-ads"
+      ]
+    },
+    {
+      "group": "Chartboost",
+      "pages": [
+        "hc/en-us/articles/360010170398-chartboost"
+      ]
+    },
+    {
+      "group": "Google Ad Manager",
+      "pages": [
+        "hc/en-us/articles/7296729882269-google-ad-manager"
+      ]
+    },
+    {
+      "group": "HyprMX",
+      "pages": [
+        "hc/en-us/articles/4403860364561-hyprmx"
+      ]
+    },
+    {
+      "group": "InMobi",
+      "pages": [
+        "hc/en-us/articles/360013932098-inmobi"
+      ]
+    },
+    {
+      "group": "ironSource",
+      "pages": [
+        "hc/en-us/articles/360010170738-ironsource"
+      ]
+    },
+    {
+      "group": "Liftoff Monetize",
+      "pages": [
+        "hc/en-us/articles/360010172278-liftoff-monetize"
+      ]
+    },
+    {
+      "group": "Meta Audience Network",
+      "pages": [
+        "hc/en-us/articles/360010170518-meta-audience-network"
+      ]
+    },
+    {
+      "group": "Mintegral",
+      "pages": [
+        "hc/en-us/articles/360010078977-mintegral"
+      ]
+    },
+    {
+      "group": "myTarget",
+      "pages": [
+        "hc/en-us/articles/360017113957-mytarget"
+      ]
+    },
+    {
+      "group": "Ogury",
+      "pages": [
+        "hc/en-us/articles/360015479617-ogury"
+      ]
+    },
+    {
+      "group": "Pangle",
+      "pages": [
+        "hc/en-us/articles/360020569718-pangle"
+      ]
+    },
+    {
+      "group": "Unity Ads",
+      "pages": [
+        "hc/en-us/articles/360010172138-unity-ads"
+      ]
+    },
+    {
+      "group": "Verve Group",
+      "pages": [
+        "hc/en-us/articles/5407305122449-verve-group"
+      ]
+    },
+    {
+      "group": "Overview",
+      "pages": [
+        "hc/en-us/articles/360009956717-overview"
+      ]
+    },
+    {
+      "group": "API Authentication",
+      "pages": [
+        "hc/en-us/articles/4410353843345-api-authentication"
+      ]
+    },
+    {
+      "group": "DT FairBid Reporting API",
+      "pages": [
+        "hc/en-us/articles/360010079438-dt-fairbid-reporting-api"
+      ]
+    },
+    {
+      "group": "DT FairBid User Level Reporting API",
+      "pages": [
+        "hc/en-us/articles/360010106598-dt-fairbid-user-level-reporting-api"
+      ]
+    },
+    {
+      "group": "SDK Integration",
+      "pages": [
+        "hc/en-us/articles/16668688781596-sdk-integration"
+      ]
+    },
+    {
+      "group": "Initializing the SDK",
+      "pages": [
+        "hc/en-us/articles/16884609483420-initializing-the-sdk"
+      ]
+    },
+    {
+      "group": "Ad Formats",
+      "pages": [
+        "hc/en-us/articles/16884885076380-ad-formats"
+      ]
+    },
+    {
+      "group": "Mediation Started Callback",
+      "pages": [
+        "hc/en-us/articles/16844772403484-mediation-started-callback"
+      ]
+    },
+    {
+      "group": "Advanced Initialization Options",
+      "pages": [
+        "hc/en-us/articles/16847944034204-advanced-initialization-options"
+      ]
+    },
+    {
+      "group": "Ad Audio",
+      "pages": [
+        "hc/en-us/articles/16848549652252-ad-audio"
+      ]
+    },
+    {
+      "group": "Auto Request",
+      "pages": [
+        "hc/en-us/articles/16850628414748-auto-request"
+      ]
+    },
+    {
+      "group": "CCPA - Privacy String",
+      "pages": [
+        "hc/en-us/articles/360012054277-ccpa-privacy-string"
+      ]
+    },
+    {
+      "group": "Custom Parameters When Showing an Ad",
+      "pages": [
+        "hc/en-us/articles/16866998558492-custom-parameters-when-showing-an-ad"
+      ]
+    },
+    {
+      "group": "Impression Level Data",
+      "pages": [
+        "hc/en-us/articles/360010821657-impression-level-data"
+      ]
+    },
+    {
+      "group": "User Settings",
+      "pages": [
+        "hc/en-us/articles/16883594439708-user-settings"
+      ]
+    },
+    {
+      "group": "SKAdNetwork ID Auto Updater",
+      "pages": [
+        "hc/en-us/articles/360015298038-skadnetwork-id-auto-updater"
+      ]
+    },
+    {
+      "group": "Enabling DT Offer Wall",
+      "pages": [
+        "hc/en-us/articles/16884004513820-enabling-dt-offer-wall"
+      ]
+    },
+    {
+      "group": "Test Suite",
+      "pages": [
+        "hc/en-us/articles/16840582428316-test-suite"
+      ]
+    },
+    {
+      "group": "Sample App",
+      "pages": [
+        "hc/en-us/articles/16844171401884-sample-app"
+      ]
+    },
+    {
+      "group": "CCPA Open Source",
+      "pages": [
+        "hc/en-us/articles/16844433005212-ccpa-open-source"
+      ]
+    },
+    {
+      "group": "Using the SDKs",
+      "pages": [
+        "hc/en-us/sections/16840609454876-using-the-sdks",
+        "hc/en-us/articles/16884209848092-sdk-integration",
+        "hc/en-us/articles/16884609483420-initializing-the-sdk",
+        "hc/en-us/articles/16884885076380-ad-formats"
+      ]
+    },
+    {
+      "group": "SDK Reference",
+      "pages": [
+        "hc/en-us/sections/16844699290140-sdk-reference",
+        "hc/en-us/articles/16844772403484-mediation-started-callback",
+        "hc/en-us/articles/16847944034204-advanced-initialization-options",
+        "hc/en-us/articles/16848549652252-ad-audio",
+        "hc/en-us/articles/16850628414748-auto-request",
+        "hc/en-us/articles/16861343334684-gdpr",
+        "hc/en-us/articles/16861742823324-ccpa-privacy-string",
+        "hc/en-us/articles/16865447805980-lgpd",
+        "hc/en-us/articles/16866998558492-custom-parameters-when-showing-an-ad",
+        "hc/en-us/articles/16881630922524-impression-level-data",
+        "hc/en-us/articles/16883594439708-user-settings",
+        "hc/en-us/articles/360015298038-skadnetwork-id-auto-updater",
+        "hc/en-us/articles/16884004513820-enabling-dt-offer-wall"
+      ]
+    },
+    {
+      "group": "Tools",
+      "pages": [
+        "hc/en-us/sections/16844437677980-tools",
+        "hc/en-us/articles/16840582428316-test-suite",
+        "hc/en-us/articles/16844171401884-sample-app",
+        "hc/en-us/articles/16844433005212-ccpa-open-source"
+      ]
+    },
+    {
+      "group": "FairBid SDK Changelog",
+      "pages": [
+        "hc/en-us/articles/16075215437980-fairbid-sdk-changelog"
+      ]
+    },
+    {
+      "group": "Welcome to DT Exchange",
+      "pages": [
+        "hc/en-us/articles/360010814637-welcome-to-dt-exchange"
+      ]
+    },
+    {
+      "group": "Setting Up DT Exchange",
+      "pages": [
+        "hc/en-us/articles/4557133593361-setting-up-dt-exchange"
+      ]
+    },
+    {
+      "group": "Block Lists",
+      "pages": [
+        "hc/en-us/articles/360019418657-block-lists"
+      ]
+    },
+    {
+      "group": "US Privacy Compliance",
+      "pages": [
+        "hc/en-us/articles/360010935578-us-privacy-compliance"
+      ]
+    },
+    {
+      "group": "DT Exchange Management API",
+      "pages": [
+        "hc/en-us/articles/4412488728721-dt-exchange-management-api"
+      ]
+    },
+    {
+      "group": "Ad Types and Specifications",
+      "pages": [
+        "hc/en-us/articles/360010915358-ad-types-and-specifications"
+      ]
+    },
+    {
+      "group": "Mediating DTX 8.3.5 with MAX on Android",
+      "pages": [
+        "hc/en-us/articles/17950246496540-mediating-dtx-8-3-5-with-max-on-android"
+      ]
+    },
+    {
+      "group": "Mediating DT Exchange",
+      "pages": [
+        "hc/en-us/articles/360015536857-mediating-dt-exchange"
+      ]
+    },
+    {
+      "group": "Reporting for Publishers",
+      "pages": [
+        "hc/en-us/articles/360010934438-reporting-for-publishers"
+      ]
+    },
+    {
+      "group": "DT Exchange Reporting API",
+      "pages": [
+        "hc/en-us/articles/8101286018717-dt-exchange-reporting-api"
+      ]
+    },
+    {
+      "group": "Basic Reporting API",
+      "pages": [
+        "hc/en-us/articles/360010934498-basic-reporting-api"
+      ]
+    },
+    {
+      "group": "User Level Reporting API",
+      "pages": [
+        "hc/en-us/articles/10213147920029-user-level-reporting-api"
+      ]
+    },
+    {
+      "group": "Integrating the Android SDK",
+      "pages": [
+        "hc/en-us/articles/360010822437-integrating-the-android-sdk"
+      ]
+    },
+    {
+      "group": "Android Ad Formats",
+      "pages": [
+        "hc/en-us/articles/360019744297-android-ad-formats"
+      ]
+    },
+    {
+      "group": "Releasing Ad Instance Resources",
+      "pages": [
+        "hc/en-us/articles/360010934178-releasing-ad-instance-resources"
+      ]
+    },
+    {
+      "group": "DT Logging on Android",
+      "pages": [
+        "hc/en-us/articles/360010834097-dt-logging-on-android"
+      ]
+    },
+    {
+      "group": "iOS SDK v.8.2.7 - Privacy Manifest File Data Transfer",
+      "pages": [
+        "hc/en-us/articles/13384579176860-ios-sdk-v-8-2-7-privacy-manifest-file-data-transfer"
+      ]
+    },
+    {
+      "group": "Version-Specific Information",
+      "pages": [
+        "hc/en-us/sections/13384064086556-version-specific-information",
+        "hc/en-us/articles/13384579176860-ios-sdk-v-8-2-7-privacy-manifest-file-data-transfer"
+      ]
+    },
+    {
+      "group": "Integrating the iOS SDK",
+      "pages": [
+        "hc/en-us/articles/360010915618-integrating-the-ios-sdk"
+      ]
+    },
+    {
+      "group": "SDK Initialization for DT Exchange SDK",
+      "pages": [
+        "hc/en-us/articles/360011618158-sdk-initialization-for-dt-exchange-sdk"
+      ]
+    },
+    {
+      "group": "ATS Configuration for DT Exchange SDK",
+      "pages": [
+        "hc/en-us/articles/17188848003612-ats-configuration-for-dt-exchange-sdk"
+      ]
+    },
+    {
+      "group": "iOS Ad Formats",
+      "pages": [
+        "hc/en-us/articles/360019954377-ios-ad-formats"
+      ]
+    },
+    {
+      "group": "Delegate Protocols",
+      "pages": [
+        "hc/en-us/articles/360020083398-delegate-protocols"
+      ]
+    },
+    {
+      "group": "DT Logging on iOS",
+      "pages": [
+        "hc/en-us/articles/360019822758-dt-logging-on-ios"
+      ]
+    },
+    {
+      "group": "DT Exchange Android Changelog",
+      "pages": [
+        "hc/en-us/articles/360010834177-dt-exchange-android-changelog"
+      ]
+    },
+    {
+      "group": "DT Exchange iOS Changelog",
+      "pages": [
+        "hc/en-us/articles/360010922578-dt-exchange-ios-changelog"
+      ]
+    },
+    {
+      "group": "Welcome to DT Exchange Demand",
+      "pages": [
+        "hc/en-us/articles/10284922807836-welcome-to-dt-exchange-demand"
+      ]
+    },
+    {
+      "group": "DT Exchange OpenRTB 2.5 Specs",
+      "pages": [
+        "hc/en-us/articles/360010835237-dt-exchange-openrtb-2-5-specs"
+      ]
+    },
+    {
+      "group": "Supported Auction Macros",
+      "pages": [
+        "hc/en-us/articles/7601407741725-supported-auction-macros"
+      ]
+    },
+    {
+      "group": "Sample Bid Requests",
+      "pages": [
+        "hc/en-us/articles/360010942598-sample-bid-requests"
+      ]
+    },
+    {
+      "group": "Auto Store",
+      "pages": [
+        "hc/en-us/articles/11846217613085-auto-store"
+      ]
+    },
+    {
+      "group": "Contextual App Targeting",
+      "pages": [
+        "hc/en-us/articles/360010959798-contextual-app-targeting"
+      ]
+    },
+    {
+      "group": "Custom Product Pages",
+      "pages": [
+        "hc/en-us/articles/10990424868892-custom-product-pages"
+      ]
+    },
+    {
+      "group": "Dual End Card",
+      "pages": [
+        "hc/en-us/articles/12077178806812-dual-end-card"
+      ]
+    },
+    {
+      "group": "SKAdNetwork",
+      "pages": [
+        "hc/en-us/articles/360011660258-skadnetwork"
+      ]
+    },
+    {
+      "group": "SKOverlay",
+      "pages": [
+        "hc/en-us/articles/8938168894621-skoverlay"
+      ]
+    },
+    {
+      "group": "DT Exchange Ad Formats",
+      "pages": [
+        "hc/en-us/articles/10301708366364-dt-exchange-ad-formats"
+      ]
+    },
+    {
+      "group": "DT Exchange Ad Creative Types",
+      "pages": [
+        "hc/en-us/articles/10382910367644-dt-exchange-ad-creative-types"
+      ]
+    },
+    {
+      "group": "Smartlink",
+      "pages": [
+        "hc/en-us/articles/360010948958-smartlink"
+      ]
+    },
+    {
+      "group": "Click to Native Browser",
+      "pages": [
+        "hc/en-us/articles/360010858357-click-to-native-browser"
+      ]
+    },
+    {
+      "group": "Handling Click Events in iOS",
+      "pages": [
+        "hc/en-us/articles/360011733337-handling-click-events-in-ios"
+      ]
+    },
+    {
+      "group": "Reporting for Buyers",
+      "pages": [
+        "hc/en-us/articles/19774381493660-reporting-for-buyers"
+      ]
+    },
+    {
+      "group": "Bid Loss Notifications",
+      "pages": [
+        "hc/en-us/articles/360010958778-bid-loss-notifications"
+      ]
+    },
+    {
+      "group": "Gzipping",
+      "pages": [
+        "hc/en-us/articles/360010958798-gzipping"
+      ]
+    },
+    {
+      "group": "Setting Up QPS Throttling",
+      "pages": [
+        "hc/en-us/articles/360010858657-setting-up-qps-throttling"
+      ]
+    },
+    {
+      "group": "A/B Testing",
+      "pages": [
+        "hc/en-us/articles/360010958838-a-b-testing"
+      ]
+    },
+    {
+      "group": "DT Exchange Demand Test App",
+      "pages": [
+        "hc/en-us/articles/4413031314321-dt-exchange-demand-test-app"
+      ]
+    },
+    {
+      "group": "SKAdNetwork Testing on the Demand Test App",
+      "pages": [
+        "hc/en-us/articles/360018267277-skadnetwork-testing-on-the-demand-test-app"
+      ]
+    },
+    {
+      "group": "Demand Content Policy",
+      "pages": [
+        "hc/en-us/articles/360010959158-demand-content-policy"
+      ]
+    },
+    {
+      "group": "Using sellers.json and SupplyChain",
+      "pages": [
+        "hc/en-us/articles/360010959198-using-sellers-json-and-supplychain"
+      ]
+    },
+    {
+      "group": "Digital Turbine and DV360",
+      "pages": [
+        "hc/en-us/articles/4402378650897-digital-turbine-and-dv360"
+      ]
+    },
+    {
+      "group": "Introduction to DT Offer Wall",
+      "pages": [
+        "hc/en-us/articles/360011062478-introduction-to-dt-offer-wall"
+      ]
+    },
+    {
+      "group": "Setting Up DT Offer Wall",
+      "pages": [
+        "hc/en-us/articles/4404313469201-setting-up-dt-offer-wall"
+      ]
+    },
+    {
+      "group": "Setting Up Rewarded Actions",
+      "pages": [
+        "hc/en-us/articles/13690696061724-setting-up-rewarded-actions"
+      ]
+    },
+    {
+      "group": "Placement A/B Test",
+      "pages": [
+        "hc/en-us/articles/10073932577180-placement-a-b-test"
+      ]
+    },
+    {
+      "group": "Rewarding Your Users",
+      "pages": [
+        "hc/en-us/articles/360010865437-rewarding-your-users"
+      ]
+    },
+    {
+      "group": "Server-Side Rewarding",
+      "pages": [
+        "hc/en-us/articles/360010867817-server-side-rewarding"
+      ]
+    },
+    {
+      "group": "Content Filters for Placements",
+      "pages": [
+        "hc/en-us/articles/360011433418-content-filters-for-placements"
+      ]
+    },
+    {
+      "group": "Testing Your Offer Wall Implementation",
+      "pages": [
+        "hc/en-us/articles/18589296749724-testing-your-offer-wall-implementation"
+      ]
+    },
+    {
+      "group": "DT Offer Wall User Management",
+      "pages": [
+        "hc/en-us/articles/6368447371025-dt-offer-wall-user-management"
+      ]
+    },
+    {
+      "group": "SDK Plugin APIs",
+      "pages": [
+        "hc/en-us/articles/16605723967132-sdk-plugin-apis"
+      ]
+    },
+    {
+      "group": "DT Offer Wall Report for Publishers",
+      "pages": [
+        "hc/en-us/articles/360010955997-dt-offer-wall-report-for-publishers"
+      ]
+    },
+    {
+      "group": "Calculating an App's Unique Users",
+      "pages": [
+        "hc/en-us/articles/360011061378-calculating-an-app-s-unique-users"
+      ]
+    },
+    {
+      "group": "Performance vs Billing Data",
+      "pages": [
+        "hc/en-us/articles/360015987057-performance-vs-billing-data"
+      ]
+    },
+    {
+      "group": "Reporting API Overview",
+      "pages": [
+        "hc/en-us/articles/360011061338-reporting-api-overview"
+      ]
+    },
+    {
+      "group": "Using the Reporting API",
+      "pages": [
+        "hc/en-us/articles/14114675739804-using-the-reporting-api"
+      ]
+    },
+    {
+      "group": "Reporting API Metrics and Dimensions",
+      "pages": [
+        "hc/en-us/articles/14114866747292-reporting-api-metrics-and-dimensions"
+      ]
+    },
+    {
+      "group": "auth/v1/token",
+      "pages": [
+        "hc/en-us/articles/16362809136796-auth-v1-token"
+      ]
+    },
+    {
+      "group": "api/v1/report",
+      "pages": [
+        "hc/en-us/articles/14637340434588-api-v1-report"
+      ]
+    },
+    {
+      "group": "Offer Wall REST API Integration",
+      "pages": [
+        "hc/en-us/articles/360011061718-offer-wall-rest-api-integration"
+      ]
+    },
+    {
+      "group": "feed/v1/offers",
+      "pages": [
+        "hc/en-us/articles/16898997163676-feed-v1-offers"
+      ]
+    },
+    {
+      "group": "show/fyber",
+      "pages": [
+        "hc/en-us/articles/16899045200156-show-fyber"
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "pages": [
+        "hc/en-us/sections/360003173838-getting-started",
+        "hc/en-us/sections/12310163180444-first-steps",
+        {
+          "group": "Introduction to DT Offer Wall",
+          "pages": [
+            "hc/en-us/articles/360010863917-introduction-to-dt-offer-wall",
+            "hc/en-us/articles/4404313469201-setting-up-dt-offer-wall",
+            "hc/en-us/articles/13690696061724-setting-up-rewarded-actions"
+          ]
+        },
+        {
+          "group": "Advanced Configurations",
+          "pages": [
+            "hc/en-us/sections/4404556183953-advanced-configurations",
+            "hc/en-us/articles/10073932577180-placement-a-b-test",
+            "hc/en-us/articles/360010865437-rewarding-your-users",
+            "hc/en-us/articles/360010867817-server-side-rewarding",
+            "hc/en-us/articles/360011433418-content-filters-for-placements",
+            "hc/en-us/articles/18589296749724-testing-your-offer-wall-implementation",
+            "hc/en-us/articles/6368447371025-dt-offer-wall-user-management"
+          ]
+        },
+        {
+          "group": "Privacy",
+          "pages": [
+            "hc/en-us/sections/360004602218-privacy",
+            "hc/en-us/articles/10988523364508-google-s-data-safety-form",
+            "hc/en-us/articles/360010964158-gdpr",
+            "hc/en-us/articles/360012054277-ccpa-privacy-string",
+            "hc/en-us/articles/360015807178-apple-s-app-privacy-details"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Offer Wall SDK",
+      "pages": [
+        "hc/en-us/sections/10890509768092-offer-wall-sdk",
+        "hc/en-us/articles/16668688781596-sdk-integration",
+        "hc/en-us/articles/16605723967132-sdk-plugin-apis"
+      ]
+    },
+    {
+      "group": "Reporting",
+      "pages": [
+        "hc/en-us/sections/360003170897-reporting",
+        "hc/en-us/sections/16675625858716-dynamic-reports",
+        {
+          "group": "DT Offer Wall Report for Publishers",
+          "pages": [
+            "hc/en-us/articles/360010955997-dt-offer-wall-report-for-publishers",
+            "hc/en-us/articles/360011061378-calculating-an-app-s-unique-users",
+            "hc/en-us/articles/360015985157-performance-vs-billing-data"
+          ]
+        },
+        {
+          "group": "Reporting API",
+          "pages": [
+            "hc/en-us/sections/16362810824860-reporting-api",
+            "hc/en-us/articles/360011061338-reporting-api-overview",
+            "hc/en-us/articles/16362220546460-using-the-reporting-api",
+            "hc/en-us/articles/16362505826076-reporting-api-metrics-and-dimensions",
+            "hc/en-us/articles/16362809136796-auth-v1-token",
+            "hc/en-us/articles/16363134365980-api-v1-report",
+            "hc/en-us/articles/10213147920029-user-level-reporting-api"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Integrating via REST API",
+      "pages": [
+        "hc/en-us/sections/360003170957-integrating-via-rest-api",
+        "hc/en-us/articles/360011061718-offer-wall-rest-api-integration",
+        "hc/en-us/articles/16898997163676-feed-v1-offers",
+        "hc/en-us/articles/16899045200156-show-fyber"
+      ]
+    },
+    {
+      "group": "Offer Wall SDK Changelog",
+      "pages": [
+        "hc/en-us/articles/16093853731612-offer-wall-sdk-changelog"
+      ]
+    },
+    {
+      "group": "Campaign Setup",
+      "pages": [
+        "hc/en-us/articles/360010956637-campaign-setup"
+      ]
+    },
+    {
+      "group": "Micro Bidding",
+      "pages": [
+        "hc/en-us/articles/360015933297-micro-bidding"
+      ]
+    },
+    {
+      "group": "DT Offer Wall Advertiser Management API",
+      "pages": [
+        "hc/en-us/articles/4408843999505-dt-offer-wall-advertiser-management-api"
+      ]
+    },
+    {
+      "group": "Multi-Reward Campaigns",
+      "pages": [
+        "hc/en-us/articles/360019015258-multi-reward-campaigns"
+      ]
+    },
+    {
+      "group": "Dynamic Payouts",
+      "pages": [
+        "hc/en-us/articles/4408229073937-dynamic-payouts"
+      ]
+    },
+    {
+      "group": "Dashboard Metrics",
+      "pages": [
+        "hc/en-us/articles/360016022058-dashboard-metrics"
+      ]
+    },
+    {
+      "group": "Blocked Apps Tool",
+      "pages": [
+        "hc/en-us/articles/4407817655313-blocked-apps-tool"
+      ]
+    },
+    {
+      "group": "Supported Attribution Providers",
+      "pages": [
+        "hc/en-us/articles/360011062598-supported-attribution-providers"
+      ]
+    },
+    {
+      "group": "Server-to-Server Tracking",
+      "pages": [
+        "hc/en-us/articles/360010956697-server-to-server-tracking"
+      ]
+    },
+    {
+      "group": "Supported Macros",
+      "pages": [
+        "hc/en-us/articles/360011062618-supported-macros"
+      ]
+    },
+    {
+      "group": "DT Offer Wall Report for Advertisers",
+      "pages": [
+        "hc/en-us/articles/360012175977-dt-offer-wall-report-for-advertisers"
+      ]
+    },
+    {
+      "group": "Reporting API",
+      "pages": [
+        "hc/en-us/articles/360012240718-reporting-api"
+      ]
+    },
+    {
+      "group": "Cost Data Integration",
+      "pages": [
+        "hc/en-us/articles/360012177977-cost-data-integration"
+      ]
+    },
+    {
+      "group": "Passing IAP Revenue Data",
+      "pages": [
+        "hc/en-us/articles/360016099398-passing-iap-revenue-data"
+      ]
+    },
+    {
+      "group": "FAQs - Multi Language",
+      "pages": [
+        "hc/en-us/articles/360015015678-faqs-multi-language"
+      ]
+    },
+    {
+      "group": "DT Offer Wall User Journey",
+      "pages": [
+        "hc/en-us/articles/4405740005649-dt-offer-wall-user-journey"
+      ]
+    },
+    {
+      "group": "Introduction to the Ignite Services API",
+      "pages": [
+        "hc/en-us/articles/8276190891293-introduction-to-the-ignite-services-api"
+      ]
+    },
+    {
+      "group": "Quickstart Guide",
+      "pages": [
+        "hc/en-us/articles/8276788738077-quickstart-guide"
+      ]
+    },
+    {
+      "group": "Authentication Guide",
+      "pages": [
+        "hc/en-us/articles/8368057468445-authentication-guide"
+      ]
+    },
+    {
+      "group": "How to Set Up Test Environment",
+      "pages": [
+        "hc/en-us/articles/8364861007261-how-to-set-up-test-environment"
+      ]
+    },
+    {
+      "group": "Terms and Definitions",
+      "pages": [
+        "hc/en-us/articles/8276610571677-terms-and-definitions"
+      ]
+    },
+    {
+      "group": "Attribution",
+      "pages": [
+        "hc/en-us/articles/15520188101532-attribution"
+      ]
+    },
+    {
+      "group": "Auto Update App",
+      "pages": [
+        "hc/en-us/articles/9845952184733-auto-update-app"
+      ]
+    },
+    {
+      "group": "Cancel Task",
+      "pages": [
+        "hc/en-us/articles/8344104859293-cancel-task"
+      ]
+    },
+    {
+      "group": "Check for App on Device",
+      "pages": [
+        "hc/en-us/articles/9866811670301-check-for-app-on-device"
+      ]
+    },
+    {
+      "group": "Install App by Package Name",
+      "pages": [
+        "hc/en-us/articles/8342605844765-install-app-by-package-name"
+      ]
+    },
+    {
+      "group": "Install App by URI",
+      "pages": [
+        "hc/en-us/articles/8367745350429-install-app-by-uri"
+      ]
+    },
+    {
+      "group": "Open App",
+      "pages": [
+        "hc/en-us/articles/9866567448093-open-app"
+      ]
+    },
+    {
+      "group": "Retry Policy",
+      "pages": [
+        "hc/en-us/articles/8344099668637-retry-policy"
+      ]
+    },
+    {
+      "group": "Track Task Status",
+      "pages": [
+        "hc/en-us/articles/9861904404764-track-task-status"
+      ]
+    },
+    {
+      "group": "Auto Update Apps",
+      "pages": [
+        "hc/en-us/articles/9862053158301-auto-update-apps"
+      ]
+    },
+    {
+      "group": "Initialization",
+      "pages": [
+        "hc/en-us/articles/8366301551133-initialization"
+      ]
+    },
+    {
+      "group": "Install by Package Name and Broadcast",
+      "pages": [
+        "hc/en-us/articles/8366730366621-install-by-package-name-and-broadcast"
+      ]
+    },
+    {
+      "group": "Install by Package Name and Callback",
+      "pages": [
+        "hc/en-us/articles/8366727943837-install-by-package-name-and-callback"
+      ]
+    },
+    {
+      "group": "Install by Package Name with Broadcast and Callback",
+      "pages": [
+        "hc/en-us/articles/8366858538013-install-by-package-name-with-broadcast-and-callback"
+      ]
+    },
+    {
+      "group": "Install by Package Name without Installation Status",
+      "pages": [
+        "hc/en-us/articles/8887838734493-install-by-package-name-without-installation-status"
+      ]
+    },
+    {
+      "group": "Install by URI and Broadcast",
+      "pages": [
+        "hc/en-us/articles/8366502510877-install-by-uri-and-broadcast"
+      ]
+    },
+    {
+      "group": "Install by URI and Callback",
+      "pages": [
+        "hc/en-us/articles/8366399285917-install-by-uri-and-callback"
+      ]
+    },
+    {
+      "group": "Install by URI with Broadcast and Callback",
+      "pages": [
+        "hc/en-us/articles/8366544491421-install-by-uri-with-broadcast-and-callback"
+      ]
+    },
+    {
+      "group": "Install by URI without Installation Status",
+      "pages": [
+        "hc/en-us/articles/8366600358557-install-by-uri-without-installation-status"
+      ]
+    },
+    {
+      "group": "Reconnect to Ongoing Installation",
+      "pages": [
+        "hc/en-us/articles/8366922053789-reconnect-to-ongoing-installation"
+      ]
+    },
+    {
+      "group": "Task Management",
+      "pages": [
+        "hc/en-us/articles/8366980458525-task-management"
+      ]
+    },
+    {
+      "group": "Logging",
+      "pages": [
+        "hc/en-us/articles/8367154579997-logging"
+      ]
+    },
+    {
+      "group": "Response and Error Handling",
+      "pages": [
+        "hc/en-us/articles/8364687532701-response-and-error-handling"
+      ]
+    },
+    {
+      "group": "Error Codes",
+      "pages": [
+        "hc/en-us/articles/8368003654813-error-codes"
+      ]
+    },
+    {
+      "group": "AppsFlyer",
+      "pages": [
+        "hc/en-us/articles/12488397320092-appsflyer"
+      ]
+    },
+    {
+      "group": "Adjust",
+      "pages": [
+        "hc/en-us/articles/13860467858844-adjust"
+      ]
+    },
+    {
+      "group": "Singular",
+      "pages": [
+        "hc/en-us/articles/13709507541148-singular"
+      ]
+    },
+    {
+      "group": "Kochava",
+      "pages": [
+        "hc/en-us/articles/13600395794204-kochava"
+      ]
+    },
+    {
+      "group": "Branch",
+      "pages": [
+        "hc/en-us/articles/13958940076060-branch"
+      ]
+    },
+    {
+      "group": "api/v1/token",
+      "pages": [
+        "hc/en-us/articles/14637230182812-api-v1-token"
+      ]
+    }
+  ]
+}

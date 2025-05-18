@@ -1,0 +1,152 @@
+---
+title: "Ad Types And Specifications"
+---
+
+Ad Types Ad Specifications
+
+A Placement is a location within your app where ads can be displayed. This might be defined when you open the app, between levels of a game or within your apps feed. An ad unit is the format that is served in that location.
+
+Each placement accommodates one ad format. You must integrate at least one to begin showing ads from DT Exchange buyers.
+
+<Frame caption="Ad_Types_and_Placement_ID.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/7141625158429" />
+</Frame>
+
+DT supports only one ad unit under each placement.
+
+## Ad Types
+
+Set out in the table below are the different ad types supported in DT Exchange.
+
+| Ad Unit Type | Size                       | Sub-type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------ | -------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Banner       | 320x50 (728x90 for tablet) | -        | A static or animated image or media usually placed in high-visibility areas on apps at the top or bottom of the screen.                                                                                                                                                                                                                                                                                                                    |
+| MREC         | 300x250                    | -        | MREC = Medium Rectangle. It always has the dimensions of 300x250 and is a highly prominent ad unit, typically seeing higher than average click through rates.                                                                                                                                                                                                                                                                              |
+| Interstitial | Full Screen                | Display  | Interstitial ads are interactive, full-screen ads that cover the app screen. They are designed to appear between content and are placed at natural transition points or breaks, such as in between activities or game levels. Their full-coverage is what differentiates them from other ad types, such as banner ads.                                                                                                                     |
+|              |                            | Video    | An in-app full-screen video. DT recommends the following video aspect ratios: 16:9 (for interstitial phone and tablet), 4:3 (for tablet), 3:2 and 16:10. DT's SDK runs videos with any aspect ratio, no constraints are put on aspect ratio. Full-screen video ads are short (15-30 sec) generally with high eCPMs. For these videos there are three options: Skippable, Non-skippable and Both - this relates to the length of the video. |
+| Rewarded     | Full Screen                | Video    | Ads where the user can opt-in to watch in exchange for an incentive — for example, an extra life in a game, an extended free trial, or virtual currency.                                                                                                                                                                                                                                                                                   |
+|              |                            | Playable | Playables are Interactive ads that give users a mini preview of an app that they can try-out before downloading. Rewarded Playables enable the user to opt-in, in exchange for an incentive in the app - such as an extra life or free tokens.                                                                                                                                                                                             |
+
+## DT Exchange SDK Ad Unit Behavior
+
+Below is a description of the UX for each ad format
+
+Banner
+
+* Displayed in high-visibility areas at the top or bottom of the screen
+* The ad can remain on screen, within the app’s layout, while the user is interacting with an app
+* There is no close button
+
+## MREC
+
+* MREC ads are commonly placed at the bottom of a users screen before scrolling down. It is generally the best performing ad size, as well as the most expensive/valuable.
+* There is no close button
+
+## Interstitial
+
+### Display (Interstitial)
+
+Close
+
+* **iOS**: The "Close" button appears on the top right-hand side with a 5-second delay.
+* **Android**: The "Back" button is enabled with a 5-second delay.
+
+### Video (Interstitial)
+
+Skip
+
+* Non-rewarded video 15s or shorter, are non-skippable and no skip button is shown
+* Non-rewarded video, 16s or longer is skippable after 5s and a Skip button is presented in the upper right hand corner after 5s
+* The end card is always shown after a user completes or skips the video
+
+Countdown Timer
+
+* A countdown timer immediately appears at the bottom left of the video based on video duration passed in VAST XML
+
+Call to Action
+
+* Call to Action button reads “Download” when the app store is detected as the landing page
+
+Video Close Behavior
+
+* When the user taps the close button on the video end card, they return to the app (i.e., resume gameplay)
+* When the user clicks the CTA button during video playback, they are taken to the DSPs landing page (app store, in-app browser, deep link). Once the landing page is closed, the video resumes playing according to the Skip & End Card logic which is described here.
+
+Close & End Card
+
+* The DT SDK always presents an end card upon video completion
+* The close-button appears on the top right-hand side with a 3 second delay
+
+Orientation
+
+* DT does not have any orientation restrictions, we abide by app and device settings
+
+Sound
+
+* The sound icon is always available to be toggled On/Off by the user. A sound icon immediately appears in the upper left of the user’s screen with the option to mute/unmute the video.
+* DT always supports the device's sound setting. If the device is set to mute, the ad plays with sound off. If the device is not set to mute, the ad plays with sound on, by default.
+* DT has added a capability for publishers to override sound settings per user session according to the user's device settings within the app, starting from DT Exchange Android SDK version 7.4.0 and iOS version 7.5.2.
+
+## Rewarded
+
+### Video (Rewarded)
+
+Duration
+
+* Rewarded Videos must be 30s or less
+
+Skip
+
+* Rewarded Video is non-skippable and no skip button is presented
+
+Countdown
+
+* A countdown timer immediately appears at the bottom left of the video based on video duration passed in VAST XML
+
+Close & End Card
+
+* The DT SDK always presents an end card upon video completion
+* The close button appears on the top right-hand side with a 3 second delay
+
+Orientation
+
+* DT does not have any orientation restrictions, we abide by app and device settings
+
+### Playables (Rewarded)
+
+Duration
+
+* Rewarded Playables must be 30s or less
+
+Close
+
+* The DT SDK adds a close button to the upper right corner after 30 seconds
+* Most commonly, the DSP controls the duration and presents their own close button in less than 30s. To do this, they must use MRAID.useCustomClose()
+* DT adds a fail-safe x-button after 30s when MRAID.useCustomClose() is detected to ensure all ads can be closed by the user
+
+Countdown
+
+* There is no countdown timer
+
+## Specifications
+
+| Ad Unit      | Supported Ad Content                  | Ad Placement Type | UI Size                                   |
+| ------------ | ------------------------------------- | ----------------- | ----------------------------------------- |
+| Banner       | \* HTML / MRAID 2.0                   | In-View           | Fixed 320 x 50                            |
+| MREC         | *HTML / MRAID 2.0*                    | In-View           | Fixed 300 x 250                           |
+| Interstitial | *HTML / MRAID 2.0 *VAST 2.0 | Fullscreen        | \*Fixed fullscreen size and is modal type |
+| Rewarded     | *VAST 2.0 *MRAID            | Fullscreen        | \*Fixed fullscreen size and is modal type |
+
+## Ads Terminology Glossary
+
+| Term                                                                                           | Description                                                                                                                                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Regular                                                                                        | The ad supports rather a**HTML/MRAID**content,**Video**content or both of them and is not**Native**.                                                                                                                                                                                                                      |
+| In-View                                                                                        | The ad unit is added as a subview to a provided, by a publisher,**UIView**class instance.                                                                                                                                                                                                                                    |
+| Full Screen                                                                                    | The ad unit is presented once and only, as a modal view controller, it occupies the entire user screen and does not allow user interaction with the views laying below the ad. It is important to understand, that**In-View**units can transit to a fullscreen and back, in several cases, described below in this document. |
+| [Modal](https://developer.apple.com/ios/human-interface-guidelines/app-architecture/modality/) | User interaction is prevented (in the views, below) until current view is dismissed.                                                                                                                                                                                                                                           |
+| In-Feed                                                                                        | The ad unit (regular or native) occupies one of the cells in table or collection view.                                                                                                                                                                                                                                         |
+| Video                                                                                          | In the context of DT Exchange ads means **VAST 2.0** content.                                                                                                                                                                                                                                                                  |
+| View to Full Screen Transition Cases                                                           | *Ad clicked and in-app browser (DT Web Browser) is presented. *Ad clicked and in-app storekit view controller is being presented \*Ad clicked and **MRAID command Expand**did trigger, ad transforms to modal type.                                                                                                 |
+
+[Back to Top ⇧](#top)

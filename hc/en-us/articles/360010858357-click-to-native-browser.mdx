@@ -1,0 +1,91 @@
+---
+title: "Click To Native Browser"
+---
+
+Demand-side platforms running in-app-to-mobile web campaigns on the DT Exchange track cookies, perform cross-device matching, and measure mobile web conversions. To track cookies after an ad click-through, DT opens the landing page URL in the native browser instead of the default embedded browser. In an embedded browser, DT tracks only device IDs. In a native browser, DT tracks user cookies, bounce rate, and web conversions.
+
+## Key Terms
+
+The following terms define important concepts for this feature:
+
+| TERM           | DESCRIPTION                                                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Click URL      | The website address a user visits after clicking on an ad, also known as a Landing Page URL. This URL passes within the client’s creative tag. |
+| Native Browser | The browser app on the device, such as Chrome or Safari, that opens the URL, also known as an External Browser.                                |
+
+## Who Can Use This Feature?
+
+This feature is available to the following participants:
+
+* Programmatic Demand partners who connect using a bidder and OpenRTB protocol.
+* API demand partners who target by SDK version or add the new custom extension to their API specification.
+
+## Implementing the Native Browser
+
+DT supports the following implementation methods:
+
+## Method 1: Using a URL Suffix
+
+1. Target the DT Exchange supply that supports opening the landing page in the native browser, when you run an app to web campaigns,
+2. DT provides a custom bid request extension to flag native browser supply:
+
+### Custom Extension
+
+**Java**
+
+```javascript
+imp.ext.brsrclk:1
+//Where [1] = native browser is forced open upon click 
+```
+
+3. Append a new URL suffix to their Click URL to force the native browser to open.\
+   DT opens the landing page in the embedded browser when you do not append the URL suffix.
+
+### Native Link Browser Example
+
+**HTML**
+
+```html
+https://ads.DSP.com/delivery/r/ajs.php?did=5bf512f8cb99bd00d942ad21dc941a00&......&FYBER_OPEN_BROWSER
+<!-- URL Suffix: FYBER_OPEN_BROWSER -->
+```
+
+
+
+## Method 2: Using a URL Prefix
+
+1. When you run an app-to-web campaigns, target the DT Exchange supply that supports opening the landing page in the native browser.
+2. DT provides a custom bid request extension to flag native browser supply:
+
+### Bid Request Extension
+
+**Java**
+
+```javascript
+imp.ext.brsrclk:1
+//Where [1] = native browser is forced open upon click
+```
+
+3. Append a new URL prefix to the Click URL to force the native browser to open.\
+   DT opens the landing page in the embedded browser when you do not append the URL prefix.
+
+### Native Browser Link Example
+
+**HTML**
+
+```html
+fybernativebrowser://navigate?url=http%3A%2F%2Fwww.google.com
+<!-- URL Prefix: fybernativebrowser -->
+```
+
+#### Note
+
+You must define the following parameters:
+
+* Scheme: `fybernativebrowser`
+* Host path: `navigate`
+* URL: Contains a single query param named `url` that is URL encoded and uses only the `http`or `https` scheme.
+
+For more information, see [Smartlink](/hc/en-us/articles/360010948958-Smartlink).
+
+[Back to Top ⇧](#top)

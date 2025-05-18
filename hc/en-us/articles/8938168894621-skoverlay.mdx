@@ -1,0 +1,68 @@
+---
+title: "SKOverlay"
+---
+
+Digital Turbine supports [Apple’s SKOverlay](https://developer.apple.com/documentation/storekit/skoverlay) class to allow DSPs to drive increased app installs and give a native user experience to their iOS 14+ audience.
+
+Adopting SKOverlay allows our buy-side partners to maximize creative optimization by adding a high-engagement feature to their ads. We ensure SKOverlay is adopted efficiently and optimally for real-time bidding.
+
+## Bid Request
+
+Unless requested otherwise, DT includes a new SKOverlay attribute in the BidRequest.imp.ext.skadn object in the bid request that provides the relevant fields used to control the SKOverlay. The attribute is only present if the DT SDK and OS versions (iOS 14 and above) support SKOverlay.
+
+BidRequest.imp.ext.skadn
+
+| Attribute  | Description                                                                                                     | Type         | Example                                                                                      |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------- |
+| version    | Supported version of SKAdNetwork. Always "2.0" or higher. Dependent on both the OS version and the SDK version. | String       | "version":"2.0"                                                                              |
+| sourceapp  | ID of publisher app in Apple’s App Store. Should match BidRequest.app.bundle.                                   | String       | "sourceapp":"880047117"                                                                      |
+| skadnetids | A subset of SKAdNetworkIdentifier entries in the publisher app’s info.plist that are relevant to the DSP.       | String Array | \["SKAdNetwork1.skadnetwork","SKAdNetwork2.skadnetwork"]                                    |
+| skoverlay  | List of attributes that should be provided on the bid response.                                                 | Array        | "skoverlay":\["dismissible","delay","present", "pos","endcarddelay","autoclose","autoclick"] |
+
+## Bid Response
+
+If the bid request includes the BidRequest.imp.ext.skadn.skoverlay array, then a DSP can pass the following parameters using the below object on their bid response. If the object is present in the response, then DT will show the SKOverlay on the ad while following the guidelines set in the response.
+
+BidResponse.seatbid.bid.ext.skadn.skoverlay
+
+| **Attribute** | **Description**                                                                                                                                  | **Type**          | **Example**                             |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- | --------------------------------------- |
+| present       | Should DTX present the SKOverlay.                                                                                                                | Binary            | “present”:1 (1 = Yes, 0 = No)           |
+| delay         | Delay in seconds before showing the overlay (0-60).                                                                                              | int; default 0    | “delay”: 3 (0 to 60 Seconds)            |
+| dismissible   | Should the SKOverlay be dismissable by the user.                                                                                                 | Binary; default 0 | “dismissible”:0 (1 = Yes, 0 = No)       |
+| pos           | Position of the overlay; 0 = bottom, 1 = bottom raised                                                                                           | Binary; default 1 | “pos”:0 (0 = bottom, 1 = bottom raised) |
+| endcarddelay  | Delay in seconds before showing the overlay on top of the end card (0-60). Use -1 if you do not want to show the overlay on top of the end card. | int; default 0    | “endcarddelay”:0 (-1 to 60 Seconds)     |
+| autoclose     | Time in seconds to automatically dismiss the overlay (0-60). Value of 0 means no automatic dismiss.                                              | int; default 0    | “autoclose”:0 (0 to 60 Seconds)         |
+| ext           | Placeholder for exchange-specific extensions to OpenRTB.                                                                                         | object            | “ext”:\{}                               |
+| autoclick     | Indicates whether or not our SDK should fire a click when the SKOverlay is displayed.                                                            | Binary; default 0 | “autoclick”:0 (1 = Yes, 0 = No)         |
+
+#### Important
+
+To support firing click trackers for display ads, DSPs must send a list of trackers on `BidResponse.seatbid.bid.ext.clicktrackers`.
+
+DT Exchange will fire these trackers if `autoclick` was set to `1`.
+
+## FAQ
+
+**Will Digital Turbine pass the new BidRequest.imp.ext.skadn.skoverlay array when the supply doesn’t support it?**
+
+No, this array will only be sent when supported.
+
+**In what cases is the BidRequest.imp.ext.skadn.skoverlay array sent?**
+
+BidRequest.imp.ext.skadn.skoverlay will only be sent for iOS 14+ inventory using DT Exchange SDK 8.1.9+.
+
+**How will Digital Turbine determine which app to show on the overlay?**
+
+Using the value we get on `BidResponse.seatbid.bid.ext.skadn.itunesitemM`.
+
+**Will Digital Turbine fire a click when showing the SKOverlay?**
+
+The DT Exchange SDK will fire a click only when explicitly requested by the DSP in the bid response.\
+This occurs when the `autoclick` flag is set to `1` and the SKOverlay is shown.
+
+**Which ad types support SKOverlay on Digital Turbine?**
+
+SKOverlay can be shown on top of any full-screen ads, including VAST ads and Display ads.
+
+[Back to Top ⇧](#top)

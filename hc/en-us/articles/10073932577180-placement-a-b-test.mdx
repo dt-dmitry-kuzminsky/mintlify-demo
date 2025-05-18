@@ -1,0 +1,150 @@
+---
+title: "Placement A/B Test"
+---
+
+Placement A/B Testing is a method that allows you to experiment with different configurations within your Offer Wall placements and determine an effective setting to boost user engagement and revenue.
+
+DT’s Placement A/B Test evaluates multiple ad placements within an app to determine which performs better based on engagement, conversions, and revenue. It runs two or more variations simultaneously, which allows you to test exchange rates, colors, banners, and layouts. You can analyze metrics such as Click-Through Rates (CTR), Offer Conversions, and Unique Users to determine the effective placement and improve ad performance.
+
+## Creating an A/B Test Experiment
+
+Set up the experiment by defining the placements and variables to compare before running the test. To start a test:
+
+1. In the [DTConsole](https://console.fyber.com/), go to **Monetization→OfferWall**.\
+   The Offer Wall Publisher Dashboard appears.
+2. Select the **App** where you want to run the test.
+
+<Frame caption="2025-02-10_11-52-42.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762112412" />
+</Frame>
+
+3. Select the **Placement** for the test.\
+   The **Placement Details**window appears.
+
+<Frame caption="2025-02-10_12-07-18.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762117404" />
+</Frame>
+
+4. Click **Create Experiment**.\
+   The **Experiment** window appears and shows all available settings.
+
+<Frame caption="2025-02-10_09-38-23.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783614492" />
+</Frame>
+
+5. In the **Enter Experiment Name** field, enter an Experiment name.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664258332" />
+</Frame>
+
+6. Click **Add Variants** to add new variants.
+
+#### Note
+
+DT allows you to test the Baseline and up to three additional variants, for a total of four.
+
+7. To edit the **Variant** name and **User Distribution** percentage, click the **Edit** icon in the **Variant** tab.\
+   The **Set variant name and percentage** window appear.
+
+* * Enter the **Name** and the **User Distribution**, thenclick **Save**.
+
+<Frame caption="2025-02-09_14-45-05.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783616156" />
+</Frame>
+
+#### Note
+
+Ensure that you make changes to the Variant, not the Baseline.
+
+8. To test the exchange rate:
+
+* * Click **Add Entry**in the **Exchange rate per country** area.
+  * Select the country from the **Countries** drop-down list and click the checkbox.
+  * Enter the required exchange rate in the **Exchange Rate Points per 1 USD** field.
+  * To add additional exchange rates, click **Add Entry** and define the parameters.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/10113719646876" />
+</Frame>
+
+9. To test the **Tag Color**, **Button Color**, or **Button Text Color**, do one of the following:
+
+* * Enter the required hex code in the text field.
+  * Click the color picker to enter the RGB values or select a color from the palette.\
+    The preview updates and reflects the new color selections.
+
+<Frame caption="Screen Shot 2023-08-30 at 14.32.33.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664261788" />
+</Frame>
+
+10. To test a **Mobile banner image** or **Tablet banner image**:
+
+* * Click **Choose File**, and upload the required image.
+
+11. To view the UI customization, click **Open Preview**.
+
+<Frame caption="2025-02-09_14-30-17.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762125084" />
+</Frame>
+
+12. Click **Start Experiment**.
+
+#### Note
+
+You can change the percentage between the variants and configurations during the experiment. However, these changes might impact the significance of the results.
+
+## Monitoring Test Results
+
+The DT Offer Wall Report allows you to view the performance of your test. To monitor the test results:
+
+1. In the DT console, go to **Dynamic Reports**→**Offer Wall Report**.\
+   See [Offer Wall Report](https://developer.digitalturbine.com/hc/en-us/articles/360010955997-DT-Offer-Wall-Report) for more information.
+2. To **Filter** the report, add the **Placement Experiment and Variant** dimension to your report.
+
+<Frame caption="2025-02-10_12-54-48.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783619100" />
+</Frame>
+
+3. Filter the dimensions and select the required experiments.
+4. To view the results, toggle the **Performance** button.\
+   The report updates and shows the results of the experiments.
+5. (Optional) To monitor the aggregated results of the experiment, select **Table**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/10187271764764" />
+</Frame>
+
+6. (Optional) To track the results over time, select **Line Chart** andsplit the data by the **Date/Time**.\
+   The report appears as a line chart.
+
+<Frame caption="2025-02-10_12-48-17.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762126748" />
+</Frame>
+
+#### Tip
+
+You can monitor your KPIs for the experiment and include the following metrics in your report:
+
+| **Metric**            | **Description**                                                               |
+| --------------------- | ----------------------------------------------------------------------------- |
+| OFW Unique Users      | Verifies the distribution between variants.                                   |
+| Publisher Revenue     | Reviews overall revenue coming from each variant.                             |
+| ARPDEU                | Average revenue per engaged user for each variant.                            |
+| Container CTR         | Number of users who entered the Offer Wall and clicked on at least one offer. |
+| Offer CTR             | Number of users who started offers.                                           |
+| Click/Conversion Rate | Overall conversion rate for each variant.                                     |
+
+## Choosing the Winning Variant
+
+After completing the experiment and analyzing the results, follow these steps to set the variant as the default:
+
+1. From the **Placement Experiment** window, select the winning variant.
+2. Click **End Experiment**.\
+   The winning variant is now the default placement configuration.
+
+<Frame caption="Screen Shot 2023-08-30 at 14.33.49.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664264220" />
+</Frame>
+
+[Back to Top ⇧](#top)

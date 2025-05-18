@@ -1,0 +1,21 @@
+---
+title: "Install By URI With Broadcast And Callback"
+---
+
+It is allowed to pass both callback and broadcast information to receive updates.
+
+```java
+// Initialization
+
+// Install application via uri string and listen to updates using callback and broadcast receiver action
+val file = File("${context.filesDir}", "fortnite.apk")
+val uriString = file.toUri().toString()
+
+IgniteServiceSdk.instance().install(uriString, buildInstallationCallback(), action = buildInstallAction())
+
+// ...
+
+// See implementations of buildInstallationCallback() and buildInstallAction() in examples above
+```
+
+[Back to Top ⇧](#top)

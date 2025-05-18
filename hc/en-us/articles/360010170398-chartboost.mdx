@@ -1,0 +1,95 @@
+---
+title: "Chartboost"
+---
+
+This article is for publishers who want to use the DT FairBid SDK to load and display Chartboost ad inventory via the DT FairBid Mediation platform.
+
+Chartboost supports the following [ad types](https://developer.digitalturbine.com/hc/en-us/articles/360010915358-Ad-Types-and-Placement-ID):
+
+* Banner
+* Interstitial
+* Rewarded
+
+<Note>
+#### Note
+
+DT FairBid SDK 3.45 or later supports Chartboost Banners.
+</Note>
+To integrate Chartboost as DT mediated network:
+
+* [Step 1: Retrieve Chartboost parameters](#step-1-retrieve-chartboost-parameters).
+* [Step 2: Add Chartboost as a DT mediated network](#step-2-add-chartboost-as-a-mediated-network).
+* [Step 3: Add the Chartboost SDK to your integration](#step-3-add-the-chartboost-sdk-to-your-dt-integration).
+* [Step 4: Test Your integration](#step-4%3A-test-your-integration).
+
+## Step 1. Retrieve Chartboost Parameters
+
+Before retrieving Chartboost parameters, ensure that you have Chartboost ad unit inventory that you want to mediate with DT. For more information about creating Chartboost inventory, see the following Chartboost articles:
+
+* [Create](https://docs.chartboost.com/en/monetization/get-started/#create--set-up-a-free-account) a Chartboost account.
+* [Add](https://docs.chartboost.com/en/monetization/publishing/adding-your-first-app-and-campaign/#adding-apps) your app to Chartboost.
+* [Create](https://docs.chartboost.com/en/monetization/publishing/ad-locations/) an ad location for your app in Chartboost.
+
+To set up Chartboost as a DT mediated network, locate the following Chartboost parameters:
+
+| CHARTBOOST PARAMETER | DESCRIPTION                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `APP ID`             | Unique identifier for your app in the Chartboost system.                                                                                                     |
+| `APP SIGNATURE`      | Unique secret signature for your app in the Chartboost system. Chartboost uses this to verify that you are the owner of your app.                            |
+| `User ID`            | Unique identifier for your account in the Chartboost dashboard.                                                                                              |
+| `User Signature`     | Uunique secret signature for your user account in the Chartboost Dashboard. Chartboost uses this to verify that you are allowed to access account analytics. |
+| `Named Location`     | Specific points in your app where you allow the display of various ad types.                                                                                 |
+
+To obtain the Chartboost parameters for DT:
+
+1. From the Chartboost dashboard, click**Monetization**.
+
+2. Select your app.
+
+3. Under **App information**, copy the `APP ID` and `APP SIGNATURE`, and save these values to a text file. These values are required later in [Step2](#h_01HMBMW7WQ5T73CWB3J56GETEV "Adding Chartboost as a Mediated Network in DT FairBid") to add Chartboost as a DT mediated network.
+
+<Frame caption="App Information in the Chartboost dashboard.">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/11720394253468" />
+</Frame>
+
+4. Click **Set up Mediation**.
+
+5. Under **Authentication**, copy the `UserID` and `UserSignature`, and save these values to a text file. These values are required later in [Step2](#h_01HMBMW7WQ5T73CWB3J56GETEV "Adding Chartboost as a Mediated Network in DT FairBid") to add Chartboost as a DT mediated network.
+
+<Frame caption="Mediation details in Chartboost.">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/11720394264220" />
+</Frame>
+
+## Step 2. Add Chartboost as a Mediated Network
+
+Before you add Chartboost as a DT mediated network:
+
+* Ensure that you have access to parameters you retrieved from Chartboost in [Step1](#h_01HMBMTNVR6CHVDWJE21YMZ32H).
+* [Add your App](/hc/en-us/articles/14755391313308) using the DT Console.
+* Ensure that you set up a [DT Placement](https://developer.digitalturbine.com/hc/en-us/articles/15005035293468-Setting-Up-Placements "Create a DT placement") for each Chartboost ad location you want to mediate with DT.
+
+To add Chartboost as a DT mediated network:
+
+1. Log in to the [DT Console](https://console.fyber.com/), and click**App Management**.
+
+2. [Set up](https://developer.digitalturbine.com/hc/en-us/articles/15005016082972-Setting-Up-Mediated-Networks) Chartboost as a DT mediated network using parameters you retrieved in [Step1](#h_01HMBMTNVR6CHVDWJE21YMZ32H).
+
+<Frame caption="Chartboost parameters required to integrate with DT">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16348038876572" />
+</Frame>
+
+3. [Set up an ad network instance](https://developer.digitalturbine.com/hc/en-us/articles/15111147606428-Setting-Up-Instances) using the Chartboost `NamedLocation` you retrieved in [Step1](#h_01HMBMTNVR6CHVDWJE21YMZ32H) for the **InstanceID**.
+
+## Step 3. Add the Chartboost SDK to your DT Integration
+
+To integrate the Chartboost SDK, follow the instructions on the [Supported Networks](https://developer.digitalturbine.com/hc/en-us/articles/360010077777-Supported-Networks) page.
+
+## Step 4: Test Your Integration
+
+Use the DT Test Suite to verify that you have set up your app properly for FairBid mediation. The DT Test Suite is available for Android, iOS, and Unity apps. For more information about using the DT Test Suite, see [Test Suite](https://developer.digitalturbine.com/hc/en-us/articles/16840582428316-Test-Suite "Using the DT Test Suite").
+
+<Frame caption="DT Test Suite screen showing app is ready for mediation">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17017449531036" />
+</Frame>
+
+[Back to Top ⇧](#top)

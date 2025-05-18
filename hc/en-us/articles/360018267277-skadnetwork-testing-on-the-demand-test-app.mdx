@@ -1,0 +1,141 @@
+---
+title: "SKAdNetwork Testing On The Demand Test App"
+---
+
+The DT Demand Test app allows you to test your SKAdNetwork setup on Digital Turbine to confirm the proper tracking of installations with Apple's SKAdNetwork framework. DT has two methods to test SKAdNetwork on DT's Demand Test App:
+
+* Option 1: [Manually testing the SKAdNetwork bid response](#h_01JQBZE8PYE8WHCV4CF6A6R22Z)
+* Option 2: [Programmatically testing the SKAdNetwork bid response](#h_01JQBZE8PZR4ET840NY4NJP6N0)
+
+See [DT Exchange Demand Test App](https://developer.digitalturbine.com/hc/en-us/articles/4413031314321-DT-Exchange-Demand-Test-App) for more information.
+
+## Manually Testing the SKAdNetwork Bid Response
+
+Manually testing the SKAdNetwork bid response setup allows you to:
+
+* Configure data on the [Web Tool](https://forest.fyber.com/demand#/login).
+* Send data to DT's Demand Test App by scanning the QR code.
+* Send data to DT's servers, which triggers DT's internal bidder.
+* Override DT's internal SKAdNetwork setup when you add `bid.ext.skadn.dfs` to key-value pairs. This allows SDK to fire your SKadNetwork parameters and receive postbacks at your endpoint.
+
+To manually test your SKAdNetwork bid response, do the following:
+
+1. Download and install the latest version of DT's Test App on your device, as described in [Downloading the Demand Test App](https://developer.digitalturbine.com/hc/en-us/articles/4413031314321-DT-Exchange-Demand-Test-App#h_01FY74MZSVWEW6GDDVQK0K9CGC).
+2. In the Demand Test App [Web Tool](https://forest.fyber.com/demand#/login), select **Creative Tester**.
+3. Click **CREATE** to add a new creative.
+4. In the description field, add a description for your creative.
+5. To add extra properties, click **+** (plus).
+6. From the accordion drop-down list below, select your SKAdNetwork version and add the required key-value pairs:
+
+#### Note
+
+* Source App: If you use `sourceapp=0`, you may receive Error 851.\
+  Ignore this error and check if the postback sends a notification after completing this procedure.
+* Nonce: `nonce` value must be unique each time you test and cannot be zero. Use `nonce =str(uuid.uuid4())` to generate a new nonce for each test.
+* Signature: Valid signatures are usually 72 -76 characters when you use a p192 private key with a p192 constant.
+
+**SDKAdNetwork 2.0 and 2.1**
+
+The following table describes the Keys and Values for SDKAdNetwork 2.0 and 2.1.
+
+| KEY                        | VALUE                                                      |
+| -------------------------- | ---------------------------------------------------------- |
+| `bid.ext.skadn.sourceapp`  | Your source app or 0                                       |
+| `bid.ext.skadn.itunesitem` | Your itunesitem                                            |
+| `bid.ext.skadn.network`    | Your SKAdNetwork ID                                        |
+| `bid.ext.skadn.nonce`      | Your nonce                                                 |
+| `bid.ext.skadn.signature`  | Your signature                                             |
+| `bid.ext.skadn.version`    | 2.0 or 2.1                                                 |
+| `bid.ext.skadn.campaign`   | Campaign name                                              |
+| `bid.ext.skadn.dfs`        | Enter `a` to override DT's SKAdNetwork setup with your own |
+| `bid.ext.skadn.timestamp`  | Your timestamp                                             |
+
+**SKAdNetwork 2.2**
+
+The following table describes the Keys and Values for SDKAdNetwork 2.2, which uses a `fidelities` based bid response:
+
+| KEY                        | VALUE                                                       |
+| -------------------------- | ----------------------------------------------------------- |
+| `bid.ext.skadn.sourceapp`  | Your source app or `0`                                      |
+| `bid.ext.skadn.itunesitem` | Your itunesitem                                             |
+| `bid.ext.skadn.network`    | Your SKAdNetwork ID                                         |
+| `bid.ext.skadn.version`    | 2.2                                                         |
+| `bid.ext.skadn.campaign`   | Your campaign ID                                            |
+| `bid.ext.skadn.dfs`        | Enter `a` to override DT's SKAdNetwork setup with your own. |
+
+Add the following to test a single `fidelities` type (SKAdImpression or SKAdNetwork for StoreKit):
+
+| KEY                                     | VALUE                                                              |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| `bid.ext.skadn.fidelities[0].nonce`     | nonce                                                              |
+| `bid.ext.skadn.fidelities[0].signature` | Signature                                                          |
+| `bid.ext.skadn.fidelities[0].timestamp` | Timestamp                                                          |
+| `bid.ext.skadn.fidelities[0].fidelity`  | SKAdImpression: Value = `0`. SKAdNetwork for StoreKit: Value =`1` |
+
+Add the following to test both `fidelities`types together:
+
+| KEY                                     | VALUE                                                          |
+| --------------------------------------- | -------------------------------------------------------------- |
+| `bid.ext.skadn.fidelities[0].nonce`     | The nonce for SKAdImpression Fidelity                          |
+| `bid.ext.skadn.fidelities[0].signature` | The signature for SKAdImpression Fidelity                      |
+| `bid.ext.skadn.fidelities[0].timestamp` | The timestamp for SKAdImpression Fidelity                      |
+| `bid.ext.skadn.fidelities[0].fidelity`  | Enter a value of 0. This captures your SKAdImpression fidelity |
+| `bid.ext.skadn.fidelities[1].nonce`     | The nonce for StoreKit Fidelity                                |
+| `bid.ext.skadn.fidelities[1].signature` | The signature for StoreKit Fidelity                            |
+| `bid.ext.skadn.fidelities[1].timestamp` | The timestamp for StoreKit Fidelity                            |
+| `bid.ext.skadn.fidelities[1].fidelity`  | Enter a value of 1. This captures your StoreKit fidelity       |
+
+7. Click ✔ (check icon) after adding each key-value.
+8. To add extra rows, increase the row display from five to ten, then click **CREATE SKADN**.
+
+<Frame caption="2025-03-31_09-20-45.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19353662701596" />
+</Frame>
+
+8. In the **markup** field, paste your ad markup.
+9. Click **SAVE**.\
+   A **QR code** appears on the **Web Tool**.
+
+<Frame caption="2025-03-31_09-09-54.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19353662702364" />
+</Frame>
+
+11. Open the **DT Test App** on your mobile device and scan the **QR Code** from the **Web Tool**.
+
+<Frame caption="Screenshot_20250327_141115_Fyber Marketplace (1).jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19353662702876" />
+</Frame>
+
+13. In the Test App, tap **Load Ad→Show Ad**.\
+    The ad appears on your device.
+14. Tap the ad's **CTA **button and install the app on your device.\
+    The designated SKAdNetwork endpoint receives a postback if the bid response is configured correctly.
+
+## Programmaticlly Testing the SKAdNetwork Bid Response
+
+Programmatically testing your SKAdNetwork bid response setup allows you to trigger a bid request for your integration, which targets your test devices on the campaign.
+
+To programmatically test your setup, do the following:
+
+1. Download and install the latest version of DT's Test App on your device, as described in [Downloading the Test App](https://developer.digitalturbine.com/hc/en-us/articles/4413031314321-DT-Exchange-Demand-Test-App#h_01FY74MZSVWEW6GDDVQK0K9CGC).
+2. Create a test campaign with SKAdNetwork on your Demand Side Platform.
+
+#### Note
+
+DT recommends installing Apple's [SKAdNetwork profiles](https://developer.apple.com/documentation/storekit/skadnetwork/downloading_a_testing_profile) on your test device, which reduces the conversion value and postback window to 5-10 minutes from 24-48 hours.\
+If you use Apple's SKAdNetwork profile, you must set `sourceapp=0`.
+
+3. Navigate to the Web Tool and select **Ad Lifecycle**.
+4. Open the **DT Test App** on your mobile device.
+5. Scan the QR code on the **Web Tool**, which:
+
+* * Triggers a sample bid request to your Demand-Side Platform.
+  * Confirms that you are the only participant in the auction.
+  * Returns an SKAdNetwork bid response using `bidresponse.seatbid.ext.skadn` parameters.
+
+6. Tap **Interstitial**→******Load Ad****→****Show Ad**.
+7. Tap the ad's CTA and install the app on your test device.\
+   Apple sends a notification if the bid response is configured correctly.\
+   If you receive an 851 error, contact your account manager for assistance.
+
+[Back to Top ⇧](#top)

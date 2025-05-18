@@ -1,0 +1,80 @@
+---
+title: "CCPA   Privacy String"
+---
+
+The California Consumer Privacy Act of 2018 ([CCPA](https://iabtechlab.com/standards/ccpa/)) protects the personal information of California residents. It applies to all businesses operating in California. If a California resident uses an app developer's mobile app, CCPA applies to the developer and all relevant partners that process users' personal information.
+
+See DT's Legal documentation for [Supply Partner CCPA Addendum](https://cdn.prod.website-files.com/6618e372884cbd97db033ea4/666023d70fc5016c59b19a85_Fyber-CCPA-Addendum-August2019-.pdf) and [Notes on CCPA Addendum for Demand Partners](https://cdn.prod.website-files.com/6618e372884cbd97db033ea4/666025702641d1e43ccd97fb_Explanatory-Notes-to-Fyber-Demand-Partners-CCPA-Addendum-FINAL-1.pdf).
+
+## Setting the IAB US Privacy String
+
+DT recommends that the first time you gather a user's opt-out (consent), pass it to the SDK before initializing it. The SDK considers the user's opt-out when initializing.
+
+To set the IAB US privacy string using the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+String privacyString = "1YNN";
+UserInfo.setIabUsPrivacyString(privacyString, context);
+```
+
+**Swift**
+
+```javascript
+FairBid.user().iabusPrivacyString = "1YNN"
+```
+
+**Objective-C**
+
+```csharp
+[FairBid user].IABUSPrivacyString = @"1YNN";
+```
+
+**C#**
+
+```javascript
+var privacyString = "1YNN"; 
+    UserInfo.SetIabUsPrivacyString(privacyString);
+```
+
+To determine what value to use for the US Privacy String, see [IAB US Privacy String](https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md).\
+Valid values include:
+
+* `1---`: CCPA does not apply, for example, the user is not a California resident.
+* `1YNN`: User does NOT opt out, ad experience continues.
+* `1YYN`: User opts out of targeted advertising.
+
+## Clearing Privacy Opt-Out
+
+To clear the user opt-out setting, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```
+UserInfo.clearIabUsPrivacyString(context);
+```
+
+**Swift**
+
+```
+FairBid.user().clearIABUSPrivacyString();
+```
+
+**Objective-C**
+
+```
+[[FairBid user] clearIABUSPrivacyString];
+```
+
+**C#**
+
+```
+UserInfo.ClearIabUsPrivacyString();
+```
+
+[Back to Top ⇧](#top)

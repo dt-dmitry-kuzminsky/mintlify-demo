@@ -1,0 +1,75 @@
+---
+title: "Impression Level Data"
+---
+
+Starting DT Exchange SDK version 7.5.1 you can access detailed information for each impression. The Impression Data API (Callback) provides, for example, which demand source served the ad and the expected or exact revenue associated with it.
+
+In addition, it contains granular details to allow you to analyze and, ultimately, optimize both your ad monetization and user acquisition strategies.
+
+## Glossary Table
+
+| Property Name    | Type    | Description                                                                                                                                                                                                                                                                                 | Examples                              |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| demandSourceName | String  | Demand Source name is the name of the buy-side / demand-side entity that purchased the impression. When mediated networks win an impression, you’ll see the mediated network’s name. When a DSP buying through the programmatic marketplace wins the impression, you’ll see the DSP’s name. | Liftoff RTB                           |
+| country          | String  | Country location of the ad impression(in ISO country code)                                                                                                                                                                                                                                  | US                                    |
+| sessionID        | String  | A unique identifier for a specific impression                                                                                                                                                                                                                                               | 5699232551401720289                   |
+| advertiserDomain | String  | Advertiser’s domain when available. Used as an identifier for a set of campaigns for the same advertiser                                                                                                                                                                                    | homedepot.com                         |
+| creativeID       | String  | Creative ID when available. Used as an identifier for a specific creative of a certain campaign. This is particularly useful information when a certain creative is found to cause user experience issues                                                                                   | 169493819                             |
+| campaignID       | String  | Campaign ID when available used as an identifier for a specific campaign of a certain advertiser                                                                                                                                                                                            | 1860\_79463ca93f1dbc4446a5a8db8520f32 |
+| pricingValue     | Double  | The impression’s net payout value                                                                                                                                                                                                                                                           | 1.32323232                            |
+| pricingCurrency  | String  | The impression’s currency type                                                                                                                                                                                                                                                              | USD                                   |
+| duration         | Long    | The duration of the video in seconds                                                                                                                                                                                                                                                        | 15                                    |
+| Skippable        | Boolean | An indication whether the video is skippable or not                                                                                                                                                                                                                                         | True/False                            |
+
+## Examples and Snippets
+
+This method implementation is**required**.
+
+## API
+
+```objectivec
+- (void)adDidShowWithImpressionData:(IAImpressionData * _Nonnull)impressionData withAdRequest:(IAAdRequest * _Nonnull)adRequest;
+```
+
+## Subscription Example
+
+```objectivec
+IASDKCore.sharedInstance.globalAdDelegate = self;
+```
+
+## Implementation Example
+
+```objectivec
+#pragma mark - IAGlobalAdDelegate
+
+- (void)adDidShowWithImpressionData:(IAImpressionData * _Nonnull)impressionData withAdRequest:(IAAdRequest * _Nonnull)adRequest {
+    NSLog(@"\n\nAd did show with impression data\
+          \ndemandSourceName: %@\
+          \ncountry: %@\
+          \nsessionID: %@\
+          \nadvertiserDomain: %@\
+          \ncreativeID: %@\
+          \ncampaignID: %@\
+          \npricing value: %@\
+          \npricingCurrency: %@\
+          \nduration: %@\
+          \nisSkippable: %@\
+          \nspotID: %@\
+          \nunitID: %@",
+          impressionData.demandSourceName,
+          impressionData.country,
+          impressionData.sessionID,
+          impressionData.advertiserDomain,
+          impressionData.creativeID,
+          impressionData.campaignID,
+          impressionData.pricingValue,
+          impressionData.pricingCurrency,
+          impressionData.duration,
+          impressionData.skippable ? @"YES" : @"NO",
+          adRequest.spotID,
+          adRequest.unitID);
+    NSLog(@"\n");
+}
+```
+
+[Back to Top ⇧](#top)

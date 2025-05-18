@@ -1,0 +1,62 @@
+---
+title: "User Settings"
+---
+
+The `UserInfo` and the `FYBUserInfo`object allows you to pass information about the user.
+
+Android iOS Unity
+
+**Kotlin**
+
+```python
+val calendar = Calendar.getInstance()
+calendar.set(Calendar.YEAR, 1990)
+calendar.set(Calendar.MONTH, Calendar.MARCH)
+calendar.set(Calendar.DAY_OF_MONTH, 1)
+
+UserInfo.birthDate = calendar.time
+UserInfo.gender = Gender.FEMALE
+UserInfo.postalCode = "31352"
+```
+
+**Java**
+
+```python
+Calendar calendar = Calendar.getInstance();
+calendar.set(Calendar.YEAR, 1990);
+calendar.set(Calendar.MONTH, Calendar.MARCH);
+calendar.set(Calendar.DAY_OF_MONTH, 01);
+UserInfo.setBirthDate(calendar.getTime());
+UserInfo.setGender(Gender.FEMALE);
+UserInfo.setPostalCode("31352");
+```
+
+**Swift**
+
+```javascript
+let user = FairBid.user()
+
+user.birthDate = Date(timeIntervalSince1970: 0)
+user.gender = .female
+user.postalCode = "31352"
+```
+
+**Objective-C**
+
+```swift
+FYBUserInfo *user = [FairBid user];
+
+user.birthDate = [NSDate dateWithTimeIntervalSince1970:0];
+user.gender = FYBGenderFemale; 
+user.postalCode = @"31352";
+```
+
+**C#**
+
+```javascript
+UserInfo.SetGender(Gender.MALE);
+UserInfo.SetPostalCode("94103");
+UserInfo.SetBirthDate("1990/08/05");
+```
+
+[Back to Top ⇧](#top)

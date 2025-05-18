@@ -1,0 +1,128 @@
+---
+title: "Auto Update Apps"
+---
+
+The following code is an example of a full integration with the Ignite Services SDK using the Auto Update.
+
+```typescript
+class MainActivity : AppCompatActivity(), IConnectionCallback {
+    lateinit var igniteService: IIgniteService
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        initializeSdk(clientSecret, clientMMPUrl) //clientSecret and MMPUrl are stored somewhere in your app.
+        igniteService.connect(this)
+
+        // Call remote function on button click
+        findViewById(R.id.userOptInCheckBox).setOnCheckedChangeListener {
+            IgniteServiceSdk.setAutoUpdateEnabled(isChecked)
+        }
+
+    }
+
+    override fun onConnected() {
+        Toast.makeText(applicationContext, "Connected and authenticated with Ignite Service", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDisconnected(message: String?) {
+        Toast.makeText(applicationContext, "Disconnected from Ignite Service: $message", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        igniteService.disconnect(this)
+    }
+    
+    override fun onStart() {
+        super.onStart()
+
+        val intentFilter = IntentFilter().apply {
+            addAction(IgniteServiceSdk.ACTION_APP_UPDATE_JOB_SCHEDULED)
+            addAction(IgniteServiceSdk.ACTION_APP_UPDATE_JOB_CANCELLED)
+        }
+
+        registerReceiver(jobStatusBroadcastReceiver, intentFilter)
+    }
+    
+    override fun onStop() {
+        super.onStop()
+
+        unregisterReceiver(jobStatusBroadcastReceiver)
+    }
+
+    private fun initializeSdk(clientSecret: String = CLIENT_SECRET, clientMMPUrl: String) {
+        igniteService = IgniteServiceSdk.init(
+            applicationContext,
+            clientSecret,
+            clientMMPUrl
+        )
+
+        if (IgniteServiceSdk.getIsAutoUpdateEnabled() == null) {
+            Toast.makeText(this, "No user Opt in value for auto update", Toast.LENGTH_LONG).show()
+        } else if (IgniteServiceSdk.getIsAutoUpdateEnabled() == true) {
+            checkboxUserOptIn.isChecked = true
+        }
+    }
+    
+    private val jobStatusBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            when (intent.action) {
+                IgniteServiceSdk.ACTION_APP_UPDATE_JOB_SCHEDULED -> {
+                    toast("App Update Job Scheduled.")
+                }
+                IgniteServiceSdk.ACTION_APP_UPDATE_JOB_CANCELLED -> {
+                    toast("App Update Job Cancelled.")
+                }
+                else -> {
+                    println("$TAG Unknown Broadcast Action")
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val clientSecret = "my-client-secret-secretly-stored"
+    }
+}
+```
+
+```typescript
+class MyApplication: Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        registerReceiver(
+            object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    intent?.let {
+                        when (it.action) {
+                            IgniteServiceSdk.ACTION_APP_UPDATE_SUCCESS -> Log.d(
+                                TAG,
+                                "App Updated Successful"
+                            )
+                            IgniteServiceSdk.ACTION_APP_UPDATE_FAILED -> Log.d(
+                                TAG,
+                                "App Updated Failed"
+                            )
+                            else -> Log.d(TAG, "Invalid Action")
+                        }
+                    }
+                }
+            },
+            IntentFilter().apply {
+                addAction(IgniteServiceSdk.ACTION_APP_UPDATE_SUCCESS)
+                addAction(IgniteServiceSdk.ACTION_APP_UPDATE_FAILED)
+            }
+        )
+    }
+
+    companion object {
+        const val TAG = "DEMOAPP"
+    }
+
+}
+```
+
+[Back to Top ⇧](#top)

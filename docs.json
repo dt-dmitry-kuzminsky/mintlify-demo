@@ -1,0 +1,130 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Digital Turbine Docs",
+  "colors": {
+    "primary": "#da1a42",
+    "light": "#da1a42",
+    "dark": "#da1a42"
+  },
+  "favicon": "/favicon.ico",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "DT FairBird",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              {
+                "group": "First Steps",
+                "pages": [
+                  "hc/en-us/articles/360009975338-getting-started-with-dt-fairbid",
+                  "hc/en-us/articles/360009974718-setting-up-dt-fairbid"
+                ]
+              },
+              {
+                "group": "Advanced Configurations",
+                "pages": [
+                  "hc/en-us/articles/360012606718-placement-experiments"
+                ]
+              },
+              {
+                "group": "Additional Resources",
+                "pages": [
+                  "hc/en-us/articles/360014033837-user-management",
+                  "hc/en-us/articles/5856765915281-payment-and-billing",
+                  "hc/en-us/articles/360009923697-ad-format-behavior"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Mediated Networks",
+            "pages": [
+              {
+                "group": "Network Integration Guides",
+                "pages": [
+                  "hc/en-us/articles/360010170338-applovin",
+                  "hc/en-us/articles/11546060390684-bigo-ads",
+                  "hc/en-us/articles/360010170398-chartboost"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "DT Exchange",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              {
+                "group": "First Steps",
+                "pages": [
+                  "hc/en-us/articles/360010814637-welcome-to-dt-exchange",
+                  "hc/en-us/articles/4557133593361-setting-up-dt-exchange"
+                ]
+              },
+              {
+                "group": "Advanced Configurations",
+                "pages": [
+                  "hc/en-us/articles/360019418657-block-lists"
+                ]
+              },
+              {
+                "group": "Privacy",
+                "pages": [
+                  "hc/en-us/articles/9577916674333-coppa",
+                  "hc/en-us/articles/5541189181841-lgpd"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Mediate DT Exchange",
+            "pages": [
+              "hc/en-us/articles/17950246496540-mediating-dtx-8-3-5-with-max-on-android",
+              "hc/en-us/articles/360015536857-mediating-dt-exchange"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Blog",
+          "href": "https://www.digitalturbine.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Contact Us",
+        "href": "https://digitalturbine.com/"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Sign In",
+      "href": "https://developer.digitalturbine.com/hc/en-us/signin?return_to=https%3A%2F%2Fdeveloper.digitalturbine.com%2Fhc%2Fen-us%2Farticles%2F360009975198-app-ads-txt&locale=en-us"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://www.twitter.com/digitalturbine",
+      "facebook": "https://www.facebook.com/DigitalTurbineInc",
+      "linkedin": "https://www.linkedin.com/company/digital-turbine/",
+      "instagram": "https://www.instagram.com/digital_turbine/"
+    }
+  }
+}

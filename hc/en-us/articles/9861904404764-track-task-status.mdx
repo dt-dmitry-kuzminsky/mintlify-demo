@@ -1,0 +1,73 @@
+---
+title: "Track Task Status"
+---
+
+Every asynchronous call returns a task ID that you can track using the getTaskInfo method. To track task information, ensure that the host app is authenticated and are using a valid token.
+
+```javascript
+void getTaskInfo(String taskId, in Bundle metadata, IIgniteServiceCallback callback)
+```
+
+## Type
+
+Asynchronous
+
+## Description
+
+Returns information about a specific task.
+
+## Parameters
+
+* taskId
+
+  Task ID you want to track
+
+* metadata
+
+  metadata that you need for processing the request
+
+* callback
+
+  * callback in which you want to receive task information
+  *
+
+## Callback Responses
+
+The getTaskInfo method returns the following information:
+
+* TASK\_ID
+* Task Status
+* Status Code
+
+| Response     | Code | Description                               |
+| ------------ | ---- | ----------------------------------------- |
+| IN\_PROGRESS | 0    | Task is running.                          |
+| STARTED      | 1    | Task has begun.                           |
+| FINISHED     | 3    | Task is complete.                         |
+| FAILED       | 4    | Task failed to complete.                  |
+| CANCELLED    | 5    | Task has been cancelled.                  |
+| QUEUED       | 6    | Task is queued to run.                    |
+| POSTPONED    | 7    | Task is postponed to run at a later time. |
+
+
+
+## Sample
+
+```php
+
+// Initialisation
+
+IgniteServiceSdk.instance().getTaskInfo(taskId, object : IResponseCallback<TaskInfoResponse, Error, Progress> {
+    override fun onSuccess(result: TaskInfoResponse) {
+        Log.i(TAG, "Get task information onSuccess(): applicationPackageName: ${result.taskInfo.applicationPackageName} status ${result.taskInfo.status}, ${result.taskInfo.progressValue}")
+    }
+
+    override fun onError(error: Error) {
+        Log.e(TAG, "Get task information onError(): ${error.message}"")
+    }
+})
+```
+
+
+
+[Back to Top ⇧](#top)

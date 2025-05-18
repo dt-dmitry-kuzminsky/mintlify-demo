@@ -1,0 +1,33 @@
+---
+title: "CCPA   Privacy String"
+---
+
+The California Consumer Privacy Act of 2018 ([CCPA](https://iabtechlab.com/standards/ccpa/)) protects the personal information of California residents. It applies to all businesses operating in California. If a California resident uses an app developer's mobile app, CCPA applies to the developer and all relevant partners that process users' personal information.
+
+For more information about how DT applies CCPA, see [Supply Partner CCPA Addendum](https://cdn.prod.website-files.com/6618e372884cbd97db033ea4/666023d70fc5016c59b19a85_Fyber-CCPA-Addendum-August2019-.pdf) and [Notes on CCPA Addendum for Demand Partners](https://cdn.prod.website-files.com/6618e372884cbd97db033ea4/666025702641d1e43ccd97fb_Explanatory-Notes-to-Fyber-Demand-Partners-CCPA-Addendum-FINAL-1.pdf) in [DT's Legal](https://www.digitalturbine.com/legal) documentation.
+
+## Setting the IAB US Privacy String
+
+DT recommends that the first time you gather a user's opt-out (consent), pass it to the SDK before initializing it. The SDK considers the user's opt-out when initializing.
+
+To set the IAB US privacy string, use the following API:
+
+**Objective-C**
+
+```javascript
+[[FyberSDK instance] user setIABUSPrivacyString:@"1YNN"];
+```
+
+
+
+## Clearing Privacy Opt-Out
+
+To clear the user opt-out setting, use the following API:
+
+**Objective-C**
+
+```
+[[FyberSDK instance] user clearIABUSPrivacyString];
+```
+
+[Back to Top ⇧](#top)

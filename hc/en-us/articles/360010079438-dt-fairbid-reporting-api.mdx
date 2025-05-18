@@ -1,0 +1,381 @@
+---
+title: "DT FairBid Reporting API"
+---
+
+DT FairBid Reporting API Metrics and Dimensions
+
+The DT FairBid Reporting API enables you to access all the reporting data from the monetization ad units. You can query multiple metrics such as revenue and impressions across the available dimensions and even implement filters.
+
+DT currently offers a Reporting API for two different reports:
+
+* [Mediation](https://developer.digitalturbine.com/hc/en-us/articles/360009984577-Network-Performance-Report)
+* [Daily Active Users](https://developer.digitalturbine.com/hc/en-us/articles/360010079178-Daily-Active-Users-DAU-Report)
+
+For supported metrics and dimensions per report, see tab above.
+
+## Reporting API Workflow
+
+The publisher makes a POST request using the Client ID and Client Secret to receive the Access Token, as described in[Step 1](#step-1-obtaining-the-access-token-0-2).
+
+Once the request is successful and the Access Token is received, an API Request is made to create a custom report as described in[Step 2](#section-step-2-reporting-api-request). A successful response will contain a URL leading to a file that will be populated with the custom report. More details can be found in[Step 3](#section-step-3-receiving-the-custom-report).
+
+## Step 1: Obtaining the Access Token
+
+DTs Reporting API uses Access Tokens for authentication purposes. To obtain your Access Token, you must first [get your Client ID and Client Secret](https://developer.digitalturbine.com/hc/en-us/articles/4410353843345). Read here on how to obtain these.
+
+**Make a POST request**
+
+The base End Point for the entire process is:`https://reporting.fyber.com`
+
+**Authentication Token**
+
+```bash
+POST /auth/v1/token
+```
+
+**Headers**
+
+```python
+Content-Type    application/json
+```
+
+**Sample Request**
+
+```ruby
+https://reporting.fyber.com/auth/v1/token
+```
+
+**Params**
+
+```python
+format  csv
+```
+
+**Body: raw (application/json)**
+
+```json
+{
+    "grant_type": "client_credentials",
+   	"client_id": "3ce66d885XXXXXXXXXXa3b752bb9058",
+    "client_secret": "YtMvC7VYTQMQ7w9UCUaFXXXJnwVZnQqqN02XNyt8IIh2h8XFDuXXXXXXXXSS6XTrFWW4TkebCcMLJkrXSw5IurkearTJIDzUxsbiMXv8hb4T23MwN6eE7DDIthRFqDnhnuhiDlY2oPeaOjsMbzE8joZ5cs6tsySJz6uZXwJ-x3lcYaYbgXXXXXXXX3_hFeuXm-C7-me2V1MMs-ftJxTd5QbHoUhG3Q5anCWCW_pg8x3CL4yPGCbpWUDZfpdNPyyCT4rxCEb-VC0Bdqwe8N2GGn_VSFOwQYxa-yap2JuNSGJfl_ZURXXXXXXXXFe1GpHDn8pk7yYwQYIGAg"
+}
+```
+
+**Grant Type** must be "client\_credentials". The credentials are sent according to the **OAuth 2.0 protocol**.
+
+**Sample Authentication Responses**
+
+When an authentication request is successful, you receive the following response in JSON format:
+
+**Successful Response**
+
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXXXJ9.eyJpYXQiOjE1NzAwMTY5MDAsImV4cCI6MTU3MDAyMDUwMCwiYXVkIjoic3BlZWRiYWxsIiwic3ViIjoiMjEwMjYzIn0.hDo1waTytSys_oRhFNUPqZPom26bL05rxgtSt3XYHqI",
+  "tokenType": "bearer",
+  "expiresIn": 3600
+}
+```
+
+**accessToken**: The token required to continue the process\
+**tokenType**: Bearer\
+**expiresIn**: 3600 seconds (1 hour)
+
+When a request is unsuccessful, you receive the following response:
+
+**Unsuccessful Response**
+
+```json
+{
+  "error": "internal_server_error"
+}
+```
+
+**Possible Authentication Errors**
+
+Set out in the table are a list of possible errors which resulted in an unsuccessful response.
+
+| HTTP Status Code | Error                    | Scenario                                                                                                                                                  |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 400              | unsupported\_grant\_type | N/A                                                                                                                                                       |
+| 400              | invalid\_request         | When there are missing credentials                                                                                                                        |
+| 400              | invalid\_client          | When the credentials are incorrect or cannot be recognized. Can also occur when your account has been disabled or when the credentials have been revoked. |
+| 500              | internal\_server\_error  | Unexpected errors in DT's servers                                                                                                                         |
+
+## Step 2: Reporting API Request
+
+Use the access token you received in[Step 1](#step-1-obtaining-the-access-token-0-2)to request your custom report.
+
+The request is made up of five individual sections:
+
+* Source
+* Date Range
+* Metrics
+* Splits
+* Filters (include)
+
+**Request Example**
+
+Set out below is a request example, with the following section settings:
+
+**Source**
+
+* mediation (the example is from the Demand Performace report)
+
+Source must be written in lower case.
+
+**Date Range**
+
+* Start date: 2019-01-06
+* End date: 2019-09-25
+
+**Metrics**
+
+* Bid Requests
+* Bid Responses
+* Impressions
+* Clicks
+* Rewarded Completions
+* Revenue (USD)
+* Unique Impressions \[Deprecated]
+
+**Splits (dimensions)**
+
+* Fyber App ID
+
+**Filters**
+
+* Dimension filtered: country
+* Values filtered: US, CA and RU
+
+For further descriptions about the terms used in this article, click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010045358-Using-the-Reports).
+
+**URL**
+
+```ruby
+https://reporting.fyber.com/api/v1/report?format=csv
+```
+
+**Headers**
+
+```javascript
+ContentType:   application/json
+Authorization: Bearer <Access Token from Authentication Response>
+```
+
+**Params**
+
+```python
+format  csv
+```
+
+**Body. raw (application/json)**
+
+```json
+{
+    "source": "mediation",
+    "dateRange": {
+        "start": "2019-07-01",
+        "end": "2019-09-25"
+    },
+    "metrics": [
+        "Bid Requests",
+        "Bid Responses",
+        "Impressions",
+        "Clicks",
+        "Rewarded Completions",
+        "Revenue (USD)",
+        "Unique Impressions"
+    ],
+    "splits": [
+        "Fyber App ID"
+    ],
+    "filters": [
+        {
+            "dimension": "Country",
+            "values": [
+              "US",
+              "CA",
+              "RU"
+            ]
+        }
+    ]
+}
+```
+
+If no splits or filters are required, their value should be an empty array. However, source, dateRange and metrics must include a value.
+
+For example: **JSON**
+
+```json
+{
+   "source": "mediation",
+    "dateRange": {
+        "start": "2019-06-01",
+        "end": "2019-09-25"
+    },
+    "metrics": [
+        "Bid Requests"
+    ],
+    "splits": [],
+    "filters": []
+}
+```
+
+**Responses**
+
+Set out below are examples of both successful and unsuccessful responses.
+
+**Response: Successful**
+
+```json
+{
+  "id": "6fad42cb-25db-4af0-8988-1e7d8e6d90bc",
+  "url": "https://fyber-async-reports.s3.amazonaws.com/group%3D210263/6fad42cb-25db-4af0-8988-1e7d8e6d90bc.csv?AWSAccessKeyId=AKIAQBQNZ5FY23OTK4UD&Expires=1570020564&Signature=LbhE5uljlPEKQRTbepDqmDgJuFQ%3D",
+}
+```
+
+* The "id" field holds an identifier of the request for later troubleshooting, if required.
+* The "url" field holds the URL to be polled (GET request) until the body response (file) is populated.
+
+**Response: Unsuccessful**
+
+```json
+{
+  "error": "invalid_token"
+}
+```
+
+**Possible Errors**
+
+The table below shows the main errors indicating an unsuccessful response.
+
+| HTTP Status Code | Error                   | Description (optional)                                                                                                                                                                                                 | Scenario                                                                                                                                                      |
+| ---------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 401              | invalid\_token          | N/A                                                                                                                                                                                                                    | *Authorization header is empty *Authorization header not sent or token is not present in the header *Unrecognized token *Disabled account |
+| 400              | invalid\_format         | N/A                                                                                                                                                                                                                    | Format is not supported - currently only csv format is supported                                                                                              |
+| 400              | invalid\_query          | For example: Invalid value undefined supplied to : Query/dateRange: DateRange -or- Invalid value "XXXXX" supplied to : Query/dateRange: DateRange/end: Date -or- Invalid dimensions: A,B,C -or- Invalid metrics: A,B,C | *If the query sent is not in the expected schema *Date range is not sent in the ISO 8601 format *Invalid dimensions *Invalid metrics      |
+| 400              | invalid\_source         | Invalid source: XXXXX                                                                                                                                                                                                  | Unsupported source type                                                                                                                                       |
+| 500              | internal\_server\_error | N/A                                                                                                                                                                                                                    | Error in DT's servers                                                                                                                                         |
+
+
+
+## Step 3: Receiving the Custom Report
+
+To obtain the Custom Report, follow the steps below:
+
+1. Receive the URL from the successful response in[Step 2](#section-step-2-reporting-api-request):
+2. Perform polling on the URL to access the file containing the custom report. The empty file is populated within one hour, depending on the size of the query.
+3. If the file is not populated with data after one hour, resend the request.
+
+The URL is valid for three hours.
+
+## Additional Information and Restrictions
+
+It is important to take note of all the information, restrictions and rules to ensure a successful response.
+
+General
+
+* All reports are presented in US dollars
+* The time zone used is UTC
+* Data related to mediated networks is reaggregated twice a day and updated for two weeks retroactively
+* The Reporting APIs are available on a daily level, with a delay of up to 12 hours from the end of day UTC
+
+Query Restrictions
+
+* All fields are mandatory. Splits and Filters can have an empty array. See example in[Step 2](#section-step-2-reporting-api-request).
+* The time range for a report query is limited to 90 days
+* Queries are limited to a maximum of 50 per day, per API
+* You can query each one of the[defined dimensions](https://developer.digitalturbine.com/hc/en-us/articles/360010079438-FairBid-Reporting-API#supported-metrics-and-dimensions-0-27)in the Reporting API calls by up to 7 dimensions in a single query
+* You are restricted to 5 filters per query
+* To receive a breakdown by date, it must exist in the "splits" array
+
+Date Range Restrictions
+
+There are a number of rules that must be observed with regard to the date range:
+
+* The start date and end date must be in the format of ISO 8601. For example, 2019-10-03
+* The interval between the start and end date should not exceed 90 days
+* The start date must be earlier or equal to the end date
+* The start date must be no later than the previous 18 months
+* The end date cannot be the current day's date or beyond it
+* The start date and end date are included in the report
+
+- Data for Mediation is available from 2019-04-01 onwards
+- Data for DAU is available from 2019-08-08 onwards
+
+Queries with the current day's date or dates prior to the above time periods result in an HTTP 400 status code (invalid\_query)
+
+## Supported Metrics and Dimensions
+
+You must specify in the API Request the source, metrics, dimensions and optional filters you want to include in your custom report. Currently the sources available are Mediation and DAU.
+
+## Mediation
+
+Set out in the tables below are the supported metrics and dimensions available in the Reporting API for the Mediation API.
+
+Metrics\
+For descriptions of the metrics in the Mediation API, click [here](https://developer.digitalturbine.com/hc/en-us/articles/360009984577-Demand-Performance-Report#section-network-performance-metrics).
+
+| Source    | Supported Metrics                |
+| --------- | -------------------------------- |
+| mediation | Bid Requests                     |
+|          | Bid Responses                    |
+|          | Impressions                      |
+|          | Clicks                           |
+|          | Rewarded Completions             |
+|          | Revenue (USD)                    |
+|          | Unique Impressions \[Deprecated] |
+|          | Ad Requests                      |
+
+For descriptions of the dimensions in the Mediation API, click [here](https://developer.digitalturbine.com/hc/en-us/articles/360009984577-Demand-Performance-Report#section-network-performance-dimensions).
+
+| Source    | Supported Dimensions                                                                                            |
+| --------- | --------------------------------------------------------------------------------------------------------------- |
+| mediation | Date                                                                                                            |
+|          | App Name                                                                                                        |
+|          | App Bundle                                                                                                      |
+|          | Fyber App ID                                                                                                    |
+|          | Placement ID                                                                                                    |
+|          | Placement Name                                                                                                  |
+|          | Placement Type (Available values: Banner, Interstitial, Rewarded)                                               |
+|          | Country                                                                                                         |
+|          | Device OS (Available values: iOS, Android)                                                                      |
+|          | Demand Source Type Name (Available values: Programmatic, Custom API, Programmatic Mediation, Mediated Networks) |
+|          | Demand Source Name                                                                                              |
+
+## Daily Active Users (DAU)
+
+Set out in the tables below are the supported metrics and dimensions available in the Reporting API for the DAU Report.
+
+Metrics\
+For descriptions of the metrics in the DAU report, click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010079178-Daily-Active-Users-DAU-Report#dau-metrics-0-4).
+
+| Source | Supported Metrics |
+| ------ | ----------------- |
+| dau    | Revenue (USD)     |
+|       | Unique Users      |
+|       | ARPDAU            |
+
+Dimensions\
+For descriptions of the dimensions in the DAU report, click[here](https://developer.digitalturbine.com/hc/en-us/articles/360010079178-Daily-Active-Users-DAU-Report#dau-dimensions-0-3).
+
+| Source | Supported Dimensions |
+| ------ | -------------------- |
+| dau    | Date                 |
+|       | App Name             |
+|       | App Bundle           |
+|       | Fyber App ID         |
+|       | Country              |
+
+You can set an include filter on any value(s) within a dimension. This means, all the data presented in the report relates only to the values defined in the filter.
+
+For example:\
+**Dimension**= Country\
+**Filtered Value**= US or CA
+
+As a result of these filters, the report will contain data relevant only for the countries US and CA.
+
+For more details on the DT FairBid Reporting API, click [here](https://developer.digitalturbine.com/hc/en-us/articles/360010079438-FairBid-Reporting-API).
+
+[Back to Top ⇧](#top)

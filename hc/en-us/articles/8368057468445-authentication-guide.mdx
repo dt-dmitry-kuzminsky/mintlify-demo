@@ -1,0 +1,23 @@
+---
+title: "Authentication Guide"
+---
+
+The following flow describes the overall flow for authentication and authorization using the Ignite Services Client SDK. If you do not use the Ignite Services Client SDK, you must manage all session information on as well as call the `authorize` method and then handle responses and pass session information in the metadata for every request.
+
+## Initialization
+
+DT will assign a **`ClientId` **that you should use as described in the [Quickstart Guide](https://developer.digitalturbine.com/hc/en-us/articles/8276788738077-Quickstart-Guide). During a connection, the Ignite Services Client SDK will attempt to automatically authenticate the client and store and manage the session on behalf of the client. Initialization failure indicates that Ignite is not present on the device. For more information about Initialization, see [Initialization](https://developer.digitalturbine.com/hc/en-us/articles/8366301551133-Initialization).
+
+## Authentication
+
+The **`ClientId`** passed during SDK initialization is stored and later automatically retrieved from the manifest metadata to transmit to the DT signature server for authentication. Upon successful authentication, the DT signature server will return an authorization token that is later used to authorize task requests for Ignite.
+
+## Authorization
+
+Every subsequent request (except **`version`**) will use the **`ClientId`** and other session information as needed in order to authorize requests. The SDK passes the **`ClientId`** as a key-value string in the **`metadata`** bundled together with **`clientSecret`** passed during SDK initialization. The session is valid for a limited amount of time. When the authorization token expires, the client should request a new token. The SDK will manage the token refresh and update on behalf of the client automatically.
+
+<Frame caption="EG_Sequence_Diagram_Initialisation.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/8368137728285" />
+</Frame>
+
+[Back to Top ⇧](#top)

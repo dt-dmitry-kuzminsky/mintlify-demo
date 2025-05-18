@@ -1,0 +1,214 @@
+---
+title: "Singular"
+---
+
+This is a multi-step guide for setting up your Digital Turbine campaign with Singular.
+
+[Step 1. Configuring Event Postbacks](#h_01HX3RXJJ2GZCKVRD3VFHTVC5H)
+
+[Step 2. Creating a Tracking Link](#h_01HX45KXG9AM89A2ECRPJJ5DCR)
+
+[Step 3 (Optional). Enabling Cost Tracking](#h_01HX4A764G89E3ANT08WNE4AYW)
+
+## Step 1. Configuring Event Postbacks
+
+By default, Singular sends install postbacks for the configured campaign.
+
+In addition, postbacks for any other events (for example, post-install events) can be sent by configuring the settings for the app at the Partner Configuration page.
+
+Complete the following steps to set up event postbacks:
+
+1. Go to **Attribution→Partner Configuration**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16022206182556" />
+</Frame>
+
+2. In the search field at the top right, start typing *Digital Turbine Media*(or click **+Add Partner** and search).
+3. Click **+Add App Site**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13956996814108" />
+</Frame>
+
+#### Note
+
+To edit an existing configuration, hover over a line and click the pencil icon on the right side.
+
+4. Select the App Site.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13958464011548" />
+</Frame>
+
+5. Check the boxes for:
+
+* **Send View-Through Postbacks**. This will let Digital Turbine receive conversion postbacks tied to impressions.
+* **Send Fraud Postbacks**. This will let Digital Turbine be aware of any installs blocked by fraud algorithms for troubleshooting purposes.
+* **Send all**. This will let Digital Turbine receive unattributed install postbacks for optimization purposes.
+
+6. Set the **Click-Through Window **for attribution lookback to *30 days*.
+
+#### Important
+
+Digital Turbine requires a 30-day attribution window.
+
+7. Set **View-Through Window** to *24 hours*.
+8. On the **In-App Event Postbacks** tab, click **+ Add a new event**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13958464025244" />
+</Frame>
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/14281456500892" />
+</Frame>
+
+#### Note
+
+If the **Event Name** field is not showing, delete the event using the ✗ (cross) icon and recreate a new one using the + (plus) icon.
+
+9. In the first column, select the in-app **SDK Event Name** as sent from the app to Singular’s attribution service.
+10. Next, add the **Event Name**.
+
+#### Note
+
+Digital Turbine machine learning algorithms rely on standard event names to improve ad targeting, optimization, measurement, and insights. For best results, use these names for event mapping:
+
+* app\_open
+* purchase
+* level\_achieved
+* ad\_click
+* ad\_view
+* login
+* add\_payment\_info
+* add\_to\_cart
+* add\_to\_wishlist
+* checkout\_initiated
+* complete\_registration
+* complete\_tutorial
+* reservation
+* update
+* subscribe
+* search
+* view\_content
+* credits\_spent
+* achievement\_unlocked
+* app\_rated
+* tutorial\_complete
+* social\_share
+
+If there's no suitable name on this list for an event, you can add an arbitrary event name. However, make sure there are no spaces and special characters in it other than the underscore (* \_ *).
+
+11. Set the **Lookback** for the event. We recommend selecting *None* as that will ensure we receive all event postbacks to reduce discrepancies.
+12. If the event includes a value that you want to deliver to the Digital Turbine (for example, in-app purchase includes a revenue value), check the **Include Revenue** checkbox.
+13. Click the + icon and repeat the process until all events are added.
+14. Click **Save** when finished.
+
+## Step 2. Creating a Tracking Link
+
+Singular offers the ability to configure one link for Android and/or iOS. You can configure one or both and the link will redirect based on the operating system of the device engaging with the link. Alternatively, it will send the user to a designated fallback destination that you provide.
+
+1. In the left navigation menu, click **Attribution→Manage Links**.
+2. Start typing the name of your app in the search bar and select it.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13958464035228" />
+</Frame>
+
+3. Click **Create Link**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13958502927900" />
+</Frame>
+
+4. In the section that opens, for **Link Type**select *Partner*.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993868953372" />
+</Frame>
+
+5. For **Source Name**, select *Digital Turbine Media*.
+6. Enter an arbitrary **Tracking Link Name**.
+7. Click on **Link Settings and Redirects**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993868956444" />
+</Frame>
+
+8. Select the **Link Sub-Domain**.
+9. Complete the next steps depending on the platform.
+
+For iOS For Android
+
+* Check the **Enable iOS tracking** checkbox.
+* Check the **Enable Probabilistic Attribution** checkbox.
+* The value of **Site** gets populated automatically.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854319772" />
+</Frame>
+
+* In the **If the app is not installed go to:** drop-down, select a URL.
+* Optionaly, in the **If the app is already installed go to (deeplink):** drop-down, add the deferred deeplink destination.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854324636" />
+</Frame>
+
+* Check the **Enable Android Tracking** checkbox.
+* The value of **Site** drop-down gets populated automatically.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854330140" />
+</Frame>
+
+10. In **Fallback Destination for Other Platforms**, set a web page for non-Android and non-iOS users to be redirected to.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993868995100" />
+</Frame>
+
+#### Note
+
+Attribution Settings are not required unless you want to change the partner lookback settings (for this link only) OR to enable re-engagement tracking for the link.
+
+11. Click **Generate**. A new item, **Link Summary**, will appear.
+12. Click on **Link Summary** to expand it. Copy the links and send them to Digital Turbine.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854344860" />
+</Frame>
+
+## Step 3. Enabling Cost Tracking
+
+1. Go to **Settings→Data Connectors**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993869010332" />
+</Frame>
+
+2. Click on **+Add Data Connector**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854352156" />
+</Frame>
+
+3. Search and select *Digital Turbine Media*.
+4. Your Digital Turbine representative will provide you with the **Client ID** and **Client Secret** via encrypted email. Optionally, you can add a description for the configuration.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13993854359964" />
+</Frame>
+
+5. Click** Submit**.
+
+#### Note
+
+Due to the nature of the data collection method and timing, when the connector is first created, you will see a red status indicator and message indicating that there is Action Required. Please disregard this message on the first day as it may take up to 24 hours to get the first file delivered, but do *contact us if you still see that error after the first cost report is scheduled to be delivered*(after midnight UTC daily).
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/13997150347932" />
+</Frame>
+
+[Back to Top ⇧](#top)

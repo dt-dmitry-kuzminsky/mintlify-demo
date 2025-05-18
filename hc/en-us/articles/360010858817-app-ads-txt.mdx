@@ -1,0 +1,34 @@
+---
+title: "App Ads.Txt"
+---
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/8224251667357" />
+</Frame>
+
+The Interactive Advertising Bureau (IAB) developed ads.txt in 2017. Ads.txt is a framework that defines how publishers should list their authorized monetization partners. Using this file, the buy-side can identify which sellers the publisher has authorized to sell their inventory.
+
+The IAB released the app version for ads.txt called app-ads.txt, as an extension of ads.txt. The simple app-ads.txt standard helps prevent the unauthorized selling of in-app inventory and app domain spoofing.
+
+## Implementing app-ads.txt
+
+To verify authorized seller status, follow the instructions below:
+
+These steps apply to all parties in the ecosystem - from sell-side platforms via exchanges to buy-side platforms.
+
+1. DT passes the `storeURL`in the bid request, used by the buyer to identify the relevant app store URL
+2. Buyer crawls the app listing page the in app store
+3. The Developer URL is translated into an app-ads.txt path
+4. The app-ads.txt file is crawled and interpreted
+
+For more information about the IAB's app-ads.txt spec, click[here](https://iabtechlab.com/wp-content/uploads/2019/03/app-ads.txt-v1.0-final-.pdf).
+
+Digital Turbine strongly encourages all publishers on our platform to implement app-ads.txt. For more information on how publishers adopt this new standard, click [here](https://developer.digitalturbine.com/hc/en-us/articles/360010915438-app-ads-txt).
+
+## FAQ
+
+**Does a Pub need to be on the Google Store for app-ads.txt to work?**
+
+Yes. The app-ads.txt initiative only takes into account apps that are officially on the iOS App Store or Google Play. For that reason, and many others, we only support apps that are on one of the app stores.
+
+[Back to Top ⇧](#top)

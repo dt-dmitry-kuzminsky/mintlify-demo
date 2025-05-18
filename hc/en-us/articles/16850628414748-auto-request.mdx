@@ -1,0 +1,192 @@
+---
+title: "Auto Request"
+---
+
+The DT FairBid SDK includes an Auto Request feature that automatically manages ad availability. It allows you to request and replace ads efficiently, which minimizes wasted fills and optimizes device resource usage. When enabled, the SDK attempts to replace ads when a user finishes watching one and retries ad requests if a placement fails to secure a fill.
+
+Auto Requests balance ad availability, reduce unnecessary network calls, and maintain a smooth user experience. You can enable or disable auto-request globally or for individual placements as needed.
+
+## Global Auto-Request Settings
+
+Auto Requests are automatically activated when you configure the DT FairBid SDK, which does one of the following:
+
+* When a user finishes watching an ad, DT FairBid attempts to replace it immediately.
+* When a specific placement has trouble obtaining a fill—like when no traditional mediated network has available inventory, and no programmatic demand is bidding within a predetermined amount of time—DT FairBid restarts the ad request process at exponentially increasing time intervals to optimize the chances of getting a fill while minimizing the usage of device resources.
+
+#### Important
+
+DT strongly recommends using the default behavior of DT FairBid. However, you can disable auto-request globally when you start the SDK.
+
+To disable Auto Requests globally, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+FairBid.withConfiguration("12345")
+       .disableAutoRequesting()
+       .start(activity);
+```
+
+**Swift**
+
+```php
+let options = FYBStartOptions()
+options.autoRequestingEnabled = false
+FairBid.start(withAppId: "1234", options: options)
+```
+
+**Objective-C**
+
+```csharp
+FYBStartOptions *options = [[FYBStartOptions alloc] init];
+ options.autoRequestingEnabled = NO;
+[FairBid startWithAppId:@"1234" options:options];
+```
+
+**C#**
+
+```java
+FairBid fairbid = FairBid.ConfigureForAppId("appId")
+    .DisableAutoRequesting()
+    .Start();/code
+```
+
+## Placement Auto-Requests
+
+You can enable or disable auto-requests for individual placements at any moment before or after starting the SDK. However, after you start the SDK, you cannot enable or disable auto requests for all placements with a single API call. You must enable or disable each placement individually.
+
+## Enabling Placement Auto-Requests
+
+Starting from DT FairBid SDK 3.8.0, you can have increased control over the availability of each placement while offloading the ad availability management to DT FairBid SDK.
+
+#### Note
+
+Even with auto-request enabled, you must request each placement you are interested in at least once.
+
+### Interstitial Ads
+
+To enable auto request for specific interstitial ads, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+Interstitial.enableAutoRequesting("12345");
+```
+
+**Swift**
+
+```javascript
+ FYBInterstitial.enableAutoRequesting("12345")
+```
+
+**Objective-C**
+
+```csharp
+[FYBInterstitial enableAutoRequesting:@"12345"];
+```
+
+**C#**
+
+```javascript
+Interstitial.EnableAutoRequesting("12345");
+```
+
+### Rewarded Ads
+
+To enable auto request for specific rewarded ads, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+Rewarded.enableAutoRequesting("12345");
+```
+
+**Swift**
+
+```javascript
+FYBRewarded.enableAutoRequesting("12345")
+```
+
+**Objective-C**
+
+```csharp
+[FYBRewarded enableAutoRequesting:@"12345"];
+```
+
+**C#**
+
+```javascript
+Rewarded.EnableAutoRequesting("12345");
+```
+
+## Disabling Placement Auto-Requests
+
+If a user is past a stage in your app where a certain placement is no longer relevant, you can disable auto-request for that particular placement to avoid waste.
+
+### Interstitials Ads
+
+To enable auto request for specific interstitial ads, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+Interstitial.disableAutoRequesting("12345");
+```
+
+**Swift**
+
+```csharp
+[FYBRewarded disableAutoRequesting:@"12345"];
+```
+
+**Objective-C**
+
+```csharp
+[FYBInterstitial disableAutoRequesting:@"12345"];
+```
+
+**C#**
+
+```bash
+Interstitial.DisableAutoRequesting("12345");/code
+```
+
+### Rewarded Ads
+
+To disable auto request for specific rewarded ads, use the following API:
+
+Android iOS Unity
+
+**Java**
+
+```javascript
+Rewarded.disableAutoRequesting("12345");
+```
+
+**Swift**
+
+```javascript
+FYBRewarded.disableAutoRequesting("12345")
+```
+
+**Objective-C**
+
+```csharp
+[FYBRewarded disableAutoRequesting:@"12345"];
+```
+
+**C#**
+
+```javascript
+Rewarded.DisableAutoRequesting("12345");
+```
+
+[Back to Top ⇧](#top)

@@ -1,0 +1,28 @@
+---
+title: "Flag End Users As A Child"
+---
+
+The `IsChild` API helps publishers comply with age-related policies such as [COPPA](https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa), [GDPR](https://gdpr-info.eu/), and [Google Play’s Families Ads Program](https://support.google.com/googleplay/android-developer/answer/9893335?sjid=16517989369363894084-EU).
+
+This API enables publishers to flag certain users as children. Children refers to individuals under a certain age, as defined under applicable data privacy laws.
+
+#### Note
+
+Available from DT FairBid SDK v.3.33.1 and later.
+
+## Calling the API
+
+#### Important
+
+You must call this API before you initialize the SDK.
+
+When you call this API, the [FairBid SDK](https://developer.digitalturbine.com/hc/en-us/sections/9947507543196-SDKs) triggers the respective APIs on the mediated networks that support it:
+
+* Privacy related APIs
+* APIs for not tracking the ad ID (in compliance with Google Family program policies)
+
+The [Networks and Related Regulatory Compliance](https://developer.digitalturbine.com/hc/en-us/articles/360013311257-Mediation-Regulatory-Compliance) table outlines network compliance levels. This information helps to determine which networks are suitable for the app. It outlines any additional steps required to ensure compliance with applicable laws, mediated network policies, and Play Store policies.
+
+For detailed guidance on calling the API, see[Setting User as Child](/hc/en-us/articles/16847944034204).
+
+[Back to Top ⇧](#top)

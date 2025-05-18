@@ -1,0 +1,36 @@
+---
+title: "COPPA"
+---
+
+The Children's Online Privacy Protection Act ([COPPA](https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa)) sets guidelines for collecting and processing personal information from children under the age of 13. It applies to apps and digital services, either directed at children or serving a general audience, where children may be present. You must assess both the nature of the content and the intended audience when configuring COPPA-related settings.
+
+DT Exchange allows you to configure COPPA compliance at the app, placement, or user level. Configuration at the app level ensures placements and users inherit the same settings. Placement and user-level configurations allow you to apply different COPPA settings to specific placements or individual users. COPPA compliance at any level confirms that the app, placement, or user context is not directed at children under the age of 13 or to a general audience that may include them.
+
+## App Level Settings
+
+App-level settings are applied to the placements and user level settings associated with your app. To configure COPPA at the app level, select the checkbox below the **Categories\*** field when you add or edit an app. This confirms that your app is COPPA-compliant.
+
+<Frame>
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19738838561180" />
+</Frame>
+
+## Placement Level Settings
+
+You can manage COPPA compliance at the placement level if your app has a mixed audience. This allows you to configure individual placements based on the intended audience and overrides the app-level COPPA setting.
+
+To configure COPPA at the placement level, select the checkbox in the **Privacy Settings** area when you add or edit a placement. This confirms that your placement is COPPA-compliant.
+
+<Frame>
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19738838561820" />
+</Frame>
+
+## User Level Settings
+
+The DT Exchange SDK 8.2.3 and later allows you to flag users as COPPA-compliant at the user level. If your app has a mixed audience and has an age screen or gate mechanism, you can define the COPPA settings at the user level and implement the COPPA API. This allows you to flag specific users as children. In the event of a conflict between the settings in the Console and the values passed through the DT Exchange SDK API, the App Level setting is used.
+
+For more information about how to integrate the DT Exchange SDK, see the following articles:
+
+* [Integrating the Android SDK](/hc/en-us/articles/360010822437)
+* [Integrating the iOS SDK](/hc/en-us/articles/360010915618)
+
+[Back to Top ⇧](#top)
