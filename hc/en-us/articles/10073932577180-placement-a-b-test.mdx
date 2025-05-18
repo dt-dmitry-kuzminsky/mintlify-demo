@@ -6,6 +6,29 @@ Placement A/B Testing is a method that allows you to experiment with different c
 
 DT’s Placement A/B Test evaluates multiple ad placements within an app to determine which performs better based on engagement, conversions, and revenue. It runs two or more variations simultaneously, which allows you to test exchange rates, colors, banners, and layouts. You can analyze metrics such as Click-Through Rates (CTR), Offer Conversions, and Unique Users to determine the effective placement and improve ad performance.
 
+<table>
+  <thead>
+    <tr>
+      <th>METHOD</th>
+      <td>
+        <code>GET</code>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CONTENT-TYPE</th>
+      <td>
+        <code>application/x-www-form-urlencoded</code>
+      </td>
+    </tr>
+    <tr>
+      <th>AUTHENTICATION</th>
+      <td>IP Allowlisting</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Creating an A/B Test Experiment
 
 Set up the experiment by defining the placements and variables to compare before running the test. To start a test:
@@ -15,42 +38,43 @@ Set up the experiment by defining the placements and variables to compare before
 2. Select the **App** where you want to run the test.
 
 <Frame caption="2025-02-10_11-52-42.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762112412" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423762112412)
 </Frame>
 
 3. Select the **Placement** for the test.\
    The **Placement Details**window appears.
 
 <Frame caption="2025-02-10_12-07-18.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762117404" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423762117404)
 </Frame>
 
 4. Click **Create Experiment**.\
    The **Experiment** window appears and shows all available settings.
 
 <Frame caption="2025-02-10_09-38-23.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783614492" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423783614492)
 </Frame>
 
 5. In the **Enter Experiment Name** field, enter an Experiment name.
 
-<Frame caption="">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664258332" />
+<Frame caption>
+  ![](https://developer.digitalturbine.com/hc/article_attachments/10207664258332)
 </Frame>
 
-6. Click **Add Variants** to add new variants.
+- Click **Add Variants** to add new variants.
+
+/
 
 #### Note
 
 DT allows you to test the Baseline and up to three additional variants, for a total of four.
 
-7. To edit the **Variant** name and **User Distribution** percentage, click the **Edit** icon in the **Variant** tab.\
-   The **Set variant name and percentage** window appear.
-
-* * Enter the **Name** and the **User Distribution**, thenclick **Save**.
+- To edit the **Variant** name and **User Distribution** percentage, click the **Edit** icon in the **Variant** tab.\
+  The **Set variant name and percentage** window appear.
+- - Enter the **Name** and the **User Distribution**, thenclick **Save**.
 
 <Frame caption="2025-02-09_14-45-05.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783616156" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423783616156)
 </Frame>
 
 #### Note
@@ -59,33 +83,38 @@ Ensure that you make changes to the Variant, not the Baseline.
 
 8. To test the exchange rate:
 
-* * Click **Add Entry**in the **Exchange rate per country** area.
-  * Select the country from the **Countries** drop-down list and click the checkbox.
-  * Enter the required exchange rate in the **Exchange Rate Points per 1 USD** field.
-  * To add additional exchange rates, click **Add Entry** and define the parameters.
+- - Click **Add Entry**in the **Exchange rate per country** area.
+  - Select the country from the **Countries** drop-down list and click the checkbox.
+  - Enter the required exchange rate in the **Exchange Rate Points per 1 USD** field.
+  - To add additional exchange rates, click **Add Entry** and define the parameters.
 
-<Frame caption="">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/10113719646876" />
+<Frame caption>
+  ![](https://developer.digitalturbine.com/hc/article_attachments/10113719646876)
 </Frame>
 
 9. To test the **Tag Color**, **Button Color**, or **Button Text Color**, do one of the following:
 
-* * Enter the required hex code in the text field.
-  * Click the color picker to enter the RGB values or select a color from the palette.\
+- - Enter the required hex code in the text field.
+  - Click the color picker to enter the RGB values or select a color from the palette.\
     The preview updates and reflects the new color selections.
 
 <Frame caption="Screen Shot 2023-08-30 at 14.32.33.png">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664261788" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/10207664261788)
 </Frame>
 
 10. To test a **Mobile banner image** or **Tablet banner image**:
 
-* * Click **Choose File**, and upload the required image.
+- - Click **Choose File**, and upload the required image.
 
 11. To view the UI customization, click **Open Preview**.
 
 <Frame caption="2025-02-09_14-30-17.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762125084" />
+  <img
+    src="https://developer.digitalturbine.com/hc/article_attachments/18423762125084"
+    alt=""
+    className="mx-auto"
+    style={{ width:"100%" }}
+  />
 </Frame>
 
 12. Click **Start Experiment**.
@@ -103,7 +132,7 @@ The DT Offer Wall Report allows you to view the performance of your test. To mon
 2. To **Filter** the report, add the **Placement Experiment and Variant** dimension to your report.
 
 <Frame caption="2025-02-10_12-54-48.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423783619100" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423783619100)
 </Frame>
 
 3. Filter the dimensions and select the required experiments.
@@ -111,15 +140,15 @@ The DT Offer Wall Report allows you to view the performance of your test. To mon
    The report updates and shows the results of the experiments.
 5. (Optional) To monitor the aggregated results of the experiment, select **Table**.
 
-<Frame caption="">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/10187271764764" />
+<Frame caption>
+  ![](https://developer.digitalturbine.com/hc/article_attachments/10187271764764)
 </Frame>
 
 6. (Optional) To track the results over time, select **Line Chart** andsplit the data by the **Date/Time**.\
    The report appears as a line chart.
 
 <Frame caption="2025-02-10_12-48-17.jpg">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/18423762126748" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/18423762126748)
 </Frame>
 
 #### Tip
@@ -144,7 +173,7 @@ After completing the experiment and analyzing the results, follow these steps to
    The winning variant is now the default placement configuration.
 
 <Frame caption="Screen Shot 2023-08-30 at 14.33.49.png">
-  <img src="https://developer.digitalturbine.com/hc/article_attachments/10207664264220" />
+  ![](https://developer.digitalturbine.com/hc/article_attachments/10207664264220)
 </Frame>
 
 [Back to Top ⇧](#top)
