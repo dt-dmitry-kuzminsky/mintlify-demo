@@ -313,3 +313,18 @@ function inArray(needle, haystack) {
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+
+   //#region marketplaceMediationVersions helpers
+    // Supported DT Exchange SDKs by Mediation Platform
+    // https://developer.digitalturbine.com/hc/en-us/articles/360015536857-Supported-DT-Exchange-SDKs-by-Mediation-Platform
+    marketplaceMediationVersionsCreate();
+
+    $(document).on('click', '.marketplaceMediationVersions .tablink', function (e) {
+        var $this = $(e.target),
+            platform = $this.data('id');
+        $this.parents('.marketplaceMediationVersions').find('.tablink').removeClass('active');
+        $this.addClass('active');
+        $this.parents('.marketplaceMediationVersions').find('[data-platform]').addClass('hidden');
+        $this.parents('.marketplaceMediationVersions').find('[data-platform="' + platform + '"]').removeClass('hidden');
+    });
+    //#endregion
