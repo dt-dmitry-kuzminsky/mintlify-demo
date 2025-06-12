@@ -1,3 +1,4 @@
+window.addEventListener('DOMContentLoaded', () => {
 // Find the HTML element with the ID 'js-test-output'.
 const testContainer = document.getElementById('js-test-output');
 
@@ -19,3 +20,4 @@ if (testContainer) {
     // If the element couldn't be found, log an error in the browser's developer console.
     console.error("Error: The target element with id 'js-test-output' was not found on the page.");
 }
+} 
