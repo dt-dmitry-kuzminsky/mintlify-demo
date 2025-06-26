@@ -5,6 +5,37 @@ title: "Welcome To DT Exchange Demand"
 # Test JS
 
 
+import React from 'react';
+
+// Main App component
+const App = () => {
+  // In a real React application, you wouldn't typically check for an element
+  // by ID in the DOM like this within the component's render logic,
+  // as React handles the rendering of elements.
+  // Instead, you'd manage state to decide what to render.
+  // For this specific example, we'll assume the component itself acts as the
+  // "test output" container.
+
+  return (
+    <div
+      // Use Tailwind CSS classes to apply the specified styles
+      // Corresponding to:
+      // padding: '20px' -> p-5
+      // margin-top: '1em' -> mt-4 (Tailwind's spacing scale, 1em is roughly 16px, so 1rem/4 is a good approximation)
+      // border: '2px solid #0077c2' -> border-2 border-blue-600 (using a close blue shade from Tailwind)
+      // border-radius: '8px' -> rounded-lg
+      // background-color: '#eef7ff' -> bg-blue-50 (a very light blue)
+      // color: '#004a7c' -> text-blue-800 (a darker blue for text)
+      // font-family: 'sans-serif' -> font-sans (default Tailwind sans-serif)
+      // font-weight: 'bold' -> font-bold
+      className="p-5 mt-4 border-2 border-blue-600 rounded-lg bg-blue-50 text-blue-800 font-sans font-bold"
+    >
+      Success! The React component is loaded and running.
+    </div>
+  );
+};
+
+
 <div id="js-test-output" />
 
 [Back to Top ⇧](#top)
