@@ -1,0 +1,49 @@
+---
+title: "Using Sellers.Json And SupplyChain"
+---
+
+The following items provide compliance with IAB specifications aimed at increasing trust in the supply chain: `sellers.json` and the OpenRTB `SupplyChain` object. For more information about these IAB specifications, seethe[IAB site](https://iabtechlab.com/sellers-json/).
+
+## DT sellers.json
+
+DT must post a publicly available `sellers.json` file on our website listing our complete list of publishers. As an advertiser, use this file to cross‑reference the `app‑ads.txt` entries provided by the publisher. Use `Publisher ID` and `SSP Domain` to identify entities across both specifications.
+
+DT provides our complete list of publishers in our [sellers.json](https://www.digitalturbine.com/sellers.json "DT sellers.json file") file.
+
+## Implementing the SupplyChain Object
+
+The `SupplyChain` object outlines the entire supply path from the publisher to the advertiser, detailing all intermediary reseller entities involved in the process. DT introduces the first node in the chain to inform our buyers of our direct publisher relationships. Any advertising system that resells DT supply is required to add its own node, ensuring that DSPs can trace the full payment chain all the way back to the publisher.
+
+DT supports the `SupplyChain` object for OpenRTB, API, and tag integrations. To enable `SupplyChain` , contact your DT Representative.
+
+## OpenRTB Implementation
+
+DT supports all required OpenRTB schain attributes. For OpenRTB 2.5, the `SupplyChain` object is in `BidRequest.Source.ext.schain`. For more details, see the OpenRTB documentation for the [`Source`](/hc/en-us/articles/360010835237-DT-Exchange-OpenRTB-2-5-Specs#01H8GF5TQ53VVSV03E43611EMP "BidRequest.Source.ext.schain")object.
+
+The following snippet is a sample bid request that contains the `SupplyChain (schain)` object in an OpenRTB 2.5 integration:
+
+**JSON**
+
+```json
+{
+    {
+        "schain": {
+            "ver": "1.0",
+            "complete": 1,
+            "nodes": [
+                {
+                    "asi": "fyber.com",
+                    "sid": "222222",
+                    "hp": "1",
+                    "rid": "9999381608846099999"
+                }
+            ]
+        }
+    }
+```
+
+## API or Tag Implementation
+
+Per the IAB spec, DT supports the `$SCHAIN` macro for Single Hop - Chain Complete. This macro returns a string-serialized SupplyChain list with the advertising system’s node appended.
+
+[Back to Top ⇧](#top)

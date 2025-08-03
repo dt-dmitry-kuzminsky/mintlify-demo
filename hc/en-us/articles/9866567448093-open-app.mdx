@@ -1,0 +1,55 @@
+---
+title: "Open App"
+---
+
+Use the following method to open an app after installation:
+
+```javascript
+void performAction(String packageName, String actionType, in Bundle metadata, IIgniteServiceCallback callback);
+```
+
+## Type
+
+Asynchronous
+
+## Description
+
+Performs a specific action specified by the **actionType** parameter on the app specified by the **packageName** parameter. Currently, the SDK supports only the open/launch action. Using this action will launch the specified application.
+
+## Parameters
+
+* packageName
+
+  application to be launched
+
+* actionType
+
+  type of action to be performed on the packageName. Currently, the SDK supports only the launch action.
+
+* metadata
+
+  metadata that may be needed for additional processing
+
+* callback
+
+  provide a callback to track the action state.
+
+## Sample
+
+```typescript
+// Initialization
+
+// ...
+
+IgniteServiceSdk.instance().performAction(packageName, IgniteActions.LAUNCH.name, Bundle(), object : IResponseCallback<PerformActionResponse, Error, Progress> {
+        override fun onSuccess(result: PerformActionResponse) {
+            Log.d(TAG, "Perform Action CallBack Success ${result.application.packageName}")
+        }
+
+        override fun onError(error: Error) {
+            Log.e(TAG, "Perform Action CallBack Error: ${error.message}")
+        }
+    })
+```
+
+[Back to Top ⇧](#top)

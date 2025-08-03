@@ -1,0 +1,53 @@
+---
+title: "Offer Wall REST API Integration"
+---
+
+The Offer Wall REST API allows you to retrieve offers tailored to your users and their device specifications. Once users complete offer requirements or specific actions in your app (RewardedActions), you can reward them with in-app virtual currency to increase user engagement. Use the retrieved offer data to render offers in your app using your own custom UI and graphics, creating a seamless and branded experience. For more information about using the OfferWall RESTAPI for RewardedActions, see[SettingUp RewardedActions](/hc/en-us/articles/13690696061724-Setting-Up-Rewarded-Actions).
+
+To implement the OfferWall REST API:
+
+* [Step 1: Configure your app for Offer Wall](#ofw_console)
+* [Step 2: Activate the Offer Wall REST API](#ofw_api)
+* [Step 3: Send requests for Offers](#offers)
+* [Step 4: Reward your user](#reward)
+* [Step5: Test Your Implementation](#h_01JRZW7SFSXWGXH3HF2E543N03)
+
+## Step 1: Configure Your App for OfferWall
+
+Before you use the OfferWall REST API, configure your app for OfferWall in the DT Console:
+
+* Add your app as an OfferWall app. For more information about adding an app for OfferWall, see[Adding Your App](https://developer.digitalturbine.com/hc/en-us/articles/4404313469201-Setting-Up-DT-Offer-Wall#adding-an-app-to-the-fyber-console-0-4).
+* Configure the virtual currency for your app. For more information about configuring a virtual currency for your app, see[Modifying App Settings](https://developer.digitalturbine.com/hc/en-us/articles/4404313469201-Setting-Up-DT-Offer-Wall#h_01G3B2FTAQMZA49W5GWS495WBN).
+* Configure DT Placements for your app, and ensure they are active (Live status). For more information about creating placements for your app, see [CreatingPlacements](https://developer.digitalturbine.com/hc/en-us/articles/4404313469201-Setting-Up-DT-Offer-Wall#h_01G1QS1CE9V9Y8V98TZ8B8QH3F).
+
+## Step 2: Activate the OfferWall REST API
+
+To activate the Offer Wall REST API for your app, contact your DT Account Manager. Once the API is activated, your DT Account Manager sends you your API key. Use your API key to sign and validate requests and responses when using the Offer Wall REST API. If you need a new API key, contact your DT Account Manager.
+
+## Step 3: Send Requests for Offers
+
+The following diagram provides an overview of the OfferWall REST API connection sequence:
+
+```csharp
+Offer WallAppOffer WallAppopt[If you want to get another page of offers]loop[up to 10 times]opt[If Reward Unsuccessful]Device UserTap "Offers"1GET /feeds/v1/offers2List of Offers3Display List of Offers4GET /feeds/v1/offers with {page} value5List of Offers6Display List of Offers7Tap an option from List of Offers8GET show/fyber9Offer Detail (with Offer URL)10Display Offer Detail11Tap Offer URL and complete Offer Requirement(subscribe, sign up, purchase, etc.)12Process offer completion by user13GET Reward Callback14Reward User in Virtual Currency15Reward Callback Response ≠ 200 OK16GET Reward Callback17Reward Callback Response =  200 OK18Device User
+```
+
+## Offer Wall REST API Endpoints
+
+### `feed/v1/offers`
+
+Use the GET method and the `feed/v1/offers` endpoint to request a list of offers for your device user. The endpoint allows you to tailor offers to meet your user and device specifications. DT responds with a list of offers that you can render with your own custom graphics and UI to create a tailored experience for your users. Each offer includes a `show/fyber` request URL for you to surface additional details about an offer. 
+
+### `show/fyber`
+
+Use the GET method and the `show/fyber` endpoint to request details about a specific offer. DT provides this request URL in the response from the `feed/v1/offers` endpoint. The response to the `show/fyber` endpoint contains the offer requirements and the offer URL that the user must use to access the offer. Render the returned offer details using your own custom graphics and UI to create a tailored experience for your users.
+
+## Step 4: Reward Your User
+
+DT recommends using server-side rewarding with the OfferWall REST API. For more details about how to set up server-side rewarding, see[Server-Side Rewarding](https://developer.digitalturbine.com/hc/en-us/articles/360010867817-Server-Side-Rewarding).
+
+## Step5: Test Your Implementation
+
+Once you have completed your Offer Wall REST API implementation, test your Offer Wall by retrieving test offers, completing them, and confirming that your reward system is functioning properly. For more information, see[Testing Your Offer Wall Implementation.](https://developer.digitalturbine.com/hc/en-us/articles/18589296749724-Testing-Your-Offer-Wall-Implementation)
+
+[Back to Top ⇧](#top)

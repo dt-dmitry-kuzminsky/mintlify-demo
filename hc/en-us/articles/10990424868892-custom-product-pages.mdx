@@ -1,0 +1,42 @@
+---
+title: "Custom Product Pages"
+---
+
+CPP enables the utilization of custom product pages in response to clicks initiated on StoreKit-based iOS components, including SKOverlay and StoreKit.\
+Additionally, DTX allows the attachment of a designated CPP ID to a bid response, enabling it to be utilized for click handling and redirection.
+
+#### Note
+
+DT Exchange supports CustomProductPages on iOS 15 or later
+
+## Supported Features
+
+* Demand-side platforms (DSPs) utilize iOS's native StoreKit-based components
+* App developers create distinct versions of their App Store product page, each with a unique design. These pages can be individually measured for marketing purposes
+* Bidding with a specific CPP value per impression, enabling DSPs to specify a particular product page ID
+
+## Configuring in AppStoreConnect
+
+* Ensure that DT supply supports CPP functionality (iOS 15+ compatibility) and utilizes DT Exchange SDK version 8.2.3 or later
+* When these conditions are met, a new field labeled "productpage" with a value of 1 (DT oRTB reference) is included under BidRequest.imp.ext.skadn.r
+
+## Object: BidRequest.imp.ext.skadn
+
+| Attribute   | Always Passed | Description                                                                                                                                                      |
+| ----------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| productpage | No            | This attribute flags supply supporting the Custom Product Page functionality; it passes with the value 1 when eligible and will not be passed when not eligible. |
+
+For additional technical information, [click here](https://developer.digitalturbine.com/hc/en-us/articles/360010835237-DT-Exchange-OpenRTB-2-5-Specs#object-bidrequest-imp-ext-skadn-0-9)
+
+* * DSPs can set the custom product page as part of the bid response.\
+    This can be achieved using a field named "productpageid" under BidResponse.seatbid.bid.ext.skadn, with the relevant product page ID
+
+## Object: BidResponse.seatbid.bid.ext.skadn
+
+| Attribute     | Required | Description                           |
+| ------------- | --------- | ------------------------------------- |
+| productpageid | No        | Product Page id to direct to on click |
+
+For additional technical information, [click here](https://developer.digitalturbine.com/hc/en-us/articles/360010835237-DT-Exchange-OpenRTB-2-5-Specs#object-bidresponse-seatbid-bid-ext-skadn-0-29)
+
+[Back to Top ⇧](#top)

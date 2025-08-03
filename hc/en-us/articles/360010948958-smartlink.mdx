@@ -1,0 +1,38 @@
+---
+title: "Smartlink"
+---
+
+The Smartlink scheme allows advertisers and demand partners to direct users to an installed application. Smartlink redirects the user to a fallback URL when the app does not appear on the device. The scheme allows you to add click trackers to the primary and fallback URLs to track user interactions.
+
+### Smartlink Example
+
+```javascript
+smartlink://navigate?
+primaryUrl=fyberawesomeapp%3A%2F%2Flink&
+primaryTrackingUrl=http%3A%2F%2Fpx.fyber.com%2FtrackPrimaryClicked&
+fallbackUrl=http%3A%2F%2Fwww.fyber.com&
+fallbackTrackingUrl=http%3A%2F%2Fpx.fyber.com%2FtrackFallbackClicked
+```
+
+The following table describes the Smartlink query parameters and their functions:
+
+| COMPONENT             | DESCRIPTION                                                                                  |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| `primaryUrl`          | Defines a deep link to the target application which might be installed on the device.        |
+| `fallbackUrl`         | Redirects the user to a webpage when the desired application is not installed on the device. |
+| `primaryTrackingUrl`  | Fires an HTTP GET request when the primary URL opens successfully.                           |
+| `fallbackTrackingUrl` | Fires an HTTP GET request when the fallback URL opens successfully.                          |
+
+#### Note
+
+You must define the following parameters for a valid Smartlink implementation:
+
+* Scheme: `smartlink`
+
+* Host path: `navigate`
+
+* Tracking URLs: Specify one or multiple tracking URLs. Smartlink triggers all applicable URLs when the corresponding event occurs.
+
+For more information, see[Click to Native Browser](/hc/en-us/articles/360010858357-Click-to-Native-Browser).
+
+[Back to Top ⇧](#top)

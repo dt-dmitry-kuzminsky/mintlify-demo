@@ -1,0 +1,95 @@
+---
+title: "BIGO Ads"
+---
+
+This article is for publishers who want to use the DT FairBid SDK to load and display ads from BIGO Ads via DT FairBid Mediation.
+
+BIGO Ads currently supports the following [ad types](https://developer.digitalturbine.com/hc/en-us/articles/360010915358-Ad-Types-and-Placement-ID):
+
+* Banner
+* Interstitial
+* Rewarded
+
+To integrate BIGO Ads as a DT mediated network:
+
+* [Step 1: Retrieve BIGO Ads parameters](#step-1%3A-retrieve-bigo-ads-parameters).
+* [Step 2: Add BIGO Ads as a DT mediated network](#step-2%3A-add-bigo-ads-as-a-dt-mediated-network).
+* [Step 3: Add the BIGO Ads SDK to your integration](#step-3%3A-add-the-bigo-ads-sdk-to-your-integration).
+* [Step 4: Test your integration](#step-4%3A-test-your-integration).
+
+## Step 1: Retrieve BIGO Ads Parameters
+
+Before retrieving BIGO Ads parameters, ensure that you have BIGO Ads ad unit inventory that you want to mediate with DT. For more information about creating BIGO Ads inventory, see the following BIGO ADS articles:
+
+* [Create](https://www.bigossp.com/register) a BIGO Ads account.
+
+* Add your app to BIGO Ads.
+
+* Create placement (Ad Slots) for your app. Ensure that you specify the appropriate **Auction Type**:
+
+  * **Waterfall** for traditional Waterfall
+  * **Server Bidding** for SDK Bidding
+
+To set up BIGO Ads as a DT mediated network, locate the following BIGO Ads parameters:
+
+| BIGO ADS PARAMETER | DESCRIPTION                                       |
+| ------------------ | ------------------------------------------------- |
+| `App ID`           | The unique ID of your app in the BIGO Ads system. |
+| `Ad Slot ID`       | The unique ID of your ad placement in BIGO Ads.   |
+
+### Obtaining the App ID
+
+1. Log in to your [BIGO Ads Dashboard](https://www.bigossp.com/login), and click **Apps and Sites**.
+
+2. Locate your app.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/11546231392540" />
+</Frame>
+
+3. Copy the `APP ID` for your app, and store the value in a text file. This value is required later in [Step2](#h_01HMBMW7WQ5T73CWB3J56GETEV "Adding BIGO Ads as a Mediated Network in DT FairBid") to add BIGO Ads as a DT mediated network.
+
+### Obtaining the Ad Slot ID
+
+1. On the [BIGO Ads Dashboard](https://www.bigossp.com/login "BIGO Ads Dashboard"), click **AdSlots**.\
+   A list of ad slots associated with all of your apps displays.
+
+2. For each ad slot you want to mediate with DT, copy the `Ad Slot ID`, and save these values to a text file. These values are required later in [Step2](#h_01HMBMW7WQ5T73CWB3J56GETEV "Adding BIGO Ads as a Mediated Network in DT FairBid") to add BIGO Ads as a DT mediated network.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/11547798228124" />
+</Frame>
+
+## Step 2: Add BIGO Ads as a DT Mediated Network
+
+Before you add BIGO Ads as a mediated network in DT FairBid:
+
+* Ensure that you have access to parameters you retrieved from BIGO Ads in [Step1](#h_01HHEY0ND7XMBRV09JAMM64GV5).
+* [Add your App](/hc/en-us/articles/14755391313308) using the DT Console.
+* Ensure that you set up a [DT Placement](/hc/en-us/articles/15005035293468 "Create a DT placement") for each BIGO Ads ad type you want to mediate with DT.
+
+To add BIGO Ads as a DT mediated network:
+
+1. Log in to the [DT Console](https://console.fyber.com/), and click**App Management**.
+
+2. [Set up](/hc/en-us/articles/15005016082972) **BIGO Ads** or **BIGO Ads Bidder** as a mediated network using the parameters you retrieved in [Step1](#h_01HHEY0ND7XMBRV09JAMM64GV5).
+
+<Frame caption="BIGO-Ads_2024-10-11_11-11-36.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16348038864028" />
+</Frame>
+
+3. [Set up an ad network instance](/hc/en-us/articles/15111147606428) using the BIGO Ads `Ad Slot ID` you retrieved in [Step1](#h_01HHEY0ND7XMBRV09JAMM64GV5) for the **Instance ID**.
+
+## Step 3: Add the BIGO Ads SDK to Your Integration
+
+To integrate the BIGO Ads SDK, follow the instructions on the [Supported Networks](https://developer.digitalturbine.com/hc/en-us/articles/360010077777-Supported-Networks) page.
+
+## Step 4: Test Your Integration
+
+Use the DT Test Suite to verify that you have set up your app properly for FairBid mediation. The DT Test Suite is available for Android, iOS, and Unity apps. For more information about using the DT Test Suite, see [Test Suite](https://developer.digitalturbine.com/hc/en-us/articles/16840582428316-Test-Suite "Using the DT Test Suite").
+
+<Frame caption="DT Test Suite screen showing app is ready for mediation">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17017418837276" />
+</Frame>
+
+[Back to Top ⇧](#top)

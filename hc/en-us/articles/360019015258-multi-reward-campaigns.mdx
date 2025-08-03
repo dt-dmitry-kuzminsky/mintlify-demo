@@ -1,0 +1,108 @@
+---
+title: "Multi Reward Campaigns"
+---
+
+Multi-reward campaigns are in-app CPE (Cost Per Engagement) campaigns that reward the user upon completing multiple actions rather than rewarding the user for completing a single action.
+
+For example, a user downloads a bingo game and progresses to level 100. Traditionally, users receive rewards only at level 100. In a multi-reward campaign, users earn rewards for reaching intermediate milestones, such as levels 30, 50, 80, and the final level, 100.
+
+## General Guidelines
+
+* Multi-reward campaigns are only available for in-app action CPE campaigns.
+* Advertisers determine the levels, stages, or actions that trigger rewards.
+* DT rewards users for any event the advertiser tracks and sends postbacks with the relevant Action ID.
+* Rewarding isn’t sequential, and the events aren’t dependent on one another; a user could ‘skip’ an event and still reach the final event.
+* Advertisers can run multiple campaigns (multi-reward or single-reward) with overlapping events.
+
+## Setting Up a Multi-Reward Campaign
+
+To set up a multi-reward campaign:
+
+1. Create a [new campaign](https://developer.digitalturbine.com/hc/en-us/articles/360010956637-Campaign-Set-Up#adding-an-offer-0-6) and set the **Default Bid** to the total payouts for all events in the campaign.\
+   The **Default Bid** represents the accumulated amount you are willing to pay for a user who completes all the events in the campaign.
+
+#### Note
+
+Use lifetime or daily budgets when you run multi-reward campaigns.
+
+2. On the **Tracking** tab, in**Campaign Steps** area, toggle **Multi Reward** on.\
+   The **Instructions** area appears.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/4423086598417" />
+</Frame>
+
+3. Enter at least two instructions to guide the user on earning rewards.
+
+#### Tip
+
+DT recommends the following wording for instructions:
+
+* Play \[add app name]
+* Complete all steps and earn rewards along the way
+* Reach level \[add final event level] to win the total reward!
+
+4. Add details to the steps the user must complete to earn the rewards in the **Step Description** area.
+5. For each step that you add, enter:
+
+* Step Description
+
+  A description of the task the user is required to complete to earn the reward, such as: "Complete level 10".
+
+* Action ID
+
+  The Action ID passed in the postbacks DT receives from your attribution provider to notify that the user completed the required event and is eligible to be rewarded.
+
+* Payout Distribution
+
+  The proportion of the Default Bid (as defined in the **Budget** section on the **Setup** page) that you want this step to represent. Payout distribution of all steps combined must reach 100%. Under the **Payout Amount** column, you can see the bid value per event based on the payout distribution that you set.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360018822017" />
+</Frame>
+
+6. Define the campaign targeting criteria.
+
+7. Review and confirm the setup before launching your campaign in the **Preview** tab.
+
+<Frame caption="mceclip0.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/6340932385693" />
+</Frame>
+
+## Micro Bidding with Multi-Reward Campaigns
+
+Optimize campaign performance by leveraging micro-bidding to adjust bids for specific Country Groups or source apps described in [Micro Bidding](/hc/en-us/articles/360015933297).
+
+When you update the bid of a Country Group or a source app in multi-reward campaigns, you override the campaign Default Bid setting. The percentage distribution for each event remains fixed at the campaign level, while the bid values for individual events adjust proportionally. Hovering over the bid price allows you to preview the new bid value distribution per event.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360018666977" />
+</Frame>
+
+## Example
+
+A campaign has a default bid of \$8 and an even distribution per each of its four events:
+
+| Event Name | Distribution per Event | Bid Value per Event |
+| ---------- | ---------------------- | ------------------- |
+| Level 1    | 20%                    | \$2                 |
+| Level 2    | 20%                    | \$2                 |
+| Level 3    | 20%                    | \$2                 |
+| Level 4    | 20%                    | \$2                 |
+| **Total**  | **100%**               | **\$8**             |
+
+At the micro-bidding level, the campaign updates the bid for a specific source app from \$8 to \$16. The system maintains the same distribution percentages and adjusts the bid values per event:
+
+| Event Name | Distribution per Event | Bid Value per Event |
+| ---------- | ---------------------- | ------------------- |
+| Level 1    | 20%                    | \$4                 |
+| Level 2    | 20%                    | \$4                 |
+| Level 3    | 20%                    | \$4                 |
+| Level 4    | 20%                    | \$4                 |
+| **Total**  | **100%**               | **\$16**            |
+
+#### Tip
+
+To set up a different distribution per event, duplicate the campaign and change the distribution setup on the **Tracking** page. This approach allows you to A/B test performance with alternative distributions or establish an allowlist of apps, each with its unique event distribution.
+
+[Back to Top ⇧](#top)

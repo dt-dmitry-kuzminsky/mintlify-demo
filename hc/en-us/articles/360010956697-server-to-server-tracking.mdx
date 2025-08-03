@@ -1,0 +1,65 @@
+---
+title: "Server To Server Tracking"
+---
+
+Setting Up the Attributed Action Postback
+
+Advertiser tracking installs must make a request to the API**every time a user completes the required action**.
+
+Requests**must be made in realtime**and cannot be made in bulk.
+
+Request URL
+
+The URL you should request using the`GET`method is
+
+`service.fyber.com/actions/v2`
+
+Parameters to Submit with the Request
+
+Append the following parameters on every request.
+
+#### Notes
+
+* Take a note of your DT `AppID`. It is required for the Server-to-Server action postback.
+* To achieve maximum reach of your campaign, use an https tracking URL.
+
+**Android**
+
+| Parameter                                   | Description                                                                                                                                                  | Example                              | Mand. for Action Postbacks? |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------ | --------------------------- |
+| appid                                       | This is the AppID that you have obtained from the campaign details or has been given to you by your account manager.                                         | 9ed9fdf1b5546748d56b4a01298a84fd     | Yes                         |
+| answer\_received                            | Always 0 for attributed actions                                                                                                                              | 0                                    | Yes                         |
+| ip                                          | IP address of the user (i.e. the external address of the device)                                                                                             | 215.65.23.555                        | Yes                         |
+| subid                                       | Click ID that was passed in the Click URL. Provide a placeholder for us to add it to your Tracking URL.                                                      | 2fc13660-4509-f1a2-a0f1-61198a460826 | Yes                         |
+| google\_ad\_id                              | The Google advertising ID obtained via AdvertisingIdClient.getAdvertisingIdInfo(mContext).getId();                                                           | 38400000-8cf0-11bd-b23e-10b96e40000d | Yes                         |
+| google\_ad\_id\_limited\_tracking \_enabled | Retrieves whether the user has limit ad tracking enabled or not. Obtained via AdvertisingIdClient.getAdvertisingIdInfo(mContext). isLimitAdTrackingEnabled() | true or false                        | Yes                         |
+
+**iOS**
+
+| Parameter                      | Description                                                                                                                                                                                                                                                                       | Example                              | Mand. for Action Postbacks? |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | --------------------------- |
+| appid                          | This is the AppID that you have obtained from the campaign details or has been given to you by your account manager.                                                                                                                                                              | 9ed9fdf1b5546748d56b4a01298a84fd     | Yes                         |
+| answer\_received               | Always 0 for attributed actions                                                                                                                                                                                                                                                   | 0                                    | Yes                         |
+| answer\_received               | Always 1 for non-attributed actions                                                                                                                                                                                                                                               | 1                                    | No                          |
+| ip                             | IP address of the user (i.e. the external address of the device)                                                                                                                                                                                                                  | 215.65.23.555                        | Yes                         |
+| subid                          | Click ID that was passed in the click URL. Please provide a placeholder for us to add it to your tracking url.                                                                                                                                                                    | 2fc13660-4509-f1a2-a0f1-61198a460826 | Yes                         |
+| apple\_idfa                    | [Apple ID for Advertising](https://developer.apple.com/library/ios/#documentation/AdSupport/Reference/ASIdentifierManager_Ref/ASIdentifierManager.html). Retrieved via \[\[ASIdentifierManager sharedManager] advertisingIdentifier]                                              | 2E7CE4B3-F68A-44D9-A923-F4E48D92B31E | Yes                         |
+| apple\_idfa\_tracking\_enabled | Is user tracking via[Apple ID for Advertising](https://developer.apple.com/library/ios/#documentation/AdSupport/Reference/ASIdentifierManager_Ref/ASIdentifierManager.html)enabled by the user? Retrieved via \[\[ASIdentifierManager sharedManager]advertisingTrackingEnabled] | True or False                        | Yes                         |
+
+
+
+Sample Request
+
+A complete request would look like this:
+
+**Attributed Action Postback**
+
+```bash
+http://service.fyber.com/actions/v2?appid=9ed9fdf1b5546748d56b4a01298a84fd&action_id=TUTORIAL&answer_received=0&subid=2fc13660-4509-f1a2-a0f1-61198a460826&google_ad_id=38400000-8cf0-11bd-b23e-10b96e40000d&google_ad_id_limited_tracking_enabled=true&ip=178.210.115.51
+```
+
+Digital Turbine Response
+
+The API always responds with`HTTP 200`(OK) and an empty body unless there is an error, in which case the API responds with the relevant HTTP Error Code.
+
+[Back to Top ⇧](#top)

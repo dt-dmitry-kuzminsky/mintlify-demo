@@ -1,0 +1,69 @@
+---
+title: "API Authentication"
+---
+
+You must use an authentication token to interact with DT Fairbid APIs. To obtain an authentication token, send your verification key through the appropriate authentication endpoint.
+
+* [DT FairBid Management API](https://developer.digitalturbine.com/hc/en-us/articles/4409541086993-FairBid-Management-API)
+
+  Allows publishers to create and maintain all settings required to monetize their apps with ads.
+
+* [DT FairBid Reporting API](https://developer.digitalturbine.com/hc/en-us/articles/360010079438-FairBid-Reporting-API)
+
+  Gives access to all the reporting data from the monetization ad units. You can query multiple metrics such as revenue and impressions and filter by the available dimensions.
+
+* [DT FairBid User Level Reporting API](https://developer.digitalturbine.com/hc/en-us/articles/360010106598-FairBid-User-Level-Reporting-API)
+
+  Gives access to reporting data to measure all revenue generated from individual device users. Use this information to optimize retargeting campaigns and accurately measure user lifetime value (LTV).
+
+## Obtaining Verification Keys
+
+To obtain an authentication token, you must provide the appropriate verification key for each API.
+
+**To locate your verification keys:**
+
+1. Log in to the [DT Console](https://console.fyber.com), and click your user name in the left-hand menu.
+
+2) Click **User Profile**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/6514699209245" />
+</Frame>
+
+The page that opens shows three types of credentials:
+
+[<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/6514974458397" />
+</Frame>](/hc/article_attachments/6514974458397)
+
+3. Consult the table below to identify which key to use:
+
+| DT FAIRBID API                                                                                                                              | NAME IN DT CONSOLE                   | VERIFICATION KEYS                               |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------- |
+| [DT FairBid Management API](https://developer.digitalturbine.com/hc/en-us/articles/4409541086993-FairBid-Management-API)                    | Management API - Credentials         | * Client ID
+* Client secret                     |
+| [DT FairBid Reporting API](https://developer.digitalturbine.com/hc/en-us/articles/360010079438-FairBid-Reporting-API)                       | Advanced Reporting API - Credentials | - Client ID
+- Client Secret                     |
+| [DT FairBid User Level Reporting API](https://developer.digitalturbine.com/hc/en-us/articles/360010106598-FairBid-User-Level-Reporting-API) | Basic Reporting API - Credentials    | * Publisher ID
+* Consumer Key
+* Consumer Secret |
+
+## Generate New Keys
+
+You should generate new verification keys on a regular basis. In order to generate new keys, you must first revoke the current keys.
+
+**To generate new verification keys:**
+
+1. Log in to the [DT Console](https://console.fyber.com), and click your user name in the left-hand menu.
+
+2) Click **User Profile**.
+
+3. For the verification keys you want to re-generate, click **Revoke**.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/6516446715037" />
+</Frame>
+
+4. Click **Generate New Keys**.
+
+[Back to Top ⇧](#top)

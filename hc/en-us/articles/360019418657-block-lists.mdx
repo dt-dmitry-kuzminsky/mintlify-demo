@@ -1,0 +1,102 @@
+---
+title: "Block Lists"
+---
+
+Block lists allow you to specify ads you do not want to appear in your app. You can block ads based on the following ad properties:
+
+* Advertiser: Blocks ads from specified advertiser domains.
+* Individual App Campaigns: Blocks ads that promote specific apps to prevent competition or undesired content.
+* Creatives: Blocks specific ad creatives by their unique identifiers to manage content at a granular level while allowing the rest of the publisher or website's ads
+
+## Block Lists Levels
+
+You can apply block lists to specific apps in your account or all of the apps in your account:
+
+* All Apps Levels: Applies the block list to all advertisers and affects all apps linked to the advertiser's domain.
+* App Level: Applies the block list to specific apps, which targets individual apps or creatives without affecting other ads within the same publisher or advertiser domain. DT automatically adds apps blocked at the app level to the publisher-level blocking list, which ensures comprehensive control of ad content across all apps within the account.
+
+## Viewing Block Lists
+
+To view block lists:
+
+1. Log in to the [DT Console](https://console.fyber.com/login), and navigate to **Block Lists**.
+
+<Frame caption="login.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17509008717084" />
+</Frame>
+
+2. Select one of the following tabs to view the blocked content on your account:
+
+* **Advertisers**
+* **Individual App Campaigns**
+* **Creatives**
+
+<Frame caption="Block Advertisers.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17509008720668" />
+</Frame>
+
+3. (Optional) To copy a block list from one app to another, click **COPY BLOCK LIST**.
+4. (Optional) To delete a blocked list, click **CLEAR ALL**.
+
+## Blocking Advertiser Domains
+
+The **Advertiser's** tab allows you to view or block ads from specific advertisers across all your apps at the account level. This only blocks an ad if the advertiser domain matches the domain provided by the Advertiser (if any). To block advertiser domains:
+
+1. Click **ADD TO BLOCK LIST**, from the **Advertisers** tab.\
+   The **Add advertiser domains** window appears.
+
+<Frame caption="2024-12-08_14-01-55.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17509008721692" />
+</Frame>
+
+2. Enter the domain name in domain format, `ABC.XYZ`, and click **Save**.\
+   For example, `testing.com`.\
+   The newly added advertiser domain appears in the blocked **Advertisers** list.
+
+<Note>
+#### Note
+
+* You can add multiple entries separated by a comma.
+* DT allows a maximum of 5000 domains.
+* Entries must be at least three characters in length.
+* DT validates all block list entries and rejects incorrect entries. A rejection message appears below the relevant field when an entry is invalid. Verify that the entry is accurate and matches the required format.
+</Note>
+3. (Optional) To view the blocking settings per app, click **Blocked advertiser on the app level**.
+
+## Blocking Individual App Campaigns
+
+The **Individual Add Campaigns** tab allows you to block ads from specific apps by entering the app's Android bundle ID or iOS app ID. To block individual app campaigns:
+
+1. Click **ADD TO BLOCK LIST**, from the **Individual App Campaigns** tab.\
+   The **Add Android bundle IDs** or the **Add iOS app IDs** window appears.
+
+<Frame caption="block campaigns.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17509000785692" />
+</Frame>
+
+2. Entereither the **Android bundle IDs** or **iOS app IDs** that you want to block, and click **Save**.\
+   Each platform's new blocked **Individual App Campaigns** list appears in the relevant areas.\
+   The newly added **Individual Add Campaign** appears in the blocked **Individual App Campaigns** list.
+3. (Optional) To view the blocking settings per app, click **Blocked individual app campaigns on the app** **level**.
+
+## Blocking Creatives
+
+The **Creatives** tab allows you to block specific ad creatives using unique identifiers, providing more control over content. To block specific creatives:
+
+1. Click **ADD TO BLOCK LIST**, from the **Creatives** tab.
+   The **Add creative IDs** window appears.
+
+<Frame caption="block creati.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17509000787356" />
+</Frame>
+
+2. Enter specific **Creative IDs**, and click **Save**.\
+   The newly added **Creative IDs** appear in the **Blocked Creatives** list.
+<Note>
+#### Note
+
+Some ads use different Creative IDs for different buyers. To block an ad, add all its creative IDs to this list.
+</Note>
+
+
+[Back to Top ⇧](#top)

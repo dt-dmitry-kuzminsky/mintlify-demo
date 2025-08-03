@@ -1,0 +1,205 @@
+---
+title: "Quickstart Guide"
+---
+
+Before you connect with the Ignite Services API, complete the following tasks:
+
+* Obtain a `ClientID` from DT. Use the `ClientID` to identify your application in the DT environment.
+* Set up a test environment for Ignite Services. For more information about test environments, see [How to Set Up Test Environment](https://developer.digitalturbine.com/hc/en-us/articles/8364861007261-How-to-Set-Up-Test-Environment).
+
+To quickly get started and interact with DT Ignite via the Ignite Services API, use the following process:
+
+1. [Add Client ID to Manifest](#h_01GQGDJKHWWCM2H2C9P1X12MZX).
+2. [Add Ignite files to your library](#h_01GQGDJWR3QFK0834KPV99QT58).
+3. [Declare and create IgniteService](#h_01GQGDK6WYJNVENJJNP9XFS0BT).
+4. [Connect to Ignite Services](#h_01GQGDKGWFSCSC3M34CJD3DW3C).
+5. [Call API Methods](#h_01GQGDKYTNWK6Q6S7MCY3AXHJH)
+6. [Disconnect from Ignite Services](#h_01GQGDMCC4WYS8VVJ3CF2M8ACE).
+
+If you encounter errors during this process, use the following resources to help resolve and respond to errors:
+
+* [Error Codes](https://developer.digitalturbine.com/hc/en-us/articles/8368003654813-Error-Codes)
+* [Installation Response and Error Handling](https://developer.digitalturbine.com/hc/en-us/articles/8364687532701-Response-and-Error-Handling)
+
+## Step 1: Add ClientID to the Manifest
+
+Insert the `ClientID` in the meta-data of the `AndroidManifest.xml` file. The following code is an example of this task.
+
+```html
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mycompany.myapp">
+
+    <application ... >
+		...
+
+		<!-- Example Client ID -->
+		<meta-data
+    		 android:name="com.digitalturbine.ignite.aidl.CLIENT_ID"
+	    	 android:value="52093f98-63a7-45b4-b9fb-191c685d6a40" />
+	</application>
+</manifest>
+```
+
+
+
+## Step 2: Add Ignite Files to Your Library
+
+Add `ignite-service-aidl-sdk.aar` to your `libs/` folder in your project. Or , if you have shared sources, import it as as a module.
+
+## Step 3: Declare IgniteService
+
+Declare and create an instance of `IIgniteService.kt`:
+
+```csharp
+lateinit var igniteService: IIgniteService
+
+// ...
+
+// After SDK is initialised the IgniteService instance is returned.
+// It can also be retrieved later using IgniteServiceSdk.instance()
+// NOTE: `clientSecret` can be empty for initial integration
+igniteService = IgniteServiceSdk.init(context, clientSecret)
+```
+
+
+
+## Step 4: Connect to Ignite Services
+
+Call the **`connect(callback)`** method:
+
+```typescript
+IgniteServiceSdk.instance().connect(object: IConnectionCallback {
+     override fun onConnected() {
+          // Connection with Ignite is established
+          Toast.makeText(applicationContext, "Connected.", Toast.LENGTH_SHORT).show()
+     }
+
+	 override fun onAuthenticated() {
+	      // Client is now able to call API methods
+          Toast.makeText(applicationContext, "Authenticated.", Toast.LENGTH_SHORT).show()
+     }
+
+     override fun onDisconnected(message: String?) {
+          Toast.makeText(applicationContext, "Disconnected from Ignite Service: $message", Toast.LENGTH_SHORT).show()
+     }
+})
+
+// or
+
+igniteService.connect(this)
+```
+
+
+
+## Step 5: Call API Methods
+
+```bash
+findViewById<Button>(R.id.version).setOnClickListener {
+    val result = IgniteServiceSdk.instance().version()
+    Toast.makeText(applicationContext, "SDK version: ${result?.sdkVersion}, Ignite version: ${result?.igniteVersion}", Toast.LENGTH_SHORT).show()
+}
+```
+
+
+
+## Step 6: Disconnect from Ignite Services
+
+Call **`disconnect()`** on lifecycle end to prevent unexpected behavior:
+
+```javascript
+// ...
+
+IgniteServiceSdk.instance().disconnect(this)
+
+// ...
+```
+
+
+
+## Example: Full Integration
+
+Below is an example class of the full integration using the Ignite Services Client SDK.
+
+A fully integrated demo application is available on request for existing customers. Please reach out to your support resource for access.
+
+```typescript
+class MainActivity : AppCompatActivity(), IConnectionCallback {
+    // Remember instance or you can call IgniteServiceSdk.instance()
+    lateinit var igniteService: IIgniteService
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        igniteService = IgniteService(applicationContext)
+        igniteService.connect(this)
+
+        // Call remote function on button click
+        findViewById<Button>(R.id.version).setOnClickListener {
+            val result = igniteService.version()
+            Toast.makeText(applicationContext, "SDK version: ${result?.sdkVersion}, Ignite version: ${result?.igniteVersion}", Toast.LENGTH_SHORT).show()
+        }
+
+        findViewById<Button>(R.id.install).setOnClickListener {
+            val file = File("${requireContext().filesDir}", "fortnite.apk")
+            val data = file.toUri().toString()
+            
+            igniteService.install(data, object : IResponseCallback<InstallationResponse, Error, InstallationProgress> {
+                override fun onSuccess(result: InstallationResponse) {
+                    Log.d("InstallApp","onSuccess(): taskId=${result.taskId}, appId=${result.applicationId}, package=${result.packageName}, partnerMetadata=${result.partnerMetaData}")
+                }
+
+                override fun onError(error: Error) {
+                    Log.d("InstallApp","onError(): message=${error.message}, code=${error.code}, partnerMetadata=${error.partnerMetadata}")
+                }
+            })
+        }
+
+        // Other API methods
+    }
+
+    override fun onConnected() {
+        Toast.makeText(applicationContext, "Connected to Ignite Service", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onAuthenticated() {
+        Toast.makeText(applicationContext, "Authenticated", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDisconnected(message: String?) {
+        Toast.makeText(applicationContext, "Disconnected from Ignite Service: $message", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        igniteService.disconnect(this)
+    }
+}
+```
+
+
+
+## Troubleshooting Connections
+
+If your Host App is unable to connect to Ignite, you may receive one of the following error messages:
+
+| ERROR MESSAGE                                    | DESCRIPTION                                                                                          |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Connection failed to unknown reason              | Ignite is not present in the device.                                                                 |
+| Authentication Exception: Can not create session | Client ID, Client Secret, or package name does not match what was given for DT Configuration.        |
+| Authentication Exception Code -2                 | Host App signing certificate fingerprint does not match with what was provided for DT Configuration. |
+
+
+
+## Best Practices
+
+When developing your Host App, consider the following best practices:
+
+* Use a unique fingerprint for Load and Production environments.
+* Within each environment, use the same signing certificate for each version of the Host App.
+* Ensure there is an active connection before initializing installations.
+* When connecting to the remote service, ensure the Host App is in the foreground, active, and visible to the user.
+* Do not connect to the remote service from classes or methods that might be called while the Host App is in the background, such as the Application class or broadcast receivers. Connecting in this manner causes multiple unnecessary connection attempts, potential resource conflicts, and unexpected behaviors when receiving broadcasts in the background.
+* Disconnect from any remote service when exiting the Host App.
+
+[Back to Top ⇧](#top)

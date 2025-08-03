@@ -1,0 +1,1128 @@
+---
+title: "DT FairBid Management API"
+---
+
+Authentication Apps Placements Instances
+
+## What is the Management API?
+
+The process of creating and maintaining waterfalls is both time and resource consuming. Once you have completed the verification process, the Management API provides a simple and quick method for publishers to create and maintain all settings for your monetization strategy.
+
+With the Management API you can perform the following functions for **Apps, Placements and Instances**:
+
+* Get (retrieve)
+* Create
+* Update
+* Delete
+
+The Management API enables **automation** of the processes, based on decisions taken on the publisher side. To complement the decision making process, read more about [reports](https://developer.digitalturbine.com/hc/en-us/sections/360002889378-Reporting) and the [reporting API](https://developer.digitalturbine.com/hc/en-us/articles/360010079438).
+
+## Generating Your Access Token
+
+Copy both the Client ID and Client Secret keys and create an HTTP request with the following body.
+
+**Description**
+
+Use the UI Management API credentials to authenticate your user and get back an access token to authorize further requests.
+
+**Method**
+
+`POST htpps://console.fyber.com/api/v2/management/auth`
+
+## Request Parameters
+
+| Key            | Description                                                                                            | Type   | Required | Example                            |
+| -------------- | ------------------------------------------------------------------------------------------------------ | ------ | -------- | ---------------------------------- |
+| grant\_type    | This key is constant and should always be completed for this API as "management\_client \_credentials" | String | Required | "management\_client\_ credentials" |
+| client\_id     | The Client ID token from the UI received for authentication.                                           | String | Required | “677eXXXXXXcdcc3fd790 deb46duyud4” |
+| client\_secret | The Client Secret token from the UI received for authentication.                                       | String | Required | “ghhjhiGHXXXXXX87686"              |
+
+## Example Request
+
+```php
+{
+          "grant_type": "management_client_credentials",
+          "client_id": "677e6543049XXXXXXXXX0deb46d2ecd4",
+          "client_secret": "d0iSLq5y6XXXXXuOyM4blm8GwzQ
+b2sLOlcBtsI9KvBx9tGuucM2kvrdxXXXXXPjIunXbATQTkHDjHv
+VEVv1JgXFj0EUWmuNpNH53p9SnGWxwXXXXgdJSkCUDuHaDeFWH
+z-prMEGftXXXXXXfa_-8mRZURDZu2d_CRnwZ-Z51EnuFszgEP0
+4f1AjcKTVhNSw0rXXXXXXdKaGZNM4EPsV5SxLBZKKdQxa3PPW
+L1Cb56U9ftviXPJKU47nAzXXXXXXXdfXKBsMCG2FX3nB7E2Ei
+b_yHNK0EtXX4zFTr8uYRXXXXXXXCLMVRUxNjQ"
+            }
+```
+
+## Response Parameters
+
+| Key         | Description                                                                | Type   | Required | Example                                                                                                                                                           |
+| ----------- | -------------------------------------------------------------------------- | ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| accessToken | Token to be used to authorize future requests                              | String | Required | “eyJhbGciXXXXXXXXsInR5cCI6IkpXVC J9.eyJpYXQiOjE2Mjg2NzI4OTMsImV4c CI6MTYyODXXXXXXwiYXVkIjoibWFu YWdlbWVudEFXXXXN1YiI6IjM2MiJ9. cjx3AgYcI0XXXXYkVsO6F\_7M72lu\_p ” |
+| tokenType   | Only bearer token type is available                                        | String | Required | “bearer”                                                                                                                                                          |
+| expiresIn   | The number of seconds for which the token is valid (3600 seconds = 1 hour) | String | Required | 3600                                                                                                                                                             |
+
+## Example Response
+
+```php
+{
+          "accessToken": "eyJhbGciXXXXXiIsInR5cCI6IkpXVCJ9.
+eyJpYXQiOjE2Mjg2NzI4OTMsIXXXXXXXODY3NjQ5MywiYXfdhei
+bWFuYWdlbWVuXXXXXXXnN1YiI6IjM2MiJ9.cjx3AgYcI0w5qG0YkVs
+O6F_7M72lu_pqSqtXXXXXU",
+          "tokenType": "bearer",
+          "expiresIn": 3600
+        }
+```
+
+#### API Requests Limit
+
+When using the DT FairBid Management API, it's important to keep in mind the API requests limit. By default, the daily API requests limit is set to 1000 requests per day. This limit ensures fair usage and helps maintain the stability and performance of the system.
+
+## App Level
+
+Here you can find the endpoints and parameters for Apps, using the DT FairBid Management API.
+
+## Get App/Apps
+
+**Description**
+
+Return the app's saved configuration by App ID.
+
+Return all apps (of a single user)
+
+**Method**
+
+GET https\://console.fyber.com/api/management/v1/app?appId=
+
+GET https\://console.fyber.com/api/management/v1/app?publisherId=
+
+### Request Parameters
+
+| Key         | Description             | Type   | Required | Example |
+| ----------- | ----------------------- | ------ | -------- | ------- |
+| appId       | The ID of the app       | Number | Required | 1070709 |
+| publisherId | The ID of the publisher | Number | Required | 4       |
+
+### Example Request
+
+```ruby
+https://console.fyber.com/api/management/v1/app?appId=170709
+```
+
+When a boolean field is left empty, the value of the empty string is automatically parsed as false.
+
+### Response Parameters
+
+| Key                                                                                                                                              | Description                                                                                      | Type       | Example                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| appId                                                                                                                                            | DT App ID                                                                                        | String     | “170709”                                                                                                                |
+| publisherId                                                                                                                                      | DT Publisher ID                                                                                  | String     | “3432”                                                                                                                  |
+| name                                                                                                                                             | The name of the app                                                                              | String     | “CashCrash”                                                                                                             |
+| bundle                                                                                                                                           | App's android bundle or iOS Store ID                                                             | String     | “com.cash\_crash.54”                                                                                                    |
+| status                                                                                                                                           | The status of the app. Can be either "active" or "inactive"                                     | String     | “active”                                                                                                                |
+| platform                                                                                                                                         | App's platform (Android or iOS)                                                                  | String     | "android"                                                                                                               |
+| storeURL                                                                                                                                         | App's store URL                                                                                  | String     | “https\://play.google.com/store /apps/details?id=com. bKash.customerapp“                                                |
+| category1                                                                                                                                        | App's first store category                                                                       | String     | "Business"                                                                                                              |
+| category2                                                                                                                                        | App's second store category                                                                      | String     | "Finance"                                                                                                               |
+| coppa                                                                                                                                            | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age? | Boolean    | false                                                                                                                   |
+| rewardedAdUrl                                                                                                                                    | URL to be used for server-side callbacks on app's rewarded placements                            | String     | "https\://mygamesdomain. com/callbacks.aspx?user\_id=\{\{USER\_ID}}\&reward\_amount=\{\{AMOUNT}} \&signature=\{\{SIG}}" |
+| rewardedAdSecurityToken                                                                                                                          |                                                                                                 | String     | “036xxxx5027e12c00f85a 4cbec3d1XXXXXa608cc 573a3482bXXXXX1164b8 64169”                                                  |
+| activeMediatedNetworks (Click [here](https://developer.digitalturbine.com/hc/en-us/articles/360010077777), for a full list of Mediated networks) | The selected mediated network                                                                    | String \[] | \[“adColony”, “admob mediation”]                                                                                        |
+
+### Example Response
+
+```php
+{
+       "appId": "170709",
+       "publisherId": "4",
+       "name": "bKash",
+       "bundle": "com.bKash.customerapp",
+       "status": "active",
+       "platform": "android",
+       "storeUrl": "https://play.google.com/store/apps/details?
+id=com.bKash.customerapp",
+       "category1": "Finance",
+       "category2": "APPLICATION",
+       "coppa": false,
+       "rewardedAdUrl": "https://mygamesdomain.com/callbacks.
+aspx?user_id={{USER_ID}}&reward_amount={{AMOUNT}}&
+signature={{SIG}}",   "rewardedAdSecurityToken": 
+"036ae5027XXXXXXXXX161a632a608cc573a3482b9c1XXXXX4b864169"
+    "activeMediatedNetworks": [
+           "Admob Mediation",
+           "AdColony"      
+       ]
+    }
+    
+```
+
+## Create an App
+
+**Description**
+
+Create a new app.
+
+**Method**
+
+POST https\://console.fyber.com/api/management/v1/app
+
+### Request Parameters
+
+| Key           | Description                                                                                      | Type   | Required | Example                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------ | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| name          | The name of the app                                                                              | String | Required | "CashCrash"                                                                                                              |
+| bundle        | App's Android bundle or iOS Store ID                                                             | String | Required | "com.cash\_crash.54"                                                                                                     |
+| platform      | App's platform (Android or iOS)                                                                  | String | Required | "android"                                                                                                                |
+| category1     | App's first store category                                                                       | String | Required | "business"                                                                                                               |
+| coppa         | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age? | String | Required | false                                                                                                                    |
+| rewardedAdUrl | URL to be used for server side call back on app’s rewarded placements                            | String | Optional | "https\://mygameesdomain.com /callbacks.aspx?user\_id=\{\{USER\_ID}}\&reward\_amount =\{\{AMOUNT}}\&signature=\{\{SIG}}" |
+| category2     | App’s second store category                                                                      | String | Optional | “Finance”                                                                                                                |
+
+### Example Request
+
+```php
+{
+        "appId": "170709",
+    "publisherId": "3432",
+    "status": "active",
+    "name": "CashCrash",
+        "coppa": true,
+        "platform": "ios",
+        "category1": "Books",
+        "category2": "Business",
+        "bundle": "com.cash_crash.54",
+        "rewardedAdUrl": "https://mygameesdomain.com/callbacks
+.aspx?user_id={{USER_ID}}&reward_amount={{AMOUNT}}
+&signature={{SIG}}"
+    }
+    
+```
+
+### Response Parameters
+
+| Key                     | Description                                                                                      | Type    | Example                                                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| appId                   | DT App ID                                                                                        | Number  | “170709”                                                                                                                  |
+| publisherId             | DT Publisher ID                                                                                  | Number  | “3432”                                                                                                                    |
+| name                    | The name of the App                                                                              | String  | “CashCrash”                                                                                                               |
+| bundle                  | App’s Android bundle or iOS store ID                                                             | String  | “com.cash\_crash.54”                                                                                                      |
+| status                  | The status of the app. Can be either "active" or "inactive"                                    | String  | “active”                                                                                                                  |
+| platform                | App’s platform (Android or iOS)                                                                  | String  | “android”                                                                                                                 |
+| storeURL                | App’s store URL                                                                                  | String  | “https\://play.google.com/store /apps/details?id=com.bKash. customerapp“                                                  |
+| category1               | App’s first store category                                                                       | String  | “Business”                                                                                                                |
+| category2               | App’s second store category                                                                      | String  | "Finance"                                                                                                                 |
+| coppa                   | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age? | Boolean | False                                                                                                                     |
+| rewardedAdUrl           | URL to be used for server side call back on app’s rewarded placements                            | String  | "https\://mygameesdomain.com/ callbacks.aspx?user\_id=\{\{USER\_ID}} \&reward\_amount=\{\{AMOUNT}} \&signature=\{\{SIG}}" |
+| rewardedAdSecurityToken |                                                                                                 | String  | “000096ae5027e12c00f 85a4XXXXXX3d161a632 a608ccXXXXXX82b9c 1151164b864169”                                                |
+
+### Example Response
+
+```php
+{
+       "appId": "170709",
+       "publisherId": "4",
+       "name": "CashCrash",
+       "bundle": "com.cash_crash.54",
+       "status": "active",
+       "platform": "ios",
+       "storeUrl": "",
+       "category1": "Books",
+       "category2": "Business",
+       "coppa": true,
+       "rewardedAdUrl": "https://mygameesdomain.com/callbacks
+.aspx?user_id={{USER_ID}}&reward_amount={{AMOUNT}}
+&signature={{SIG}}",   "rewardedAdSecurityToken": 
+"d613c47d081eXXXXXXXXXXf19f90a197ba4b5057556493f1e5759b14c"
+    }
+    
+```
+
+## Update an App
+
+**Description**
+
+Update an existing app.
+
+**Method**
+
+PUT https\://console.fyber.com/api/management/v1/app
+
+### Request Parameters
+
+| Key           | Description                                                                                      | Type    | Required | Example                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| appId         | DT App ID                                                                                        | Number  | Required | "170709"                                                                                                                |
+| status        | The status of the app. Can be either "active" or "inactive"                                      | String  | Optional | "active"                                                                                                                |
+| coppa         | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age? | Boolean | Optional | true                                                                                                                    |
+| rewardedAdUrl | URL to be used for server-side call back on app's rewarded placements                            | String  | Optional | "https\://mygameesdomain.com /callbacks.aspx?user\_id=\{\{USER\_ID}}\&reward\_amount=\{\{AMOUNT}}\&signature=\{\{SIG}}" |
+
+### Example Request
+
+```php
+{
+       "appId": "178505",
+       "coppa": true,
+       "status": "inactive",
+       "rewardedAdUrl": "https://check546745674.com/callbacks.
+aspx?user_id={{USER_ID}}&reward_amount={{AMOUNT}}&signature
+={{SIG}}"
+    }
+    
+```
+
+## Delete an App
+
+**Description**
+
+Delete an existing app.
+
+**Method**
+
+DELETE https\://console.fyber.com/api/management/v1/app
+
+### Request Parameters
+
+| Key   | Description       | Required | Type   |
+| ----- | ----------------- | -------- | ------ |
+| appId | The ID of the app | Required | Number |
+
+### Example Request
+
+```json
+{
+       "appId": "123123"
+    }
+```
+
+### Example Response
+
+```json
+{
+       "message": "App 178441 has been deleted successfully."
+    }
+    
+```
+
+## Placement Level
+
+Here you can find the endpoints and parameters for Placements, using the DT Management API.
+
+## Get Placement/Placements
+
+**Description**
+
+Return the placement’s configuration by placement ID.
+
+Return all placements of a single app.
+
+**Method**
+
+GET https\://console.fyber.com/api/management/v1/placement?placementId=
+
+GET https\://console.fyber.com/api/management/v1/placement?appId=
+
+Request Parameters
+
+| Key         | Description             | Type   | Required | Example |
+| ----------- | ----------------------- | ------ | -------- | ------- |
+| placementId | The ID of the Placement | Number | Required | 10804   |
+| appId       | The ID of the app       | Number | Required | 170709  |
+
+### Example Request
+
+```ruby
+https://console.fyber.com/api/management/v1/
+placement?placementId=10804
+```
+
+### Response Parameters
+
+| Key                                                           | Description                                                                                                                    | Type                                                        | Example                                                                    |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | -------------------------------------------------------------------------- |
+| placementId                                                   | The ID of the Placement                                                                                                        | Number                                                      | “24542”                                                                    |
+| status                                                        | The status of the placement. Can be either "active" or "inactive"                                                              | String                                                      | "active"                                                                   |
+| name                                                          | The name of the Placement                                                                                                      | String                                                      | "int\_13"                                                                  |
+| appId                                                         | The ID of the Placement's app                                                                                                  | String                                                      | "12345"                                                                    |
+| placementType                                                 | The Placement type ("Banner", "Rewarded", "Interstitial", "MREC")                                                              | String                                                      | "Banner"                                                                   |
+| coppa                                                         | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age?                               | Boolean                                                     | false                                                                      |
+| createTypes (**Interstitial only**)\*Affects DT Exchange only | Allowed creative types for interstitial Placement                                                                              | String array                                                | \["video", "display"]                                                      |
+| bannerRefresh (**Banner only**)                               | Set the Refresh Interval for the app banner placement. This determines the frequency in which a banner placement is refreshed. | Number                                                      | 45                                                                         |
+| floorPrices                                                   | The minimal price at which you are willing to sell your inventory. By default, it is set to \$0.01 for all countries.          | Object array (country: string, price: number)               | \[\{ “country”: “WW”, “price”: 0.01 },\{ “country”: “IL”, “price”: 0.05 }] |
+| targetingEnabled                                              | Enable audience targeting by countries or connection type                                                                      | Boolean                                                     | true                                                                       |
+| geo                                                           | Geo target countries                                                                                                           | Object (include: boolean, countries: string array)          | \{ "countries": \[ "BT", "SG" ], "include": true }                         |
+| connectivity                                                  | Targeted connection type (“Cellular”, “WIFI”)                                                                                  | String array                                                | \[“WIFI”]                                                                  |
+| capping                                                       | \*only if enabled=true Limit the number of impressions per second / minute / day                                               | Object (value: number, unit: string, enabled: boolean)      | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing                                                        | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                  | Object (value: number, unit: string, enabled: boolean)      | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| ssrConfig (**Rewarded only**)                                 | \*only if enabled=true                                                                                                         | Object (currency: string, amount: number, enabled: boolean) | \{"currency": "dollars", "amount": 3456, "enabled": true }                 |
+| skipability(**Interstitial only**)\*Affects DT Exchange only  | Ads can be skippable or non-skippable                                                                                          | String                                                      | "NonSkippable"                                                             |
+
+### Response Example
+
+```json
+{
+        "placementId": "10804",
+        "name": "Rewarded Placement",
+        "appId": "170709",
+        "placementType": "Rewarded",
+        "status": "active",
+        "coppa": true,
+        "rewardedConfig": {
+            "id": "",
+            "currency": {
+                "id": "dollars",
+                "appId": "",
+                "currency": "dollars"
+            },
+            "amount": 3456,
+            "rewardingType": "server",
+            "placementId": ""
+        },
+        "floorPrices": [
+            {
+                "country": "AF",
+                "price": 0.05
+            },
+            {
+                "country": "SG",
+                "price": 0.03
+            },
+            {
+                "country": "WW",
+                "price": 0.01
+            }
+        ],
+        "targetingEnabled": true,
+        "geo": {
+            "include": true,
+            "countries": [
+                "BT"
+            ]
+        },
+        "capping": {
+            "value": 12,
+            "unit": "minute",
+            "enabled": true
+        },
+        "pacing": {
+            "value": 13,
+            "unit": "second",
+            "enabled": true
+        }
+    }
+```
+
+## Create a Placement
+
+**Description**
+
+Create a new placement
+
+**Method**
+
+POST https\://console.fyber.com/api/management/v1/placement
+
+### Request Parameters
+
+| Key                                                          | Description                                                                                                                    | Type                                                        | Required | Example                                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | -------- | ------------------------------------------------------------------------ |
+| name                                                         | The name of the placement                                                                                                      | String                                                      | Required | "int\_13"                                                                |
+| appId                                                        | The ID of the placement's app                                                                                                  | Number                                                      | Required | "12345"                                                                  |
+| placementType                                                | The placement type ("Banner", "Rewarded", "Interstitial", "MREC")                                                              | String                                                      | Required | "Rewarded"                                                               |
+| coppa                                                        | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age?                               | Boolean                                                     | Required | false                                                                    |
+| creativeTypes (**Interstitial only**)                        | Allowed creative types for interstitial placement                                                                              | String array                                                | Optional | \[“video”, “display״]                                                    |
+| bannerRefresh (**Banner only**)                              | Set the Refresh Interval for the app banner placement. This determines the frequency in which a banner placement is refreshed. | Number                                                      | Optional | 45                                                                       |
+| floorPrices                                                  | The minimal price at which you are willing to sell your inventory. By default, it is set to \$0.01 for all countries.          | Object Array (country: string, price: number)               | Optional | \[\{“country”: “WW”, “price”: 0.01 },\{ “country”: “IL”, “price”: 0.05}] |
+| targetingEnabled                                             | Enable audience targeting by countries or connection type                                                                      | Boolean                                                     | Optional | true                                                                     |
+| geo                                                          | Geo target countries \*only if targetingEnabled=true                                                                           | Object (include: boolean, countries: string array)          | Optional | \{"countries": \["BT","SG" ],"include": true}                            |
+| connectivity                                                 | Targeted connection type (“Cellular”, “WIFI”) \*\*only if targetingEnabled=true                                                | String array                                                | Optional | \[“WIFI”]                                                                |
+| capping                                                      | \*only if enabled=true Limit the number of impressions per second / minute / day                                               | Object (value: number, unit: string, enabled: boolean)      | Optional | \{"value": 12, "unit": "minute", "enabled": true }                       |
+| pacing                                                       | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                  | Object (value: number, unit: string, enabled: boolean)      | Optional | \{ "value": 12, "unit": "minute", "enabled": true }                      |
+| ssrConfig (**Rewarded only**)                                | \*only if enabled=true                                                                                                         | Object (currency: string, amount: number, enabled: boolean) | Optional | \{"currency": "dollars", "amount": 3456, "enabled": true }               |
+| skipability(**Interstitial only**)\*Affects DT Exchange only | Ads can be skippable or non-skippable                                                                                          | String                                                      | Optional | "NonSkippable"                                                           |
+
+Example Request
+
+```json
+{
+    "name": "int_13",
+    "appId": "12345",
+    "placementType": "Rewarded",
+    "coppa": true,
+    "ssrConfig": {
+    "currency": "dollars",
+    "amount": 3456,
+    "enabled": true
+    },
+    "targetingEnabled": true,
+    "geo": {
+    "countries": [
+    "BT",
+    "SG"
+    ],
+    "include": true
+    },
+    "connectivity": ["WIFI"],
+    "floorPrices": [
+    {
+    "price": 0.05,
+    "country": "AF"
+    },
+    {
+    "price": 0.03,
+    "country": "SG"
+    }
+    ],
+    "capping": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "pacing": {
+    "value": 13,
+    "unit": "second",
+    "enabled": true
+    }
+    }
+    
+```
+
+### Response Parameters
+
+| Key                                                          | Description                                                                                                                    | Type                                                             | Example                                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| placementId                                                  | The ID of the newly created placement                                                                                          | String                                                           | “24542”                                                                    |
+| status                                                       | The status of the placement. Can be either "active" or "inactive"                                                              | String                                                           | “active”                                                                   |
+| name                                                         | The name of the placement                                                                                                      | String                                                           | “int\_13”                                                                  |
+| appId                                                        | The ID of the placement's app                                                                                                  | String                                                           | “12354”                                                                    |
+| placementType                                                | The placement type ("Banner", "Rewarded" or "Interstitial", "MREC")                                                            | String                                                           | “Banner”                                                                   |
+| coppa                                                        | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age?                               | Boolean                                                          | false                                                                      |
+| creativeTypes (**Interstitial only**)                        | Allowed creative types for interstitial placement                                                                              | String Array                                                     | \[“video”, “display״]                                                      |
+| bannerRefresh (**Banner only**)                              | Set the Refresh Interval for the app banner placement. This determines the frequency in which a banner placement is refreshed. | Number                                                           | 45                                                                         |
+| floorPrices                                                  | The minimal price at which you are willing to sell your inventory. By default, it is set to \$0.01 for all countries.          | Object array (country: string, price: number)                    | \[\{ “country”: “WW”, “price”: 0.01 },\{ “country”: “IL”, “price”: 0.05 }] |
+| targetingEnabled                                             | Enable audience targeting by countries or connection type                                                                      | Boolean                                                          | true                                                                       |
+| geo                                                          | Geo target countries                                                                                                           | Object (include: boolean, countries: string array)               | \{ "countries": \[ "BT", "SG" ], "include": true }                         |
+| connectivity                                                 | Targeted connection type ("Cellular" or "WIFI")                                                                                | String array                                                     | \[“WIFI”]                                                                  |
+| capping                                                      | \*only if enabled=true Limit the number of impressions per second / minute / day                                               | Object (value: number, unit: string, enabled" boolean)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing                                                       | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                  | Object (value: number, unit: string, enabled" boolean)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| ssrConfig (**Rewarded only**)                                | \*only if enabled=true                                                                                                         | Object (currency: unit: string, amount, number enabled" boolean) | \{"currency": "dollars", "amount": 3456, "enabled": true }                 |
+| skipability(**Interstitial only**)\*Affects DT Exchange only | Ads can be skippable or non-skippable                                                                                          | String                                                           | "NonSkippable"                                                             |
+
+### Example Response
+
+```json
+{
+        "PlacementId": "245254",
+        "name": "Rewarded Placement",
+        "appId": "170709",
+        "placementType": "Rewarded",
+        "status": "active",
+        "coppa": true,
+        "rewardedConfig": {
+            "id": "",
+            "currency": {
+                "id": "dollars",
+                "appId": "",
+                "currency": "dollars"
+            },
+            "amount": 3456,
+            "rewardingType": "server",
+            "placementId": ""
+        },
+        "floorPrices": [
+            {
+                "country": "AF",
+                "price": 0.05
+            },
+            {
+                "country": "SG",
+                "price": 0.03
+            },
+            {
+                "country": "WW",
+                "price": 0.01
+            }
+        ],
+        "targetingEnabled": true,
+        "geo": {
+            "include": true,
+            "countries": [
+                "BT"
+            ]
+        },
+        "capping": {
+            "value": 12,
+            "unit": "minute",
+            "enabled": true
+        },
+        "pacing": {
+            "value": 13,
+            "unit": "second",
+            "enabled": true
+        }
+    }
+    
+```
+
+## Update a Placement
+
+**Description**
+
+Update an existing placement by Placement ID.
+
+**Method**
+
+PUT https\://console.fyber.com/api/management/v1/placement
+
+### Request Parameters
+
+| Key                                                          | Description                                                                                                                    | Type                                                             | Required | Example                                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
+| placementId                                                  | The ID of the placement                                                                                                        | String                                                           | Required | "123123"                                                                   |
+| status                                                       | The status of the placement. Can be either "active" or "inactive"                                                              | String                                                           | Optional | "active"                                                                   |
+| name                                                         | The name of the placement                                                                                                      | String                                                           | Optional | "int\_13"                                                                  |
+| coppa                                                        | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age?                               | Boolean                                                          | Optional | false                                                                      |
+| creativeTypes (**Interstitial only**)                        | Allowed creative types for Interstitial placement                                                                              | String array                                                     | Optional | \[“video”, “display״]                                                      |
+| bannerRefresh (**Banner only**)                              | Set the Refresh Interval for the app banner placement. This determines the frequency in which a banner placement is refreshed. | Number                                                           | Optional | 45                                                                         |
+| floorPrices                                                  | The minimal price at which you are willing to sell your inventory. By default, it is set to \$0.01 for all countries.          | Object array (country: string, price: number)                    | Optional | \[\{ “country”: “WW”, “price”: 0.01 },\{ “country”: “IL”, “price”: 0.05 }] |
+| targetingEnabled                                             | Enable audience targeting by countries or connection type                                                                      | Boolean                                                          | Optional | true                                                                       |
+| geo                                                          | Geo target countries \*only if targetingEnabled=true                                                                           | Object (include: boolean, countries: string array)               | Optional | \{ "countries": \[ "BT", "SG" ], "include": true }                         |
+| connectivity                                                 | Targeted connection type ("Cellular" or "WIFI") \*only if targetingEnabled=true                                                | String array                                                     | Optional | \[“WIFI”]                                                                  |
+| capping                                                      | \*only if enabled=true Limit the number of impressions per second / minute / day                                               | Object (value: number, unit: string, enabled" boolean)           | Optional | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing                                                       | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                  | Object (value: number, unit: string, enabled" boolean)           | Optional | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| ssrConfig (**Rewarded only**)                                | \*only if enabled=true                                                                                                         | Object (currency: unit: string, amount, number enabled" boolean) | Optional | \{"currency": "dollars", "amount": 3456, "enabled": true }                 |
+| skipability(**Interstitial only**)\*Affects DT Exchange only | Ads can be skippable or non-skippable                                                                                          | String                                                           | Optional | "NonSkippable"                                                             |
+
+### Example Request
+
+```json
+{
+    "placementId": "12345",
+    "name": "updated_name",
+    "status": "active",
+    "coppa": true,
+    "ssrConfig": {
+    "currency": "dollars",
+    "amount": 3456,
+    "enabled": true
+    },
+    "targetingEnabled": true,
+    "geo": {
+    "countries": [
+    "BT",
+    "SG"
+    ],
+    "include": true
+    },
+    "connectivity": ["WIFI"],
+    "floorPrices": [
+    {
+    "price": 0.05,
+    "country": "AF"
+    },
+    {
+    "price": 0.03,
+    "country": "SG"
+    }
+    ],
+    "capping": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "pacing": {
+    "value": 13,
+    "unit": "second",
+    "enabled": true
+    }
+    }
+    
+```
+
+### Response Parameters
+
+| Key                                                          | Description                                                                                                                    | Type                                                             | Example                                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| placementId                                                  | The ID of the newly created placement                                                                                          | String                                                           | "24542"                                                                    |
+| status                                                       | The status of the placement. Can be either "active" or "inactive"                                                              | String                                                           | "active"                                                                   |
+| name                                                         | The name of the placement                                                                                                      | String                                                           | "int\_13"                                                                  |
+| appId                                                        | The ID of the placement's app                                                                                                  | String                                                           | "12345"                                                                    |
+| placementType                                                | The placement type ("Banner", "Rewarded", "Interstitial", "MREC")                                                              | String                                                           | "Banner"                                                                   |
+| coppa                                                        | Children's Online Privacy Protection Act. Is the app directed to children under 13 years of age?                               | Boolean                                                          | false                                                                      |
+| creativeTypes (**Interstitial only**)                        | Allowed creative types for Interstitial placement                                                                              | String array                                                     | \[“video”, “display״]                                                      |
+| bannerRefresh (**Banner only**)                              | Set the Refresh Interval for the app banner placement. This determines the frequency in which a banner placement is refreshed. | Number                                                           | 45                                                                         |
+| floorPrices                                                  | The minimal price at which you are willing to sell your inventory. By default, it is set to \$0.01 for all countries.          | Object array (country: string, price: number)                    | \[\{ “country”: “WW”, “price”: 0.01 },\{ “country”: “IL”, “price”: 0.05 }] |
+| targetingEnabled                                             | Enable audience targeting by countries or connection type                                                                      | Boolean                                                          | true                                                                       |
+| geo                                                          | Geo target countries \*only if targetingEnabled=true                                                                           | Object (include: boolean, countries: string array)               | \{ "countries": \[ "BT", "SG" ], "include": true }                         |
+| connectivity                                                 | Targeted connection type ("Cellular" or "WIFI") \*only if targetingEnabled=true                                                | String array                                                     | \[“WIFI”]                                                                  |
+| capping                                                      | \*only if enabled=true Limit the number of impressions per second / minute / day                                               | Object (value: number, unit: string, enabled" boolean)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing                                                       | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                  | Object (value: number, unit: string, enabled" boolean)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| ssrConfig (**Rewarded only**)                                | \*only if enabled=true                                                                                                         | Object (currency: unit: string, amount, number enabled" boolean) | \{"currency": "dollars", "amount": 3456, "enabled": true }                 |
+| skipability(**Interstitial only**)\*Affects DT Exchange only | Ads can be skippable or non-skippable                                                                                          | String                                                           | "NonSkippable"                                                             |
+
+### Example Response
+
+```json
+{
+        "placementId": "243713",
+        "name": "changedBanner",
+        "appId": "170709",
+        "placementType": "Banner",
+        "status": "active",
+        "coppa": false,
+        "bannerRefresh": 88,
+        "floorPrices": [
+            {
+                "country": "WW",
+                "price": 0.01
+            }
+        ],
+        "targetingEnabled": false
+    }
+    
+```
+
+## Delete a Placement
+
+**Description**
+
+Delete an existing placement.
+
+**Method**
+
+DELETE https\://console.fyber.com/api/management/v1/placement
+
+### Request Parameters
+
+| Key         | Description             | Required | Type   |
+| ----------- | ----------------------- | -------- | ------ |
+| placementId | The ID of the placement | Required | String |
+
+### Example Request
+
+```php
+{
+       "placementId": "123123"
+    }
+    Response Parameters
+    
+    Response example:
+    {
+       "message": "Placement 123123 has been deleted 
+successfully."
+    }
+    
+```
+
+## Instance Level
+
+Here you can find the endpoints and parameters for Instances, using the DT Management API.
+
+## Get Instances
+
+**Description**
+
+Return the instance configuration by Instance ID.
+
+Show all the configured instances for a specific placement.
+
+**Method**
+
+GET console.fyber.com/api/management/v1/instance?instanceInternalId=
+
+GET console.fyber.com/api/management/v1/instance?placementId=
+
+### Request Parameters
+
+| Key                | Description                    | Type   | Required | Example |
+| ------------------ | ------------------------------ | ------ | -------- | ------- |
+| instanceInternalId | The ID of the instance (DT ID) | String | Required | 678643  |
+| PlacementId        | The ID of the placement        | String | Required | 10804   |
+
+### Example Request
+
+```swift
+console.fyber.com/api/management/v1/instance?placementId=10804
+```
+
+### Response Parameters
+
+| Key                 | Description                                                                                                                                                                 | Type                                                                 | Example                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| name                | DT instance name                                                                                                                                                            | String                                                               | "my-instance"                                                     |
+| instanceInternalId  | DT instance ID                                                                                                                                                              | String                                                               | "123123"                                                          |
+| mediatedNetworkName | The mediated network of the instance                                                                                                                                        | String                                                               | "Meta"                                                            |
+| instanceId          | External instance value                                                                                                                                                     | String                                                               | "my-instanceId"                                                   |
+| status              | The status of the instance. Can be either "active" or "inactive"                                                                                                          | String                                                               | "active"                                                          |
+| userTrackingStatus  | User tracking status                                                                                                                                                        | String                                                               |                                                                  |
+| targetedCountries   | The targeted countries of the instance                                                                                                                                      | Object (enabled: boolean, include: boolean, countries: string array) | \{ "countries": \["BT", "SG"], "include": true, "enabled": true } |
+| cpmManualPrices     | The manually set CPM price you predict to be paid by this instance. This price will be used if "Manual" CPM price method is selected or while Auto CPM prediction ramps up | Object Array (Country: string, price: number)                        | \[\{ “Country”: “WW”, “Price”: 0.01 }]                            |
+| cpmPriceMethod      | Manual/AUTO                                                                                                                                                                 | String                                                               | "AUTO"                                                            |
+| capping             | \*only if enabled=true Limit the number of impressions per second / minute / day                                                                                            | Object (value: number, unit: String, enabled: boolean)               | \{ "value": 12, "unit": "minute", "enabled": true }               |
+| pacing              | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                                                               | Object (value: number, unit: String, enabled: boolean)               | \{ "value": 12, "unit": "minute", "enabled": true }               |
+
+### Example Response
+
+```json
+[
+       {
+           "Name": "my-instance-name-1",
+           "instanceInternalId": "123123",
+           "mdiatedNetworkName": "Meta",
+           "instanceId": "my-instance-id",
+           "status": "active",
+           "userTrackingStatus": "Tracking Only",
+           "cpmInstancePrices": [
+               {
+                   "country": "WW",
+                   "price": 0.01
+               }
+           ]
+       }
+    ]
+    
+```
+
+## Create Instance
+
+**Description**
+
+Show all the configured instances for a specific placement.
+
+**Method**
+
+POST https\://console.fyber.com/api/management/v1/instance
+
+### Request Parameters
+
+| Key                 | Description                                                                                                                                                                 | Type                                                                 | Required | Example                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------- | ----------------------------------------------------------------- |
+| placementId         | The ID of the placement                                                                                                                                                     | String                                                               | Required | "123321"                                                          |
+| name                | The name of the instance                                                                                                                                                    | String                                                               | Required | "my-instance-name"                                                |
+| instanceId          | The external instance ID                                                                                                                                                    | String                                                               | Required | "my-instance-id"                                                  |
+| mediatedNetworkName | The mediated network                                                                                                                                                        | String                                                               | Required | "Meta"                                                            |
+| UserTrackingStatus  | \*only if enabled=true                                                                                                                                                      | String                                                               | Optional | “Tracking Only”                                                   |
+| geo                 | \*only if enabled=true                                                                                                                                                      | Object (enabled: boolean, include: boolean, countries: string array) | Optional | \{ "countries": \["BT", "SG"], "include": true, "enabled": true } |
+| capping             | \*only if enabled=true Limit the number of impressions per second / minute / day                                                                                            | Object (value: number, unit: string)                                 | Optional | \{ "value": 12, "unit": "minute", "enabled": true }               |
+| pacing              | \*only if cpmPriceMethod= manual Set the pace for the maximum number of ad impressions per second / minute / day / hour                                                     | Object (value: number, unit: string)                                 | Optional | \{ "value": 12, "unit": "minute", "enabled": true }               |
+| cpmManualPrices     | The manually set CPM price you predict to be paid by this instance. This price will be used if "Manual" CPM price method is selected or while Auto CPM prediction ramps up | Object array (price:number, country:string)                          | Optional | \[\{ price: 2, Country: “US” }]                                   |
+| cpmPriceMethod      | The CPM price method of the instance                                                                                                                                        | String                                                               | Optional | "AUTO"                                                            |
+
+Starting from March 1st 2022, the names of Facebook and Facebook Bidder in the Management API have been changed to Meta and Meta Bidder, accordingly. Adjust when using the API, as required.
+
+### Example Request
+
+```json
+[{
+    "placementId": "12345",
+    "name": "instance_name",
+    "instanceInternalId": "instance_id",
+    "mediatedNetworkName": "Meta",
+    "cpmPriceMethod": "manual",
+    "cpmManualPrices": [
+    {
+    "country": "AF",
+    "price": 0.5
+    },
+    {
+    "country": "WW",
+    "price": 0.6
+    }]
+    ],
+    "capping": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "pacing": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "geo": {
+    "countries": ["BT", "SG"],
+    "include": true,
+    "enabled": true
+    },
+    "UserTrackingStatus": "Tracking Only"
+    }
+    
+```
+
+### Response Parameters
+
+| Key                 | Description                                                                                                                                                                 | Type                                           | Example                                                                    |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------- |
+| name                | DT instance name                                                                                                                                                            | String                                         | "my-instance"                                                              |
+| instanceInternalId  | DT instance ID                                                                                                                                                              | String                                         | "123123"                                                                   |
+| mediatedNetworkName | The mediated network of the instance                                                                                                                                        | String                                         | "Meta"                                                                     |
+| instanceId          | External instance value                                                                                                                                                     | String                                         | "my-instanceId"                                                            |
+| status              | The status of the instance. Can be either "active" or "inactive"                                                                                                          | String                                         | "active"                                                                   |
+| userTrackingStatus  | User tracking status                                                                                                                                                        | String                                         | "Tracking Only"                                                            |
+| targetedCountries   | The targeted countries of the instance                                                                                                                                      | Object (include: boolean, value: string array) | \{”enabled”: true, “include”: true, “countries”: \[“US”]}                  |
+| cpmManualPrices     | The manually set CPM price you predict to be paid by this instance. This price will be used if "Manual" CPM price method is selected or while Auto CPM prediction ramps up | Object Array (country: string, price: number)  | \[\{ “Country”: “WW”, “value”: 0.01 },\{ “Country”: “IL”, “Price”: 0.01 }] |
+| capping             | \*only if enabled=true Limit the number of impressions per second / minute / day                                                                                            | Object (value: number, unit: string)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing              | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                                                               | Object (value: number, unit: string)           | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+
+### Example Response
+
+```json
+{
+           "name": "my-instance-name-1",
+           "instanceInternalId": "123123",
+           "mediatedNetworkName": "Meta",
+           "instanceId": "my-instance-id",
+           "status": "active",
+           "userTrackingStatus": "Tracking Only",
+           "cpmManualPrices": [
+               {
+                   "country": "WW",
+                   "price": 0.01
+               }
+           ]
+       }
+    
+```
+
+## Update Instance
+
+**Description**
+
+Show all the configured instances for a specific placement.
+
+**Method**
+
+PUT https\://console.fyber.com/api/management/v1/instance
+
+### Request Parameters
+
+| Key                | Description                                                                                                                                                                 | Type                                                                 | Required | Example                                                                    |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
+| instanceInternalId | The DT ID of the instance                                                                                                                                                   | String                                                               | Required | "123123"                                                                   |
+| name               | The name of the instance                                                                                                                                                    | String                                                               | Optional | "my-instance-name"                                                         |
+| cpmPriceMethod     | The CPM price method of the instance                                                                                                                                        | String                                                               | Optional | “auto”                                                                     |
+| status             | The status of the instance. Can be either "active" or "inactive"                                                                                                          | String                                                               | Optional | “inactive”                                                                 |
+| userTrackingStatus | User tracking status                                                                                                                                                        | String                                                               | Optional | “Tracking Only”                                                            |
+| geo                | \*only if enabled=true                                                                                                                                                      | Object (enabled: boolean, include: boolean, countries: string array) | Optional | \{ "countries": \["BT", "SG"], "include": true, "enabled": true }          |
+| capping            | \*only if enabled=true Limit the number of impressions per second / minute / day                                                                                            | Object (value: number, unit: string)                                 | Optional | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| pacing             | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                                                               | Object (value: number, unit: string)                                 | Optional | \{ "value": 12, "unit": "minute", "enabled": true }                        |
+| cpmManualPrices    | The manually set CPM price you predict to be paid by this instance. This price will be used if "Manual" CPM price method is selected or while Auto CPM prediction ramps up | Object Array (country: string, price: number)                        | Optional | \[\{ “Country”: “WW”, “price”: 0.01 },\{ “Country”: “IL”, “Price”: 0.01 }] |
+
+### Example Request
+
+```json
+{
+    "instanceInternalId": "12345",
+    "name": "updated_name",
+    "status": "inactive",
+    "cpmPriceMethod": "manual",
+    "cpmManualPrices": [
+    {
+    "country": "AF",
+    "price": 0.5
+    },
+    {
+    "country": "WW",
+    "price": 0.6
+    }
+    ],
+    "capping": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "pacing": {
+    "value": 12,
+    "unit": "minute",
+    "enabled": true
+    },
+    "geo": {
+    "countries": ["BT","SG"],
+    "include": true,
+    "enabled": true
+    },
+    "UserTrackingStatus": "Tracking Only"
+    }
+    
+```
+
+### Response Parameters
+
+| Key                 | Description                                                                                                                                                                 | Type                                                                 | Example                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| name                | DT instance name                                                                                                                                                            | String                                                               | "my-instance"                                                     |
+| instanceInternalId  | DT instance ID                                                                                                                                                              | String                                                               | "123123"                                                          |
+| mediatedNetworkName | The mediated network of the instance                                                                                                                                        | String                                                               | “Meta”                                                            |
+| instanceId          | External instance value                                                                                                                                                     | String                                                               | “my-instanceId”                                                   |
+| status              | The status of the instance. Can be either "active" or "inactive"                                                                                                          | String                                                               | “active”                                                          |
+| userTrackingStatus  | User tracking status                                                                                                                                                        | String                                                               | “Tracking Only”                                                   |
+| targetedCountries   | The targeted countries of the instance                                                                                                                                      | Object (enabled: boolean, include: boolean, countries: string array) | \{ "countries": \["BT", "SG"], "include": true, "enabled": true } |
+| cpmManualPrices     | The manually set CPM price you predict to be paid by this instance. This price will be used if "Manual" CPM price method is selected or while Auto CPM prediction ramps up | Object Array (country: string, price: number)                        | \[\{ “Country”: “WW”, “Price”: 0.01 }]                            |
+| capping             | \*only if enabled=true Limit the number of impressions per second / minute / day                                                                                            | Object (value: number, unit: string)                                 | \{ "value": 12, "unit": "minute", "enabled": true }               |
+| pacing              | \*only if enabled=true Set the pace for the maximum number of ad impressions per second / minute / day / hour                                                               | Object (value: number, unit: string)                                 | \{ "value": 12, "unit": "minute", "enabled": true }               |
+
+### Example Response
+
+```json
+  {
+           "Name": "my-instance-name-1",
+           "instanceInternalId": "123123",
+           "mediatedNetworkName": "Meta",
+           "instanceId": "my-instance-id",
+           "status": "active",
+           "userTrackingStatus": "Tracking Only",
+           "targetedCountries": {
+               "include": true,
+               "countries": []
+           },
+           "cpmManualPrices": [
+               {
+                   "country": "WW",
+                   "price": 0.01
+               }
+           ]
+       }
+    
+```
+
+## Delete Instance
+
+**Description**
+
+Delete a specific instance.
+
+**Method**
+
+DELETE https\://console.fyber.com/api/management/v1/instance
+
+### Request Parameters
+
+| Key                | Description               | Required | Type   |
+| ------------------ | ------------------------- | -------- | ------ |
+| instanceInternalId | The DT ID of the instance | Required | String |
+
+### Example Request
+
+```php
+{
+       "instanceInternalId": "123123"
+    }
+    Response Parameters
+    
+    Response example:
+    {
+       "message": "Instance 123123 has been deleted
+successfully."
+    }
+    
+```
+
+## Multi-Test
+
+* It is **not** possible to create or update Placements under multi-test
+* It is possible to use the ‘Get’ method to return them - get placement by placement ID, get placements by app ID, get instance by instance ID and get instances by placement ID;
+
+Read [here](https://developer.digitalturbine.com/hc/en-us/articles/360012606718) about multi-testing.
+
+## Example Response
+
+```json
+{
+       "placementId": "257561",
+       "name": "created by api",
+       "appId": "206148",
+       "placementType": "Rewarded",
+       "status": "active",
+       "coppa": true,
+       "rewardedConfig": {
+           "id": "2261",
+           "currency": {
+               "id": "2284",
+               "appId": "206148",
+               "currency": "stars"
+           },
+           "amount": 6,
+           "rewardingType": "server",
+           "placementId": "257561"
+       },
+       "variants": [
+           {
+               "variantName": "Variant 1",
+               "floorPrices": [
+                   {
+                       "country": "WW",
+                       "price": 53
+                   }
+               ],
+               "targetingEnabled": true,
+               "connectivity": [
+                   "Cellular Network"
+               ],
+               "geo": {
+                   "include": false,
+                   "countries": [
+                       "AU",
+                       "CA"
+                   ]
+               },
+               "capping": {
+                   "value": 43,
+                   "unit": "day",
+                   "enabled": true
+               },
+               "pacing": {
+                   "value": 45,
+                   "unit": "minute",
+                   "enabled": true
+               }
+           },
+           {
+               "variantName": "Variant 2",
+               "floorPrices": [
+                   {
+                       "country": "WW",
+                       "price": 67
+                   }
+               ],
+               "targetingEnabled": true,
+               "connectivity": [
+                   "Wifi"
+               ],
+               "geo": {
+                   "include": true,
+                   "countries": [
+                       "AU",
+                       "CA",
+                       "GB",
+                       "NZ",
+                       "US"
+                   ]
+               },
+               "capping": {
+                   "value": 5,
+                   "unit": "minute",
+                   "enabled": true
+               },
+               "pacing": {
+                   "value": 5,
+                   "unit": "second",
+                   "enabled": true
+               }
+           }
+       ]
+    }
+    
+```
+
+## Store Categories
+
+Set out below are a list of all store categories:
+
+**Android Store Categories**
+
+'Books & Reference', 'Business', 'Comics', 'Communication', 'Education', 'Entertainment', 'Finance', 'Games - Arcade & Action', 'Games - Brain & Puzzle', 'Games - Cards & Casino', 'Games - Casual', 'Games - Live Wallpaper', 'Games - Racing', 'Games - Sports Games', 'Games - Widgets', 'Health & Fitness', 'Libraries & Demo', 'Lifestyle', 'Live Wallpaper', 'Media & Video', 'Medical', 'Music & Audio', 'News & Magazines', 'Personalization', 'Photography', 'Productivity', 'Shopping', 'Social', 'Sports', 'Tools', 'Transportation', 'Travel & Local', 'Weather', 'Widgets', 'Casual', 'Android Wear', 'Art & Design', 'Auto & Vehicles', 'Beauty', 'Dating', 'Events', 'Action', 'Adventure', 'Arcade', 'Board', 'Games - Cards', 'Casino', 'Educational', 'Family', 'Music Games', 'Puzzle', 'Role Playing', 'Simulation', 'Strategy', 'Trivia', 'Word Games', 'House & Home', 'Maps & Navigation', 'Overall', 'Parenting', 'Video Players & Editors', 'Word', 'Card'
+
+**iOS Store Categories**
+
+'Books', 'Business', 'Catalogs', 'Education', 'Entertainment', 'Finance', 'Food & Drink', 'Games - Action', 'Games - Adventure', 'Games - Arcade', 'Games - Board', 'Games - Card', 'Games - Casino', 'Games - Dice', 'Games - Educational', 'Games - Family', 'Games - Kids', 'Games - Music', 'Games - Puzzle', 'Games - Racing', 'Games - Role Playing', 'Games - Simulation', 'Games - Sports', 'Games - Strategy', 'Games - Trivia', 'Games - Word', 'Health & Fitness', 'Lifestyle', 'Medical', 'Music', 'Navigation', 'News', 'Newsstand', 'Photo & video', 'Productivity', 'Reference', 'Social Networking', 'Sports', 'Travel', 'Utilities', 'Weather', 'Games
+
+[Back to Top ⇧](#top)

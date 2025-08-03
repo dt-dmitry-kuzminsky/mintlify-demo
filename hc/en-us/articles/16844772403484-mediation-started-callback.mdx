@@ -1,0 +1,253 @@
+---
+title: "Mediation Started Callback"
+---
+
+DT FairBid provides access to initialization information about FairBid itself and each of the integrated third-party networks (mediatednetworks).
+
+Run the following API to set up a single listener that monitors mediation events, confirms network readiness, and efficiently handles initialization in your app.
+
+For more detailed initialization information for each mediated network, see [Tracking Network Initialization](#h_01JCDBR3RVVM7A2Y6Z2PPWFRVR).
+
+Android iOS Unity
+
+**Kotlin**
+
+```typescript
+fairBid.withFairBidListener(object : FairBidListener {
+            override fun mediationFailedToStart(errorMessage: String, errorCode: Int) {
+                // The SDK was unable to start any of the mediated networks.
+                // That includes DT-X
+                // Nothing to do. Contact support if this error persists (errorCode will be used to troubleshoot the problem)
+            }
+
+            override fun mediationStarted() {
+                // FairBid is ready to mediate.
+                // TPNs that need to be started as early as possible have been started
+            }
+
+            override fun onNetworkFailedToStart(network: MediatedNetwork, errorMessage: String) {
+                // A specific network failed to start.
+            }
+
+            override fun onNetworkStarted(network: MediatedNetwork) {
+                // A specific network started successfully.
+            }
+
+        })
+```
+
+**Java**
+
+```typescript
+
+FairBid.configureForAppId("AppId").withFairBidListener(new FairBidListener() {
+    @Override
+    public void mediationFailedToStart(String errorMessage, int errorCode) {
+        // The SDK was unable to start any of the mediated networks.
+        // That includes DT-X
+        // Nothing to do. Contact support if this error persists (errorCode will be used to troubleshoot the problem)
+    }
+
+    @Override
+    public void mediationStarted() {
+        // FairBid is ready to mediate.
+        // TPNs that need to be started as early as possible have been started
+    }
+
+    @Override
+    public void onNetworkFailedToStart(MediatedNetwork network, String errorMessage) {
+        // A specific network failed to start.
+    }
+
+    @Override
+    public void onNetworkStarted(MediatedNetwork network) {
+        // A specific network started successfully.
+    }
+});
+}    
+```
+
+**Swift**
+
+```swift
+class MyDelegate: FairBidDelegate {
+    func networkStarted(_ network: FYBMediatedNetwork) {
+        // A specific network started successfully.
+    }
+    func network(_ network: FYBMediatedNetwork, failedToStartWithError error: Error) {
+        // A specific network failed to start.
+    }
+    
+    func mediationStarted() {
+        // FairBid is ready to mediate.
+        // TPNs that need to be started as early as possible have been started
+    }
+    
+    func mediationFailedToStartWithError(_ error: Error) {
+        // The SDK was unable to start any of the mediated networks.
+        // That includes DT-X
+        // Nothing to do.
+        // Contact support if this error persists (errorCode will be used to troubleshoot the problem)
+    }
+}
+}
+```
+
+**Objective-C**
+
+```java
+@interface MyDelegate: NSObject
+
+
+@end
+
+
+@implementation MyDelegate
+- (void)networkStarted:(FYBMediatedNetwork)network {
+    // A specific network started successfully.
+}
+- (void)network:(FYBMediatedNetwork)network failedToStartWithError:(NSError *)error {
+    // A specific network failed to start.
+}
+- (void)mediationStarted {
+    // FairBid is ready to mediate.
+    // TPNs that need to be started as early as possible have been started
+}
+- (void)mediationFailedToStartWithError:(NSError *)error {
+    // The SDK was unable to start any of the mediated networks.
+    // That includes DT-X
+    // Nothing to do. 
+    // Contact support if this error persists (errorCode will be used to troubleshoot the problem)
+}
+@end
+```
+
+**C#**
+
+```csharp
+public class MyListener : FairBidListener
+{
+    public void OnNetworkStarted(MediatedNetwork network)
+    {
+        // A specific network started successfully.
+    }
+
+    public void OnNetworkFailedToStart(MediatedNetwork network, string error)
+    {
+         // A specific network failed to start.
+    }
+
+    public void OnMediationStarted()
+    {
+        // FairBid is ready to mediate.
+        // TPNs that need to be started as early as possible have been started
+    }
+
+    public void OnMediationFailedToStart(string error, string code)
+    {
+        // The SDK was unable to start any of the mediated networks.
+        // That includes DT-X
+        // Nothing to do. 
+        // Contact support if this error persists (errorCode will be used to troubleshoot the problem)        
+
+    }
+}
+
+FairBid.SetFairBidListener(new MyListener());
+```
+
+## Tracking Network Initialization
+
+Mediated networks can be initialized either when FairBid starts or later when the first ad request is made (Lazy Start). With either initialization method, some networks provide an explicit callback to report whether network initialization was successful.
+
+The following tables summarize whether Lazy Start is available for each network and the dedicated Start Success callback availability.
+
+Android iOS Unity-Android Unity-iOS
+
+| MEDIATED NETWORK          | NAME IN CALLBACK | LAZY START | START SUCCESS CALLBACK |
+| ------------------------- | ---------------- | ---------- | ---------------------- |
+| AdMob/GoogleBidding      | `ADMOB`          |           |                       |
+| Amazon Publisher Services | `AMAZON`         |           |                       |
+| Applovin                  | `APPLOVIN`       |           |                       |
+| BIGO Ads                  | `BIGOADS`        |           |                       |
+| Chartboost                | `CHARTBOOST`     |           |                       |
+| Google Ad Manager         | `GAM`            |           |                       |
+| HyprMX                    | `HYPRMX`         |           |                       |
+| InMobi                    | `INMOBI`         |           |                       |
+| IronSource                | `IRON_SOURCE`    |           |                       |
+| Liftoff Monetize          | `VUNGLE`         |           |                       |
+| Meta Audience Network     | `FACEBOOK`       |           |                       |
+| Mintegral                 | `MINTEGRAL`      |           |                       |
+| MyTarget                  | `MYTARGET`       |           |                       |
+| Ogury                     | `OGURY`          |           |                       |
+| Pangle                    | `PANGLE`         |           |                       |
+| Unity Ads                 | `UNITYADS`       |           |                       |
+| Verve Group               | `VERVE`          |           |                       |
+
+| MEDIATED NETWORK          | NAME IN CALLBACK | LAZY START | START SUCCESS CALLBACK |
+| ------------------------- | ---------------- | ---------- | ---------------------- |
+| AdMob/Google Bidding      | `ADMOB`          |           |                       |
+| Amazon Publisher Services | `AMAZON`         |           |                       |
+| Applovin                  | `APPLOVIN`       |           |                       |
+| BIGO Ads                  | `BIGOADS`        |           |                       |
+| Chartboost                | `CHARTBOOST`     |           |                       |
+| Google Ad Manager         | `GAM`            |           |                       |
+| HyprMX                    | `HYPRMX`         |           |                       |
+| InMobi                    | `INMOBI`         |           |                       |
+| IronSource                | `IRON_SOURCE`    |           |                       |
+| Liftoff Monetize          | `VUNGLE`         |           |                       |
+| Meta Audience Network     | `FACEBOOK`       |           |                       |
+| Mintegral                 | `MINTEGRAL`      |           |                       |
+| MyTarget                  | `MYTARGET`       |           |                       |
+| Ogury                     | `OGURY`          |           |                       |
+| Pangle                    | `PANGLE`         |           |                       |
+| Unity Ads                 | `UNITYADS`       |           |                       |
+| Verve Group               | `VERVE`          |           |                       |
+
+#### Note
+
+Apps built on iOS should support Lazy Start on all networks. However, if you have at least one Bidding instance, FairBid initializes the network immediately.
+
+| MEDIATED NETWORK          | NAME IN CALLBACK | LAZY START | START SUCCESS CALLBACK |
+| ------------------------- | ---------------- | ---------- | ---------------------- |
+| AdMob/Google Bidding      | `ADMOB`          |           |                       |
+| Amazon Publisher Services | `AMAZON`         |           |                       |
+| Applovin                  | `APPLOVIN`       |           |                       |
+| BIGO Ads                  | `BIGOADS`        |           |                       |
+| Chartboost                | `CHARTBOOST`     |           |                       |
+| Google Ad Manager         | `GAM`            |           |                       |
+| HyprMX                    | `HYPRMX`         |           |                       |
+| InMobi                    | `INMOBI`         |           |                       |
+| IronSource                | `IRON_SOURCE`    |           |                       |
+| Liftoff Monetize          | `VUNGLE`         |           |                       |
+| Meta Audience Network     | `FACEBOOK`       |           |                       |
+| Mintegral                 | `MINTEGRAL`      |           |                       |
+| MyTarget                  | `MYTARGET`       |           |                       |
+| Ogury                     | `OGURY`          |           |                       |
+| Pangle                    | `PANGLE`         |           |                       |
+| Unity Ads                 | `UNITYADS`       |           |                       |
+| Verve Group               | `VERVE`          |           |                       |
+
+| MEDIATED NETWORK          | NAME IN CALLBACK | LAZY START | START SUCCESS CALLBACK |
+| ------------------------- | ---------------- | ---------- | ---------------------- |
+| AdMob/Google Bidding      | `ADMOB`          |           |                       |
+| Amazon Publisher Services | `AMAZON`         |           |                       |
+| Applovin                  | `APPLOVIN`       |           |                       |
+| BIGO Ads                  | `BIGOADS`        |           |                       |
+| Chartboost                | `CHARTBOOST`     |           |                       |
+| Google Ad Manager         | `GAM`            |           |                       |
+| HyprMX                    | `HYPRMX`         |           |                       |
+| InMobi                    | `INMOBI`         |           |                       |
+| IronSource                | `IRON_SOURCE`    |           |                       |
+| Liftoff Monetize          | `VUNGLE`         |           |                       |
+| Meta Audience Network     | `FACEBOOK`       |           |                       |
+| Mintegral                 | `MINTEGRAL`      |           |                       |
+| MyTarget                  | `MYTARGET`       |           |                       |
+| Ogury                     | `OGURY`          |           |                       |
+| Pangle                    | `PANGLE`         |           |                       |
+| Unity Ads                 | `UNITYADS`       |           |                       |
+| Verve Group               | `VERVE`          |           |                       |
+
+
+
+[Back to Top ⇧](#top)

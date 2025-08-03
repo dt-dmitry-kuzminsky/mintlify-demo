@@ -1,0 +1,27 @@
+---
+title: "Calculating An App'S Unique Users"
+---
+
+DT uses the app start event to count the app's unique users. When looking at a daily aggregation, this represents that app's DAU (daily active users).
+
+DT uses the app's unique users to reflect in our reporting system with the following metrics:
+
+| Metric                                 | Description                                                                                                                                                                           |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Publisher App Unique Users             | The publisher app's unique active users. This metric is accurate only when a publisher initializes our SDK on app start! When splitting by day, it shows the daily active users (DAU) |
+| Publisher ARPDAU                       | Publisher's average revenue per daily active users.**This metric is accurate only when a publisher initializes our SDK on app start**!                                               |
+| OFW Engagement Rate                    | DT Offer Wall's daily engaging users divided by the publisher app's daily active users.                                                                                               |
+| Offer Impressions per App Unique Users | Offer impressions divided by app unique users                                                                                                                                         |
+| OFW Impressions per App Unique Users   | OFW impressions divided by app unique users                                                                                                                                           |
+
+## Clarifications
+
+* DT displays the unique users who opened the app during a chosen period of time and don't count duplicates (e.g. if timeframe = month, we show MAU)
+* If DT identifies the same user from different countries (due to proximity), at the country level it appears twice, on a worldwide level - we count it once
+* DT bases the count on the user game if provided. If not, DT counts based on device ID
+
+#### Warning
+
+These metrics are accurate only if a publisher initializes our SDK on app start!
+
+[Back to Top ⇧](#top)

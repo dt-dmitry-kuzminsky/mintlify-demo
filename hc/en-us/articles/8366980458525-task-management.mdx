@@ -1,0 +1,41 @@
+---
+title: "Task Management"
+---
+
+It should not be common for you to track task information or operate over them but SDK provides some abilities to do so. You should be authenticated and a valid token should be present in order to proceed.
+
+## Get Task Information
+
+SDK provides a fancy way to get task information for the specified task identifier. It may be useful sometimes to track the task via polling.
+
+```php
+// Initialization
+
+// Specify task id received previously in broadcast or callbacks onScheduled() method
+
+IgniteServiceSdk.instance().getTaskInfo(taskId, object : IResponseCallback<TaskInfoResponse, Error, Progress> {
+    override fun onSuccess(result: TaskInfoResponse) {
+        Log.i(TAG, "Get task information onSuccess(): applicationPackageName: ${result.taskInfo.applicationPackageName} status ${result.taskInfo.status}, ${result.taskInfo.progressValue}")
+    }
+
+    override fun onError(error: Error) {
+        Log.e(TAG, "Get task information onError(): ${error.message})
+    }
+})
+```
+
+## Cancel Task
+
+Sometimes you might not be longer interested in some task and wish to cancel it (per user request or your internal logic). SDK does not provide any feedback on the cancellation as this should be an impediment operation and you should not worry if the task has been cancelled, it is guaranteed to be cancelled by Ignite.
+
+```javascript
+// Initialization
+
+// Specify task id received previously in broadcast or callbacks onScheduled() method
+
+IgniteServiceSdk.instance().cancelTask(taskId)
+
+// ...
+```
+
+[Back to Top ⇧](#top)

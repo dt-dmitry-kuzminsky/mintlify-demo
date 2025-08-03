@@ -1,0 +1,162 @@
+---
+title: "Server Side Rewarding"
+---
+
+Providing incentives for app users is a great way of encouraging customer engagement with your app. With Rewarded Ads, incentives come in the form of in-app rewards that are offered to users in exchange for watching a video ad in full.
+
+To enable Server Side Rewarding you must first integrate rewarded ads, for a detailed guide click on the relevant OS:
+
+* [Android](https://developer.digitalturbine.com/hc/en-us/articles/360013580478#rewarded-ads-0-11)
+* [iOS](https://developer.digitalturbine.com/hc/en-us/articles/360013525277#rewarded-ads-0-10)
+* [Unity](https://developer.digitalturbine.com/hc/en-us/articles/360013587998#rewarded-ads-0-12)
+
+## Initializing the SDK
+
+When initializing the SDK, there are no changes to be taken into consideration. The rewarded ad completion itself triggers Server Side Rewarding. However, you must make sure the User ID is set before this action happens. It can be set before or after initialization of the SDK.
+
+## Setting the User ID
+
+Implement according to the correct operating system to set the User ID.
+
+Android iOS Unity
+
+`UserInfo.setUserId("myUserId");`
+
+// obj-c `FYBUserInfo *userInfo = [FairBid user]; userInfo.userId = @"myUserId";`
+
+// swift `let userInfo = FairBid.user() userInfo.userId = "myUserId"`
+
+`UserInfo.SetUserId("myUserId");`
+
+The User ID length must not exceed 256 characters. If it does, the Server Side Reward callback will not contain a User ID value.
+
+If no User ID is set, the DT FairBid SDK uses:
+
+* The IDFV, for an iOS device.
+* The GAID, for an Android device.
+
+## Showing a Rewarded Ad
+
+There is no change to consider when showing a rewarded ad since the callback is always triggered upon video completion.
+
+You must make sure that the User ID is set to the value you are interested in before showing your rewarded ad.
+
+## Appending Custom Parameters
+
+Use the code samples below to send extra parameters into your completion callback.
+
+To do this, create an object with your custom parameters, which you pass using the show method.
+
+The total length of characters in the custom parameters collection must not exceed 4096. If it does, an empty collection of custom parameters is sent.
+
+Android iOS Unity
+
+`Map<String, String> customParameters = new HashMap<>();`\
+`customParameters.put("myCustomKey", "myCustomValue");
+``customParameters.put("anotherCustomKey", "anotherCustomValue");
+``RewardedOptions rewardedOptions = new RewardedOptions();
+``rewardedOptions.setCustomParameters(customParameters);
+``Rewarded.show("placementID", rewardedOptions, activity);`
+
+// obj-c
+
+`FYBShowOptions *showOptions = [FYBShowOptions new]; showOptions.customParameters = @{@"myCustomKey": @"myCustomValue", @"anotherCustomKey": @"anotherCustomValue"}; [FYBRewarded show:@"placementID" options:showOptions];`
+
+// swift
+
+`let showOptions = FYBShowOptions() showOptions.customParameters = ["myCustomKey": "myCustomValue", "anotherCustomKey": "anotherCustomValue"] FYBRewarded.show("placementID", options: showOptions)`
+
+`Dictionary<string, string> customParameters = new Dictionary<string, string>();
+customParameters.Add("myCustomKey", "myCustomValue");
+customParameters.Add("anotherCustomKey", "anotherCustomValue");
+RewardedOptions rewardedOptions = new RewardedOptions();
+rewardedOptions.CustomParameters = customParameters;
+Rewarded.Show("placementID", rewardedOptions);`
+
+## Configuring Endpoints in the Console
+
+1. Log in to your [DT account](https://console.fyber.com/)
+2. You can configure the endpoint in the Callback URL under **Configure Placement** in the console\
+   <Frame caption="Screen_Shot_2022-07-25_at_11.05.52.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/7886685617169" />
+   </Frame>
+3. Under Server Side Rewarding, click**Edit Server to Server Callback**. The Callback URL and Security Token are displayed\
+   <Frame caption="Screen_Shot_2022-07-25_at_11.07.56.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/7886793498001" />
+   </Frame>
+4. Copy your security token. It is sent in each callback to enable you to validate that the response is coming from DT’s server
+5. Click**Save**
+
+#### Important
+
+* The Security token should be kept secret between your servers and DT's. Ensure that there is no possible way that any of your users can access it.
+* There is a significance to the order of the parameters in the Callback URL when computing the SHA1 hash of the request parameters.
+
+## Callback Structure and Behavior
+
+DT calls your endpoint with the URL configured in the console.
+
+Before performing the GET request with the URL, DT replaces the following macros with information related to the video completion event.
+
+| Parameter      | Mandatory | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| USER\_ID       | Yes       | The ID of the user to be credited                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| SIG            | Yes       | The value of the SIG macro is the SHA1 Hash of the values of all parameters (including the customized params even if they are not configured in the callback URL) in the URL (alphabetically sorted by parameter name) and the Security token displayed in the UI.For example, if the callback URL is:```javascript
+https://mygamesdomain.com/callbacks.aspx?appID=123456¤cyName=Get%2Bcurrency&data=
+test123456test&reward_amount=1.000000&sessionID=1234567890123456789&signature=SIG×tamp=
+1234567890123&user_id=test123456
+```('data' is the custom params in the project) and the security token in the UI is:```
+abcdefghijklmnopqrstuvwxyz123456789123zyxwvutsrqponmlkjihgfedcba
+```Then the string (URL Decoded) to be encrypted is:```
+123456Get currencytest123456test1.00000012345678901234567891234567890123test123456abcdefgh
+ijklmnopqrstuvwxyz123456789123zyxwvutsrqponmlkjihgfedcba
+```The SIG appears as:```
+10708d03944513ae9eeb95f958838cfeef66cf06
+``` |
+| AMOUNT         | Yes       | The amount of virtual currency the user is to be credited.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| CURRENCY\_NAME | No        | The name of the virtual currency being rewarded as it appears in the console.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| APP\_ID        | No        | The Application ID as it appears in the console.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| SESSION\_ID    | No        | The unique transaction ID in the form of an**int64**. Use this to check whether the transaction has already been processed in your system.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| TIMESTAMP      | No        | Indicates the time stamp when the completion event occurred.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+
+## Response Options
+
+DT expects to receive a `HTTP 200`response to indicate that the publisher has successfully processed the callback. If a`HTTP 302`response is received, it is redirected a maximum of three times.
+
+If the response is`HTTP 400`or`HTTP 401`, DT does not retry that attempt. For any other response, DT continues to resend the callback at increasing intervals until it receives a `HTTP 200`response or until the maximum 10 tries limit is reached.
+
+DT's server decides whether the callback request was successful based on the HTTP status code of your response.
+
+| Callback Request Type             | Description                                                                                                                                                                                                                                                                                                                             |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Response                          | A successful callback must return an empty response and a`HTTP 200`status code. This indicates to our servers that you have successfully processed the callback. Any other response is interpreted as an unsuccessful callback (see below).                                                                                           |
+| Redirects                         | DT’s servers follow HTTP redirects (status code 301 or 302), however, all redirect locations must be absolute URLs, as specified in the W3C standard.                                                                                                                                                                                   |
+| Unsuccessful Callbacks            | If an error occurs on your side, you may send**any status code other than`HTTP 200`**to indicate to our servers that the callback was not processed successfully. Any response other than`HTTP 200`causes our system to resend the callback up to 10 additional times with an exponentially increasing delay between each attempt. |
+| Duplicates and Rejected Callbacks | If you identify the callback request as a duplicate based on the `SESSION_ID`, or if you choose to reject the callback intentionally, we recommend you to send an`HTTP 200`status code response. In this way, this indicates to us that the callback was processed and there is no need to resend it.                                 |
+
+Important
+
+To ensure the security of your reward callbacks, our servers send a`sig`(signature) parameter to authenticate the event. We highly recommend you verify this on your end.
+
+## Whitelist DT IPs
+
+If your server has restrictive security settings and/or is protected by a firewall, you may have to unblock DT’s servers’ IP addresses to receive callback requests.
+
+The IP ranges and addresses that you must whitelist are provided below.
+
+We have added a new list of IPs. They are due to come into effect over the next few months.
+
+| New DT IP Address | Old DT IP Address |
+| ----------------- | ----------------- |
+| 34.139.213.214    | 52.203.142.28     |
+| 34.23.52.214      | 54.82.252.137     |
+| 34.23.119.91      | 52.21.200.98      |
+| 35.243.128.240    |                  |
+| 34.23.179.242     |                  |
+| 104.196.223.181   |                  |
+| 34.23.216.190     |                  |
+| 35.196.84.62      |                  |
+| 34.23.149.113     |                  |
+| 34.73.158.22      |                  |
+
+[Back to Top ⇧](#top)

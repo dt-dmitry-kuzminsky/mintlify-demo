@@ -1,0 +1,89 @@
+---
+title: "Mediating DT Exchange"
+---
+
+The DT Exchange SDK supports mediation through partner networks for both Waterfall and SDK Bidding models.
+
+Waterfall ranks ad networks based on their average historical performance and prioritizes networks with the highest eCPM, fill rate, and lowest latency. The system sequentially passes impressions from one ad network to the next until they sell.
+
+SDK bidding, or header bidding, enables real-time advertising auctions and allows publishers to auction their ad inventory to multiple sources simultaneously.
+
+The DT Exchange bidder allows DT Exchange to participate in RTB auctions and bid in programmatic exchanges on mediation platforms, which promotes fair competition among media buyers.
+<Warning>
+#### Important
+
+To mediate DT Exchange through other platforms, integrate the DTX SDK:
+
+* [Integrating the Android SDK](https://developer.digitalturbine.com/hc/en-us/articles/360010822437-Integrating-the-Android-SDK)
+* [Integrating the iOS SDK](https://developer.digitalturbine.com/hc/en-us/articles/360010915618-Integrating-the-iOS-SDK)
+</Warning>
+The table below describes which DT Exchange SDK version is supported by which mediation platform.
+
+
+More information about each Ad Type is available in [Ad Types and Specifications](/hc/en-us/articles/360010915358).
+
+<Frame caption="Ad Types and Placement ID (1).png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17190945135132" />
+</Frame>
+
+## Waterfall
+
+Mediating DT Exchange through another mediation platform requires configurations in both the DT Exchange and the mediation platform dashboards.
+
+## MAX
+
+Enable DT Exchange in the MAX dashboard as described in MAX's[Bidder Network Guides](https://developers.applovin.com/en/max/mediated-network-guides/sdk-bidder-network-guides#digital-turbine-dt-exchange).
+
+***
+
+## ironSource
+
+Enable DT Exchange in the ironSource dashboard as described in ironSource's DT Exchange Mediation Integration Guide ([Android](https://developers.is.com/ironsource-mobile/android/fyber-mediation-integration-guide/), [iOS](https://developers.is.com/ironsource-mobile/ios/fyber-mediation-integration-guide/), [Unity](https://developers.is.com/ironsource-mobile/unity/fyber-mediation-integration-guide/)).
+
+***
+
+## Google AdMob
+
+Enable DT Exchange in the Google AdMob dashboard as described in Google AdMob's Integrate DT Exchange with Mediation guide ([Android](https://developers.google.com/admob/android/mediation/fyber), [iOS](https://developers.google.com/admob/ios/mediation/dt-exchange)).
+
+***
+
+## Google Ad Manager
+
+Enable DT Exchange in the Google AdManager dashboard as described in Google Ad Integrate DT Exchange with Mediation guide ([Android](https://developers.google.com/ad-manager/mobile-ads-sdk/android/mediation), [iOS](https://developers.google.com/ad-manager/mobile-ads-sdk/ios/mediation)).
+
+***
+
+## SDK Bidding
+
+Mediating DT Exchange through another mediation platform with SDK bidding requires configuration in the DT Exchange Bidder and the mediation platform dashboards. The DT Exchange bidder uses the first week to learn and optimize, which may cause performance fluctuations.
+
+## MAX
+
+Complete the following steps to enable DT Exchange Bidder in the MAX dashboard:
+
+1. Create new [Placement IDs](https://developer.digitalturbine.com/hc/en-us/articles/4557133593361-Setting-Up-DT-Exchange#h_01F4BSEC7MF5WQNWYNCKRMFSHV)in the DT Console.
+2. Log in to your [MAX](https://dash.applovin.com/login) account and follow the steps in MAX's [SDK Bidder Network Guides](https://developers.applovin.com/en/max/mediated-network-guides/sdk-bidder-network-guides#digital-turbine-dt-exchange).
+3. Activate the placement in the MAX dashboard.
+
+## ironSource
+
+Complete the following steps to enable DT Exchange Bidder in the ironSource dashboard:
+
+1. Create new [Placement IDs](https://developer.digitalturbine.com/hc/en-us/articles/4557133593361-Setting-Up-DT-Exchange#h_01F4BSEC7MF5WQNWYNCKRMFSHV) in the DT Console.
+2. Log in to your [ironSource](https://auth.ironsrc.com/login) account and follow the steps in ironSource's DT Exchange Mediation Integration Guide ([Android](https://developers.is.com/ironsource-mobile/android/fyber-mediation-integration-guide/), [iOS](https://developers.is.com/ironsource-mobile/ios/fyber-mediation-integration-guide/)).
+3. Activate the placement in the ironSource dashboard.
+
+<Note>
+#### Note
+
+DT Exchange SDK Bidding is currently in open beta.
+</Note>
+## FAQ
+
+<Accordion title="How to switch from Waterfall to Bidding?">
+
+You cannot directly re-purpose a waterfall placement as a bidding placement. Instead, in DT Console, create a new placement, set it up for bidding, and deactivate the old waterfall placement.\
+When setting up the placement in your mediation provider's dashboard, pick **DT Exchange** **Bidder **(not **DT Exchange**) as a mediated network.
+</Accordion>
+[Back to Top ⇧](#top)

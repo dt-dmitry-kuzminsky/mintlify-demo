@@ -1,0 +1,18 @@
+---
+title: "Releasing Ad Instance Resources"
+---
+
+After an ad has been shown, it is recommended to release the resources which were required to display it.
+
+To perform such an operation, performing the following:
+
+Releasing Your Placement (previously known as Ad Spot)
+
+```javascript
+if (mSpot != null) {
+   mSpot.destroy();
+   mSpot = null;
+}
+```
+
+[Back to Top ⇧](#top)

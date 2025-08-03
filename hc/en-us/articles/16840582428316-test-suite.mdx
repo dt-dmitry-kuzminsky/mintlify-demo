@@ -1,0 +1,284 @@
+---
+title: "Test Suite"
+---
+
+The DT FairBid Test Suite allows you to check that your app is set up correctly and ready to mediate using DT FairBid mediation. It checks that the mediated networks associated with the app are fully integrated, that Placements and Instances are correctly set up, and that ads are successfully served.
+
+## Launching the Test Suite
+
+The Test Suite runs the following diagnostic tests when it launches:
+
+* [Mediated Networks Integration Status](#h_01HF4HC3WY8YT6HDRA3AQECZ5G): Verifies whether mediated networks are properly integrated and ready to serve ads.
+* [Placements](#h_01HF4HC3WZG1VFW3WV5KP3M6H1): Verifies whether all configured Placements and Instances in the DT Console are correctly set up and run as expected by DT FairBid's auction on real-time ad requests.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582387996" />
+</Frame>
+
+## Launching the Test Suite via SDK
+
+To launch the Test Suite via SDK or start the app in debug mode:
+
+Android iOS Unity
+
+1. Initialize the FairBid SDK and import the `com.fyber.fairBid-sdk-plugin` header.
+2. Run the following API:
+
+```
+FairBid.showTestSuite(activity);
+```
+
+1. Initialize the FairBid SDK and import the `FairBidSDK/FairBid.h `header.
+2. Run the following API:
+
+**Swift**
+
+```
+FairBid.presentTestSuite()
+```
+
+**Objective-C**
+
+```csharp
+[FairBid presentTestSuite];
+```
+
+1. Initialize the FairBid SDK and import the `FairBidSDK.h` header.
+2. Run the following API:
+
+```
+FairBid.ShowTestSuite();
+```
+
+## Launch the Test Suite from Your App
+
+You can launch the Test Suite from your app in Debug mode (signed with a Debug certificate). If the FairBid SDK detects integration errors, a pop-up message appears. No explicit SDK call is required.
+
+To launch the Test Suite from your app:
+
+1. Sign your app with a Debug certificate, and start your app.\
+   If the FairBid SDK detects integration errors, a pop-up that summarizes the errors found automatically appears.
+
+<Frame caption="Test Suite pop-up for App in Debug mode">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585313180" />
+</Frame>
+
+#### Note
+
+The FairBid SDK displays this pop-up only when your app is in debug mode. The FairBid SDK turns off this pop-up when you sign your app with a release certificate.
+
+2. Tap **Test Suite**.\
+   The Test Suite opens with additional diagnostic details.
+
+## Mediated Networks Integration Status
+
+The main screen of the Test Suite gives you an immediate idea of your mediated network's integration status:
+
+* Successful Integration: A green screen indicates that the associated mediated networks are connected and enabled. For more information about how to test the instances in your app, see [Testing Mediation Placements](#h_01JCWHNJDGZ4D6MSB8MT0PYAJT).
+* Unsuccessful Integration: A red screen indicates that the Test Suite encountered errors while attempting to connect to your mediated networks. Tap the red square for more information about the mediation errors.\
+  DT recommends correcting the identified issues before going live with your app.
+
+| SUCCESSFUL INTEGRATION                                                                                                 | UNSUCCESSFUL INTEGRATION                                                                                               |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582387996" />
+</Frame> | <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585314588" />
+</Frame> |
+
+## Troubleshooting Integration Errors
+
+If the Test Suite detects an integration error, it provides information to help you identify and fix the issue. Some common errors and suggested fixes include:
+
+### Missing SDK
+
+Android iOS Unity
+
+| ISSUE DESCRIPTION                                                                                                                                                                                                                                                                                                                    | SUGGESTED FIX                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585315228" />
+</Frame> The DT FairBid SDK requires the mediated ad network's SDK to work. If the Test Suite mentions that a network is missing its SDK, then it might mean you forgot to insert the network's SDK into your project. | Refer to the documentation on integrating that specific network into your project to resolve this problem.                      |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582395420" />
+</Frame> If the AdMob SDK is not implemented or configured in the Console but the Google Play Services API is still used in the project, the following error occurs when you integrate AdMob.                          | This message only applies to AdMob integrations. If you are not planning to integrate AdMob, you can ignore this error message. |
+
+| ISSUE DESCRIPTION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | SUGGESTED FIX                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585315228" />
+</Frame> The DT FairBid SDK requires the mediated ad network's SDK to work. If the Test Suite mentions that a network is missing its SDK, then it might mean you forgot to insert the network's SDK into your project.                                                                                                                                                                                                                                     | Refer to the documentation on integrating that specific network into your project to resolve this problem.                                                                                                                                                                                                                                                                                                                                                          |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16841401265948" />
+</Frame> To allow attribution using SKAdNetwork, demand partners must register with Apple. Developers must configure their apps to work with ad networks by specifying SKAdNetwork IDs. Per Apple's [SKAdNetwork documentation](https://developer.apple.com/documentation/storekit/skadnetwork/), you must include these IDs in the app's [Info.plist](https://developer.apple.com/documentation/storekit/skadnetwork/configuring_an_advertised_app) file. | The [Supported Networks Table](https://developer.fyber.com/hc/en-us/articles/360010077777-Supported-Networks#platform-ios) allows you to select each network that you have integrated and produces the snippet for you to insert into the Info.plist You can also use the [SKAdNetwork ID Auto Updater](https://developer.fyber.com/hc/en-us/articles/360015298038-SKAdNetwork-ID-Auto-Updater) tool to manage SKAdNetwork IDs directly from XCode or Unity Editor. |
+
+| ISSUE DESCRIPTION                                                                                                                                                                                                                                                                                                                    | SUGGESTED FIX                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585315228" />
+</Frame> The DT FairBid SDK requires the mediated ad network's SDK to work. If the Test Suite mentions that a network is missing its SDK, then it might mean you forgot to insert the network's SDK into your project. | Refer to the documentation on integrating that specific network into your project to resolve this problem. |
+
+### Not Configured in the Console
+
+| ISSUE DESCRIPTION                                                                                                                                                                                                                                                                                                                                                        | SUGGESTED FIX                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582397468" />
+</Frame> DT FairBid SDK requires enabling the mediated ad networks in the console. If the Test Suite mentions that a network is not configured in the console, you might have forgotten to enable it and configure it for your application in the console. | Refer to the documentation on integrating that specific network into your project to resolve this problem. |
+
+### Missing Credentials
+
+| ISSUE DESCRIPTION                                                                                                                                                                                                                                                                                                                                                                                 | SUGGESTED FIX                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582399132" />
+</Frame> For the mediation stack of the DT FairBid SDK to work, the SDK needs to have access to your credentials for the different networks you integrate. If the Test Suite mentions that a network is missing credentials, it was not configured with credentials in the Console. | Access the Console and verify that credentials are correctly configured for the relevant network to resolve this issue. |
+
+### Missing Activities
+
+Android iOS Unity
+
+Not applicable.
+
+Not applicable.
+
+Android Only
+
+| ISSUE DESCRIPTION                                                                                                                                                                                  | SUGGESTED FIX                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582400924" />
+</Frame> Some SDKs require activities to be added to the `manifest.xml` file to run. | To fix this issue, refer to the integration documentation specific to the faulty network and make sure all its required activities are added to the `manifest.xml` file. |
+
+### Missing Permissions
+
+Android iOS Unity
+
+Not applicable.
+
+Not applicable.
+
+Android Only
+
+| ISSUE DESCRIPTION                                                                                                                                                                                  | SUGGESTED FIX                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582400924" />
+</Frame> Some SDKs require activities to be added to the `manifest.xml` file to run. | To fix this issue, refer to the integration documentation specific to the faulty network and make sure all its required activities are added to the `manifest.xml` file. |
+
+## Testing Mediated Networks Instances
+
+After integrating the mediated networks, use the Test Suite to request and display ads:
+
+1. Tap the green square on the main menu.
+2. Select the network you want to interact with from the list of networks.
+3. View the list of configured Instances in your app:
+
+* * Mediation Placements (waterfall instances).
+  * Programmatic Mediation Placements (bidding instances).
+
+## Waterfall Instances
+
+The Waterfall Instances section lists all Instances configured in the Console. Tap **Request** and **Show **to request and show ads for these Instances.
+
+<Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582403740" />
+</Frame>
+
+## Bidding Instances
+
+This section lists all the bidding Instances configured in the Console and used throughout your app.
+
+## Placements
+
+The Placements section of the Test Suite allows you to validate placement setups and view performance details:
+
+* Verify that the Placements Instances setup is applied correctly as configured in the Console.
+* View the order of a Placement's Waterfall Instances, which includes CPM values predicted by the DT FairBid algorithm when you select Auto CPM in the Console.
+* Request an ad and see in real-time how the DT FairBid auction selects a winner.
+
+## Verify Placement Instance Setup
+
+To view and verify the configured placements for your app:
+
+1. Tap the Placement section of the main screen (the blue square).\
+   The Placements, including the Placement name, ID, and Type, appear.
+
+2. To view the bidding Instances set for the placement, tap on a placement.\
+   For each Instance, the following information appears:
+
+   * Mediated Network name.
+
+   * Instance ID: Configured on the mediated network's dashboard and set in the DT Console.
+
+   * Predicted CPM Value:
+
+     * Auto CPM: The predicted value by DT FairBid's algorithm appears.
+     * Manual CPM: The value appears in bold, alongside the predicted value by FairBid's algorithm if available.\
+       The Instance is positioned in the waterfall by the CPM values in bold.
+
+|                                                                                                                                    |                                                                                                                                    |                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="IMG_4984.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585323420" />
+</Frame> | <Frame caption="IMG_5005.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585324316" />
+</Frame> | <Frame caption="IMG_5006.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585325084" />
+</Frame> |
+
+
+
+## Running the DT FairBid Auction
+
+To run the DT FairBid auction and verify that the Placement delivers ads successfully and instances are called as expected:
+
+1. Tap **Request** (Show for banner placements) button.\
+   The DT FairBid auction starts running and looks for available ads from the Waterfall instances. If necessary, it proceeds to the bidders' auction to find a bid that meets the Placement floor price or beats the Waterfall result.
+2. The Auction status appears at the bottom of the screen while the auction is running.\
+   Once the auction ends, the winning Instance appears.
+3. To view the winning ad, tap **Show**.
+
+|                                                                                                                        |                                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585325980" />
+</Frame> | <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585327516" />
+</Frame> |
+
+## Waterfall Instance Responses
+
+| RESPONSE                                                                                                                                | DESCRIPTION                                                                                |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582410140" />
+</Frame> Requesting       | Requesting an ad for the Instance.                                                         |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585329692" />
+</Frame> Fill             | Instance returns an ad.                                                                    |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582414620" />
+</Frame> No Fill          | Instance reports that no ad is available.                                                  |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840582415772" />
+</Frame> Instance Timeout | Instance does not respond in time, but the SDK is still awaiting a response.               |
+| <Frame caption="">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/16840585335196" />
+</Frame> Failure          | An error occurred during the Instance request, such as adapter failure, error, or timeout. |
+
+## Troubleshooting
+
+Requesting an ad can sometimes fail for many reasons. Below is a list of possible problems to check that can help you get an ad:
+
+| PROBLEM                   | RESOLUTION                                                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Console Credentials**   | Verify correct credentials and mediation placements.                                                          |
+| **Console Logs**          | Review console logs for network-specific warnings or integration notes.                                       |
+| **Network Documentation** | Confirm correct SDK integration and required settings, including test device setup and test ad configuration. |
+
+## Caching Mechanism
+
+The DT FairBid SDK implements a caching mechanism for the console configuration. As a result, you might experience some delays when you change your console configuration and when the changes reflect in the SDK. DT recommends deletingand reinstalling your application after every change in the Console.
+
+[Back to Top ⇧](#top)

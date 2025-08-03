@@ -1,0 +1,99 @@
+---
+title: "Attribution"
+---
+
+Host apps can use Direct App Attribution for installs via Ignite Services by including Mobile Measurement Partner (MMP) data in the install request ([install by package name](https://developer.digitalturbine.com/hc/en-us/articles/8342605844765-Install-App-by-Package-Name) or [install by URI](https://developer.digitalturbine.com/hc/en-us/articles/8367745350429--Install-App-by-URI)). Attribution via Ignite Services is available for the following mobile measurement partners:
+
+* Adjust
+* AppsFlyer
+* Singular
+
+#### Note
+
+Direct App Attribution is available for SDK version4.0 or later *and* Reignite version21.2 on the device. If you are using an older version of either the SDK or Ignite, attribution attempts return as errors.
+
+## Send Attribution Data
+
+1. Create an empty bundle.
+
+```java
+val metadataBundle = Bundle()
+```
+
+2. Send attribution data for all apps as `SdkConstants.AttributionData` constants.
+
+```java
+  
+/*
+ * Send Attribution data for one App or multiple Apps
+ * To send Attribution data for multiple apps, create multiple attributionData objects (attributionDataApp1, attributionDataApp2, etc.)
+ */
+val attributionDataApp1 = mapOf(
+    SdkConstants.AttributionData.MMP_NAME to etMmpNameValue,
+    SdkConstants.AttributionData.MMP_PROVIDER to etMmpProviderValue,
+    SdkConstants.AttributionData.MMP_TRANSACTION_ID to etMmpTransactionIdValue,
+    SdkConstants.AttributionData.MMP_LINK to etMmpLinkValue
+)
+```
+
+| PARAMETER       | DESCRIPTION                                       | SAMPLE DATA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | REQUIRED FOR |           |          |
+| --------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------- | -------- |
+|                 |                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | ADJUST       | APPSFLYER | SINGULAR |
+| MMP\_NAME       | Name of mobile measurement partner.               | `AppsFlyer
+Adjust
+Singular`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Yes          | Yes       | Yes      |
+| MMP\_PROVIDER   | Name of provider.                                 | `Adjust`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Yes          | No        | No       |
+| TRANSACTION\_ID | MMP Transaction ID for attribution.               | `3e456bj7f89065s433`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | No           | Yes       | No       |
+| MMP\_LINK       | Fully populated tracking URL. Do not use aliases. | `https://app.adjust.com/17cokf03?campaign=WoodySort_Android_20630_MX_Multi_IGNITE_CPI&adgroup=15792&id2=dltSWkJQ&idfa=&gps_adid_lower_sha1=cceb917745519888862b3b5e4390df0a49c27ef0&android_id=&subpublisher_id=%5BSUBSITE_ID%5D&digital_turbine_referrer=APPIA112272313849595687647011480182574916004&cost_type=CPI&cost_amount=0.14&cost_currency=USD``https://tactile.sng.link/D196p/g7w3?pcn=LG%3AUS%3AA%3A01%3ADTGrowth&psid=12903&cl=APPIA98303053034660451540383180027752312312&id2=dl5XWUJU&aifa=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&test_an=digitalturbine` | Yes          | No        | Yes      |
+
+3. Create an attribution data map that associates the package name or URI with the corresponding attribution data.
+
+```go
+
+/* Send a single Attribution Data Map which holds the Attribution Data for every App.
+*/
+val attributionDataMap = HashMap<string, map="Map"><string, string="String">()
+attributionDataMap.put(PACKAGE_NAME, attributionDataApp1)     // If Install By Package Name, key as PACKAGE_NAME
+attributionDataMap.put(FILE_URI, attributionDataApp2)         // If Install By File URI, key as FILE_URI
+```
+
+4. Add the map to the bundle.
+
+```
+  metadataBundle.putSerializable(
+    SdkConstants.AttributionData.MMP_ATTRIBUTION_DATA,
+    attributionDataMap
+```
+
+`MMP_ATTRIBUTION_DATA` is the key for the `attributionDataMap`.
+
+5. Pass the metadata bundle in your install request. The following code snippet passes the metadata bundle in an installation request by package name.
+
+```javascript
+  
+IgniteServiceSdk.instance().install(
+                applicationPackageName,
+                callback,
+                broadcastAction,
+                metadataBundle)        // Pass the bundle to the IgniteService Sdk
+```
+
+## Attribution Results
+
+Ignite Services sends the results of attribution data to the MMP in the `result.application` object in the `onSuccess` callback. If either the Host app uses an unsupported version of the SDK or the devices uses an unsupported version of Ignite, DT sends an error message in the `onSuccess` callback.
+
+```bash
+
+override fun onSuccess(result: InstallationResponse) {
+    Log.d(TAG, "Install application onSuccess(): taskId=${result.taskId}, appId=${result.applicationId}, package=${result.packageName}")   
+ 
+    toast("Installed successfully Attibution Data Saved = ${result.application.attributionDataStorageSuccess} and Error = ${result.application.errorMessage}")
+}
+```
+
+| PARAMETER                     | TYPE    | DESCRIPTION                                                                                                                                                                   |
+| ----------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| attributionDataStorageSuccess | Boolean | Indicates whether DT was able to store attribution data after successful installation. `TRUE` = Attribution data saved succesfully. `FALSE` = Attribution data was not saved. |
+| errorMessage                  | String  | If attribution data is not saved successfully, this string provides information on the error.                                                                                 |
+
+[Back to Top ⇧](#top)

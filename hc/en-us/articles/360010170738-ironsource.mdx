@@ -1,0 +1,110 @@
+---
+title: "IronSource"
+---
+
+This article is for publishers who want to use the DT FairBid SDK to load and display ads from ironSource via DT FairBid mediation.
+
+ironSource currently supports the following [ad types](https://developer.digitalturbine.com/hc/en-us/articles/360010915358-Ad-Types-and-Placement-ID):
+
+* Banner
+* Interstitial
+* Rewarded
+
+To integrate ironSource as DT mediated network:
+
+* [Step 1: Retrieve ironSource parameters](#h_01J50P77B3CYYMEAZ36BQEC30R "Retrieve ironSource Parameters").
+* [Step 2: Add ironSource as a DT mediated network](#h_01J50P77B39H7QKGYQMHM8TREW "Add ironSource as a mediated network in DT").
+* [Step 3: Add the ironSource SDK to your integration](#h_01J50P77B3RENMP2JVMGK304PA "Add the ironSource SDK to your DT integration").
+* [Step 4: Test your integration](#h_01JD5DY1XW3XZ76DC1ECH5P1PE "Test your ironSource integration").
+
+## Step 1: Retrieve ironSource Parameters
+
+Before retrieving ironSource parameters, ensure that you have ironSource ad unit inventory that you want to mediate with DT. For more information about creating ironSource inventory, see the following ironSource articles:
+
+* [Create](https://developers.is.com/ironsource-mobile/general/create-an-account-ironsource-ads/ "Create an ironSource account") an ironSource account.
+* [Add](https://developers.is.com/ironsource-mobile/general/how-to-add-an-app-to-your-account/ "Add your app to ironSource") your app to ironSource.
+* [Create](https://developers.is.com/ironsource-mobile/general/how-to-add-an-app-to-your-account/#step-4 "Create ad units in ironSource") ad units in ironSource.
+
+To set up ironSource as a DT mediated network, locate the following ironSource parameters:
+
+| PARAMETER       | DESCRIPTION                                                                       |
+| --------------- | --------------------------------------------------------------------------------- |
+| `App Key`       | Unique ID for your app in the ironSource system.                                  |
+| `API User Name` | The User Name for your ironSource account.                                        |
+| `Secret Key`    | Unique identifier detailing the relationship between your account and ironSource. |
+| `Ad Unit ID`    | Unique identifier for the ad unit you want to mediate in DT FairBid.              |
+
+## Obtaining the App Key
+
+1. On the ironSource dashboard, go to**Apps**→**App Management**.\
+   A list of your apps display along with the associated App Keys.
+
+<Frame caption="ironSource app list and app keys">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360010784257" />
+</Frame>
+
+2. Copy the `App Key`, and store the value in a text file. This value is required later in [Step2](#h_01J50P77B39H7QKGYQMHM8TREW "Step 2: Adding ironSource as a DT mediated network") to add ironSource as a DT mediated network.
+
+## Obtaining the API User Name and Secret Key
+
+Obtain the `API User Name` and `Secret Key` from your ironSource user account settings:
+
+1. From the ironSource dashboard, click the dropdown menu next to your user name, and select **My Account**.\
+   The User Info tab displays basic account details.
+
+<Frame caption="ironSource basic user settings">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360010784337" />
+</Frame>
+
+2. Copy the **User Name**, and store the value in a text file. This value is required later in [Step2](#h_01J50P77B39H7QKGYQMHM8TREW "Step 2: Adding ironSource as a DT mediated network") to add ironSource as a DT mediated network.
+
+3) Select the**API** tab.\
+   The Secret Key displays.
+
+<Frame caption="ironSource user settings API tab">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/360010784357" />
+</Frame>
+
+4. Copy the `Secret Key`, and store the value in a text file. This value is required later in [Step2](#h_01J50P77B39H7QKGYQMHM8TREW "Step 2: Adding ironSource as a DT mediated network") to add ironSource as a DT mediated network.
+
+## Obtaining Ad Unit IDs
+
+To locate ironSource Ad Unit IDs, see the ironSource article about [How to manage your ad units](https://developers.is.com/ironsource-mobile/general/how-to-manage-your-ad-units/#step-1). For each placement you want to mediate in DT FairBid, copy the `Ad Unit ID`, and store the value in a text file. This value is required later in [Step2](#h_01J50P77B39H7QKGYQMHM8TREW "Step 2: Adding ironSource as a DT mediated network") to add ironSource as a DT mediated network.
+
+## Step 2: Add ironSource as a Mediated Network
+
+Before you add ironSource as a mediated network in DT FairBid:
+
+* Ensure that you have access to the parameters you retrieved from ironSource in [Step1](#h_01J50P77B3CYYMEAZ36BQEC30R).
+* [Add your App](https://developer.digitalturbine.com/hc/en-us/articles/14755391313308-Adding-an-App) using the DT Console.
+* Ensure that you set up a [DT Placement](https://developer.digitalturbine.com/hc/en-us/articles/15005035293468-Setting-Up-Placements "Create a DT placement") for each ironSource ad type you want to mediate with DT.
+
+To add ironSource as a DT mediated network:
+
+1. Log in to the [DT Console](https://console.fyber.com/), and click**App Management**.
+
+2) [Set up](https://developer.digitalturbine.com/hc/en-us/articles/15005016082972-Setting-Up-Mediated-Networks) ironSource as a mediated network using the parameters you retrieved in [Step1](#h_01J50P77B3CYYMEAZ36BQEC30R).
+
+<Frame caption="ironSource network parameters for DT">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/9411745974429" />
+</Frame>
+
+3. [Create an ad network instance](https://developer.digitalturbine.com/hc/en-us/articles/15111147606428-Setting-Up-Instances) for each ad type you want to mediate with DT. Use the ironSource `Ad Unit ID` you retrieved in [Step1](#h_01J50P77B3CYYMEAZ36BQEC30R) as the **Instance ID**.
+
+## Step 3: Adding the ironSource SDK to your Integration
+
+To integrate the ironSource SDK, follow the instructions on the [Supported Networks](https://developer.digitalturbine.com/hc/en-us/articles/360010077777-Supported-Networks) page.
+
+#### Note
+
+If you use ProGuard, follow the [ironSource instructions for SDK integration](https://developers.ironsrc.com/ironsource-mobile/android/android-sdk/# "ironSource SDK integration instructions").
+
+## Step 4: Test Your Integration
+
+Use the DT Test Suite to verify that you have set up your app properly for FairBid mediation. The DT Test Suite is available for Android, iOS, and Unity apps. For more information about using the DT Test Suite, see [Test Suite](https://developer.digitalturbine.com/hc/en-us/articles/16840582428316-Test-Suite "Using the DT Test Suite").
+
+<Frame caption="DT Test Suite screen showing app is ready for mediation">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17017418831260" />
+</Frame>
+
+[Back to Top ⇧](#top)

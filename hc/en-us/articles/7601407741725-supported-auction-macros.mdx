@@ -1,0 +1,19 @@
+---
+title: "Supported Auction Macros"
+---
+
+DT allows you to substitute macros based on the [OpenRTB API Specification Version 2.5](https://www.iab.com/wp-content/uploads/2016/03/OpenRTB-API-Specification-Version-2-5-FINAL.pdf) in the `nurl` or `burl` fields, or within the tracking pixel in the `adm` field for auctions. The following table describes the supported DT auction macros.
+
+| Macro                   | Description                                                                                                                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `${AUCTION_PRICE}`      | The settlement price of the auction. This macro is required in any bid response; otherwise, the bid is considered invalid.                                                       |
+| `${AUCTION_ID}`         | ID of the bid request: From the [BidRequest.id](/hc/en-us/articles/360010835237#bidrequestid) attribute.                                                                         |
+| `${AUCTION_BID_ID}`     | ID of the bid: From the [BidRequest.id](/hc/en-us/articles/360010835237#bidrequestid) attribute.                                                                                 |
+| `${AUCTION_IMP_ID}`     | ID of the impression won: From the [imp.id](/hc/en-us/articles/360010835237#imp) attribute.                                                                                      |
+| `${AUCTION_SEAT_ID}`    | ID of the bidder seat for whom the bid is made.                                                                                                                                  |
+| `${AUCTION_AD_ID}`      | ID of the ad markup the bidder wishes to serve: From the [`bid.adid`](https://www.iab.com/wp-content/uploads/2016/03/OpenRTB-API-Specification-Version-2-5-FINAL.pdf) attribute. |
+| `${AUCTION_CURRENCY}`   | The currency used in the bid. Digital Turbine only supports USD.                                                                                                                 |
+| `${AUCTION_MIN_TO_WIN}` | The minimum bid the bidder needs to win the auction. Supported in the [seatbid.bid.nurl](/hc/en-us/articles/360010835237#seatbidnurl) attribute.                                 |
+| `${AUCTION_LOSS}`       | Auction loss reason code.                                                                                                                                                        |
+
+[Back to Top ⇧](#top)

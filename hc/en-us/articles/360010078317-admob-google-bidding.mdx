@@ -1,0 +1,156 @@
+---
+title: "AdMob/Google Bidding"
+---
+
+This article provides steps to integrate AdMob/Google bidding for mediation.
+
+#### Note
+
+Mediation of AdMob Bidding placements are transacted on the **Google bidding** network. For more information, see Google's [documentation on partner bidding](https://support.google.com/admob/answer/12374122?sjid=7406285673992422155-NC).
+
+AdMob currently supports the following [ad types](/hc/en-us/articles/360010915358-Ad-Types-and-Placement-ID):
+
+* Banner
+* Interstitial
+* Rewarded
+* MREC
+
+To integrate AdMob/Google bidding as a DT mediated network:
+
+* [Step 1: Locate AdMob parameters](#Step1).
+
+* [Step 2: Add AdMob as a DT mediated network](#Step2):
+
+  * [Add AdMob as a Waterfall network](#Waterfall).\
+    This allows for traditional waterfall mediation with AdMob. Ensure that your app and bidding placements have been added to the AdMob network.
+
+  * Add AdMob/Google bidding as a Bidding network:
+
+    * [Add Google bidding as a manually managed Bidding network](#BidderManual).\
+      This allows DT to include Google bidding in bidding mediation. Ensure that your app and bidding placements have been added to the AdMob network.
+    * [Add Google bidding as an automatically managed Bidding network](#BidderAuto).\
+      This allows DT to include Google bidding in bidding mediation. DT adds your app and bidding placements to the AdMob network on your behalf.
+
+* [Step 3: Add the AdMob/Google bidding SDK to your integration](#Step3).
+
+* [Step 4: Test your integration](#Step4).
+
+## Step1: Locate AdMob Parameters
+
+Depending on the type of mediation intend use, adding AdMob as a mediated network requires specific parameters from the AdMob Dashboard. Before you can locate these parameters, use the following table to ensure that you have completed any app setup tasks in the AdMob Dashboard.
+
+| AdMob Tasks                                                                                                                                        | Waterfall | Bidding |           |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :-----: | :-------: |
+|                                                                                                                                                    |           |  Manual | Automatic |
+| [Create](https://dev.AdMob.com/user/signup) an AdMob account.                                                                                      |          |        |          |
+| [Add](https://support.google.com/admob/answer/9989980?hl=en\&sjid=1010601375034565367-NC "Add your app to AdMob") your app to the AdMob dashboard. |          |        |          |
+| [Create](https://support.google.com/admob/answer/6128738?hl=en\&sjid=7406285673992422155-NC) AdMob ad units for your app.                          |          |        |          |
+| [Create](https://support.google.com/admob/answer/12374122?sjid=7406285673992422155-NC) AdMob partner bidding ad units for your app.                |          |        |          |
+
+Once you have completed the necessary tasks in the Mintegral Dashboard, use the following table to determine which Mintegral parameters you need to locate.
+
+| Parameter    | Description                                                                                                                                                                                   | Waterfall | Bidding |           |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :-----: | --------- |
+|              |                                                                                                                                                                                               |           |  Manual | Automatic |
+| `Ad Unit ID` | Unique identifier of the ad unit you want to mediate. For more information, see[Google's documentation](https://support.google.com/admob/answer/7356431?hl=en\&sjid=9565178303220392684-NC). |          |        |          |
+| `APP ID`     | Unique identifier of the app in AdMob. For more information, see[Google's documentation](https://support.google.com/admob/answer/7356431?hl=en\&sjid=9565178303220392684-NC).                |          |        |          |
+| `Bundle`     | Bundle ID for your app in the app store.                                                                                                                                                      |          |        |          |
+
+## Step2:AddingAdMob/GoogleBidding as a DTMediatedNetwork
+
+Before you add GoogleBidding as a DT mediated network, complete the following tasks in the DT Console:
+
+* Add your App to the DT ecosystem. For more information, see[Adding an App](https://developer.digitalturbine.com/hc/en-us/articles/14755391313308-Adding-an-App).
+* Ensure that you have a DT Placement for each AdMob ad unit you want to mediate with DT. For more information, see[Setting Up Placements](/hc/en-us/articles/15005035293468-Setting-Up-Placements "Create a DT placement").
+
+## Adding AdMob as a Waterfall Network
+
+To add AdMob as a Waterfall network:
+
+1. From the [DTConsole](https://console.fyber.com/), go to **Monetization→App Management**, locate the **Network** tab for your app, and click**Addnetwork**.\
+   The list of available networks appears.
+
+<Frame caption="FB_Network-List-AdMob_2025-04-08_11-17-18.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728807226524" />
+</Frame>
+
+2. Click the **AdMob**tile.\
+   The **Add network** form for **AdMob** appears.
+
+<Frame caption="FB_AdMob_2025-04-22 at 09.28.39.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728799014556" />
+</Frame>
+
+3. If you have not previously signed in to Google, click**Sign in with Google** and enter your AdMob credentials and Waterfall parameters from [Step1](#Step1).\
+   Signing in to Google automatically enters your AdMob `PublisherID` and `RefreshToken`.
+4. Create a Waterfall network instance for each AdMob ad unit you want DT to mediate. Use the Admob `Ad unit ID` you located in [Step1](#h_01J539GTZE7DEWJ0CT03G6QMDD) as the **Instance ID**.\
+   For more information, see[Adding a Waterfall Instance](/hc/en-us/articles/15111147606428-Setting-Up-Instances#h_01JREWSZ35BVDEVSB8XDXFHKZW).
+
+## Add GoogleBidding as a Manually Managed Bidding Network
+
+To add GoogleBidding for manually managed bidding mediation:
+
+1. From the [DT Console](https://console.fyber.com/), go to **Monetization→App Management**, locate the **Network** tab for your app, and click**Addnetwork**.\
+   The list of available networks appears.
+
+<Frame caption="FB_Network-List-GoogleBidder_2025-04-08_11-17-18.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728807229084" />
+</Frame>
+
+2. Click the **Googlebidder**tile.\
+   The **Add network** form for **Google bidder** appears.\
+   For more information, see[Addinga ManuallyManaged BiddingNetwork](/hc/en-us/articles/15005016082972-Setting-Up-Mediated-Networks#h_01J3NTVS4Q02JAV2B543ED1K52).
+
+#### Note
+
+Networks that support programmatic bidding appear as separate tiles labeled specifically for bidding. To offer your placements for bidding, make sure you select the *bidder* version of the network—in this case,**Googlebidder**.
+
+<Frame caption="GoogleBidder_Manual_2025-04-11_14-41-47.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728799015964" />
+</Frame>
+
+3. Click**Manually Managed** and enter the AdMob parameters for manual management from [Step1](#Step1).
+4. Create a Bidding network instance for each AdMob AD unit you want DT to mediate. Use the AdMob `AD Unit ID` you located in [Step1](#h_01J539GTZE7DEWJ0CT03G6QMDD) as the **Instance ID**.\
+   For more information, see[ManuallyAdding a BiddingInstance](/hc/en-us/articles/15111147606428-Setting-Up-Instances#h_01J3RD5A45GD79RK31ERHWMV3R).
+
+## Add GoogleBidding as an Automatically Managed Bidding Network
+
+To add GoogleBidding for automatically managed bidding mediation:
+
+1. From the [DT Console](https://console.fyber.com/), go to **Monetization→App Management**, locate the **Network** tab for your app, and click**Addnetwork**.\
+   The list of available networks appears.
+
+<Frame caption="FB_Network-List-GoogleBidder_2025-04-08_11-17-18.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728807229084" />
+</Frame>
+
+2. Click the **Googlebidder**tile.\
+   The **Add network** form for **Google bidder** appears.\
+   For more information, see[Addingan AutomaticallyManaged BiddingNetwork](/hc/en-us/articles/15005016082972-Setting-Up-Mediated-Networks#h_01JR8JQY9TQ9QCGT8CYV3E4HQV).
+
+#### Note
+
+Networks that support programmatic bidding appear as separate tiles labeled specifically for bidding. To offer your placements for bidding, make sure you select the *bidder* version of the network—in this case,**Googlebidder**.
+
+<Frame caption="GoogleBidder-Auto_2025-04-11_14-51-47.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728799016348" />
+</Frame>
+
+3. Click**Automatically Managed**.
+4. If you have not signed in to Google previously, click**Sign in with Google** and enter your AdMob credentials.\
+   Signing in to Google automatically enters your AdMob `PublisherID` and `RefreshToken`.
+5. Auto-generate a Bidding network instance for each FairBid placement you want to mediate with LiftoffMonetize. For more information, see[AutomaticallyAdding a BiddingInstance](/hc/en-us/articles/15111147606428-Setting-Up-Instances#h_01JR13WRNMJEPRFCC26PZBZGMH).
+
+## Step 3: Add the AdMob/GoogleBidding SDK to your Integration
+
+To integrate the AdMob/GoogleBidding SDK, follow the instructions on the [SupportedNetworks](https://developer.digitalturbine.com/hc/en-us/articles/360010077777-Supported-Networks) page.
+
+## Step 4: Test Your Integration
+
+Use the DT Test Suite to verify that you have set up your app properly for FairBid mediation. The DT Test Suite is available for Android, iOS, and Unity apps. For more information about using the DT Test Suite, see[Test Suite](https://developer.digitalturbine.com/hc/en-us/articles/16840582428316-Test-Suite "Using the DT Test Suite").
+
+<Frame caption="DT Test Suite screen showing app is ready for mediation">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/19728799016860" />
+</Frame>
+
+[Back to Top ⇧](#top)

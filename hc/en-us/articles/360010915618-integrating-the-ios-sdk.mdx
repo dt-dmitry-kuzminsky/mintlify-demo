@@ -1,0 +1,353 @@
+---
+title: "Integrating The IOS SDK"
+---
+
+This guide describes how to integrate the DT Exchange SDK into your iOS project, which uses CocoaPods for dependency management.
+
+## Integrating with CocoaPods
+
+CocoaPods enables you to add and manage external libraries. Do the following to integrate via CocoaPods:
+
+1. Open a terminal.
+2. Navigate to your project folder.
+3. Run the following command to create a new pod file if you don't already have one:
+
+```csharp
+pod init
+```
+
+4. Edit the Podfile and add the DT Exchange pod to the desired target:
+
+```javascript
+pod 'Fyber_Marketplace_SDK'
+```
+
+5. Run the install and update the repository. The `pod install` command installs the SDK and its dependencies and creates a `.xcworkspace` file to use with Xcode:
+
+```
+pod install --repo-update
+```
+
+6. Import the`IASDKCore` into the`AppDelegate` class by running the following command:
+
+Objective-C
+
+```csharp
+[IASDKCore.sharedInstance setGDPRConsentString:@"abcdef"];
+```
+
+
+
+## Downloading and Setting Up the SDK
+
+To download the DT Exchange iOS SDK, click here:
+
+[**SDK 8.3.6](javascript:void\(0\))
+
+\[] By downloading and/or using this SDK I hereby agree to the [SDK License Agreement](https://www.digitalturbine.com/legal/sdk-license-fyber)
+
+#### Tip
+
+The DT Exchange SDK Zip folder contains a test app that demonstrates integration and adds functionality. It shows ads from DT Exchange appear and troubleshoots issues.
+
+## Starting the Process
+
+* If you use the CocoaPods Dependency Manager, see [Integrating with CocoaPods](#h_01EZXYFQPVDB5HYXVPVPCYENZ4)and then refer to [Initializing the SDK](#h_01H959GWAFM6R8ZAPZJ5KHD113).
+* The DT iOS SDK requires, at minimum, an iOS 11 target and is fully compatible with iOS 17.
+
+## Step 1: Integrating the Libraries
+
+1. Drag the `IASDKCore` library to your Xcode project.\
+   The**Choose options for adding these files **pop-up screen appears.
+2. Select the **Copy items if needed **and **Create Groups** checkboxes.
+3. From **Application target**→**Build Phases,** click **Link Binary With Libraries **to verify the linkage of the app target with the IASDKCore library.
+4. If missing, drag the `IASDKCore`library to the **Link Binary With Libraries** section, which links your project with the `IASDKCore`library and adds a required path to the **Framework Search Paths**.
+5. Import the `IASDK`into the `AppDelegate`****class:
+
+```cpp
+#import <IASDKCore/IASDKCore.h>
+```
+
+## Step 2: Initializing the SDK
+
+SDK initialization is mandatory because the DT SDK relies on the Console configuration for functionality. Without this configuration, no ad units will display, and the SDK will not operate. DT recommends that you perform it at the app's initialization stage.
+
+The following takes place during the initialization phase:
+
+* Initialization of SDK.
+* Remote configuration fetching, parsing, loading, and local configuration update.
+
+1. Add the following code inside the method in `AppDelegate` class
+
+```
+application:didFinishLaunchingWithOptions:
+```
+
+2. Run the following command:
+
+```go
+[IASDKCore.sharedInstance initWithAppID:@"YOUR APP ID"
+                        completionBlock:^(BOOL success, NSError * _Nullable error) {}
+                        completionQueue:nil];
+```
+
+
+
+#### Tip
+
+All Publisher (client side) Ad Requests are on hold until the configuration is loaded to memory. The requests resume asynchronously once the config is ready. If a timeout occurs, the Publisher receives an `ad failed` event.
+
+#### Tip
+
+For further information about advanced SDK init integration, see [SDK Initialization for DT Exchange SDK](/hc/en-us/articles/360011618158).
+
+## Step 3: Configuring Apple Requirements
+
+Adhering to Apple's requirements ensures that your app complies with its privacy guidelines, as described in [ATS Configuration for DT Exchange SDK](/hc/en-us/articles/17188848003612).
+
+## Configuring Tracking Permission Alerts With ATT Framework for iOS 14+
+
+The AppTrackingTransparency (ATT) framework requires a user authorization request for app tracking. The tracking authorization status is then returned based on the user's selection.
+
+#### Note
+
+Calling `requestTrackingAuthorization(completionHandler:)` prompts the end user for app-tracking authorization. If the user disables tracking, the IDFA is set to zero.
+
+DT uses the ATT framework in iOS 14 and above to retrieve user authorization statuses. For more information, see[App Tracking Transparency](https://developer.apple.com/documentation/apptrackingtransparency).
+
+### SKAdNetwork Attribution Solution
+
+The[SKAdNetwork API](https://developer.apple.com/documentation/storekit/skadnetwork) enables advertisers to measure app installs in a privacy-aware manner in iOS 14 and above. Configuring SKAdNetwork IDs is crucial to monetizing with DT Exchange since it allows DSPs to credit your app with installs. DT recommends that you include SKAdNetwork IDs in the `info.plist` file to maximize revenue potential.
+
+## Getting the SKAdNetwork IDs
+
+The SKAdNetwork IDs for DT and DT buyers are available in two formats. These files are regularly updated. Select one of the following links to retrieve the latest SKAdNetwork IDs:
+
+* SKAdNetwork IDs in[JSON format](https://github.com/fyber-engineering/SKAdNetworks/blob/master/docs/index.json).
+* SKAdNetwork IDs in[XML format](https://github.com/fyber-engineering/SKAdNetworks/blob/master/docs/skadnetwork.xml).
+
+## Configuring the SKAdNetwork IDs
+
+The SKAdNetwork helps track app installs in a privacy-friendly way. Do the following to configure your app with SKAdNetwork IDs:
+
+1. Select`Info.plist`from the **Project** navigator in Xcode.
+
+2. In the property list editor, click **Add** (+) beside a key and press **Return**.
+
+3. In the field, type the key name[SKAdNetworkItems](https://developer.apple.com/documentation/bundleresources/information_property_list/skadnetworkitems).
+
+4. From the pop-up menu in the **Type** column, select **Array**.
+
+5. Create an array that contains one dictionary for each of DT's recommended SKAdNetwork IDs with the single-key [`SKAdNetworkIdentifier `](https://developer.apple.com/documentation/bundleresources/information_property_list/skadnetworkitems/skadnetworkidentifier). The string value for the key is the ad network identifier.
+
+## SKAdNetwork ID Manager
+
+The[SKAdNetwork IDs Manager](/hc/en-us/articles/360015298038) tool identifies and manages SKAdNetwork IDs. This tool processes and deduplicates SKAdNetwork IDs for all buyers on DT Exchange and then generates a finalized`Info.plist`output for streamlining integration into your app. The tool enables you to add other SKAdNetwork IDs to your final`Info.plist` file.
+
+#### Tip
+
+DT recommends that you use lowercase text for the ad network identifier string.
+
+To configure SKAdNetwork IDs, see [Configuring a Source App](https://developer.apple.com/documentation/storekit/skadnetwork/configuring_a_source_app).
+
+## Step 4: Adding Delegates
+
+Delegates manage various events and interactions related to ads. Depending on your integration, add delegate information to your iOS integration.
+
+Different delegates are required; select the following necessary delegates:
+
+* Global Ad Delegate Protocol
+* Unit Delegate
+* Video Content Delegate
+* HTML / MRAID Delegate
+
+For further information, see [Delegate Protocols](/hc/en-us/articles/360020083398).
+
+## Step 5: Adding User Consent
+
+User consent mechanisms are essential to comply with various data protection laws. The following regulations mandate that user's data be handled with explicit consent:
+
+* [GDPR](#h_01H959GWAG5ZA05MRF5P9AZHB0)
+* [CCPA](#h_01H959GWAGCD68BTFGWZ2JK435)
+* [LGPD](#h_01H959GWAG1EZNQ5CRHRYTAFNW)
+* [COPPA](#h_01H959GWAH3PC301NCG03ZSFQF)
+
+#### Tip
+
+Review the [GDPR](#h_01J64GFT6CDGX97EYG11T7DFYF)-related instructions (available starting iOS v7.0.8 SDK and legacy version v6.4.6).
+
+## GDPR
+
+The General Data Protection Regulation of the European Union (GDPR) requires you to implement a user consent mechanism. A user could be within the GDPR scope for your app when one or all of the following apply:
+
+* The user is currently located in the EU.
+* The user has registered with the app as an EU resident.
+* The app is specifically targeted to EU users.
+
+#### Note
+
+When you set a GDPR consent value for a user, DT assumes that the user is subject to GDPR rules, even if the user is outside Europe. If your legal assessment concludes that your non-EU users are not subject to GDPR, do not set any consent value for them.
+
+#### Important
+
+DT recommends that you consult a legal advisor to determine the best approach for your business. We also highly recommend collecting user consent with a certified Consent Management Platform (CMP).
+
+For a complete list of CMPs, see[Interactive Advertising Bureau - CMP List](https://iabeurope.eu/cmp-list/).
+
+To incorporate GDPR consent values, run the `GDPRConsent` API in Boolean format, for example:
+
+```csharp
+[IASDKCore.sharedInstance setGDPRConsent:YES]
+```
+
+Valid values:
+
+* `True`: Granted consent.
+* `False`: No consent.
+
+#### Important
+
+The second option, using a valid CMP (consent management platform), is highly recommended. It involves passing a consent string per the IAB's [Transparent & Consent Framework](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20Consent%20string%20and%20vendor%20list%20formats%20v2.md).
+
+#### Note
+
+We recommend that the first time you gather the user's consent, you pass it onto the SDK before starting it*. *The SDK then considers the user's consent when initializing. In the following sessions, you only need to call the API if the user updates their consent.
+
+**Setting Consent String**
+
+Use the following API to set the GDPR consent string:
+
+```csharp
+[IASDKCore.sharedInstance setGDPRConsentString:@"abcdef"];
+```
+
+See [GDPR Resource Page and FAQs](/hc/en-us/articles/360010915398) for further information.
+
+## CCPA
+
+The California Consumer Privacy Act of 2018 (CCPA) protects the personal information of California residents and applies to all companies operating in California. If a California resident uses a mobile app developer's app, CCPA applies to the developer and every company that processes the personal information of the app's users.\
+For more information on CCPA and DT's practices, see the [DT Resource Page](#) and [IAB CCPA Compliance Framework](#).
+
+**CCPA API**
+
+Use the following API to set the CCPA consent string:
+
+```javascript
+`IASDKCore.sharedInstance.CCPAString = `
+```
+
+Example
+
+```python
+`IASDKCore.sharedInstance.CCPAString = @"1YNN";
+```
+
+To determine what value to use for the US Privacy String, refer to [USPrivacy IAB documentation](https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md).\
+Example values:
+
+* When CCPA does not apply (for example, if the user is not a resident of California), you can either skip this API or use the following value`1---`.
+* If the user chooses NOT to opt and is ok with advertising as usual, you can use 1YNN.
+* If the user decides to restrict advertising and opt out, you can use 1YYN.
+
+To clear the CCPA-provided data, pass a `nill` value and use the following Clear Privacy Setting:
+
+```ruby
+IASDKCore.sharedInstance.CCPAString = nil;
+```
+
+
+
+#### Tip
+
+The DT Exchange SDK does not validate the provided CCPA string and passes it as is.
+
+## LGPD
+
+The Brazilian General Data Protection Law, the **Lei Geral de Proteção de Dados Pessoais** (LGPD), mandates processing personal data for legitimate, specific, explicit, and communicated purposes.
+
+Use the following API to set the LGPD consent value:
+
+Swift Objective-C
+
+```
+IASDKCore.sharedInstance().lgpdConsent = .given
+IASDKCore.sharedInstance().lgpdConsent = .denied
+```
+
+```
+[[IASDKCore sharedInstance] setLGPDConsent:IALGPDConsentTypeGiven]; 
+[[IASDKCore sharedInstance] setLGPDConsent:IALGPDConsentTypeDenied];
+```
+
+Accepted values:
+
+* `IALGPDConsentTypeGiven`: Granted consent.
+* `IALGPDConsentTypeDenied`: No consent.
+
+If the consent value is not set, the default is `no consent`.
+
+## COPPA
+
+The Children's Online Privacy Protection Act of 1998 (COPPA) is a federal law that imposes specific requirements on websites and online service operators to protect the privacy of children under 13.
+
+### COPPA API for Flagging Specific Users
+
+iOS SDK 8.2.1+ supports the COPPA API, which allows publishers to flag specific end users as children as required under COPPA. It is the Publisher's responsibility to decide whether to use the COPPA API or to treat all users as children. For instructions on flagging all users as children, see [COPPA](https://developer.digitalturbine.com/hc/en-us/articles/9577916674333-COPPA).
+
+#### Important
+
+* Execute the COPPA API after successfully initializing the DT SDK.
+* Pass the COPPA state after every successful init of the SDK.
+
+Use the following API to confirm that the target audience of the application applies to COPPA:
+
+Swift Objective-C
+
+```
+IASDKCore.sharedInstance().coppaApplies = .given
+```
+
+```
+IASDKCore.sharedInstance.coppaApplies = IACoppaAppliesTypeGiven;
+```
+
+## Step 6: Setting User IDs (Optional)
+
+The following steps describe how to set a User ID that is cached on the device and does not need to be passed in every session.
+
+## Setting a User ID
+
+The User ID is sent as is, without validation or modification.
+
+To reset the User ID on a device, pass a `nil` or an empty string in the following format.
+
+Objective-C
+
+```python
+@property (atomic, nullable) NSString *userID*
+```
+
+Example:
+
+Objective-C
+
+```javascript
+IASDKCore.sharedInstance.userID = @"User_123456"
+```
+
+## Setting Introspection (reflection) Integration
+
+To run an integration using introspection (reflection), run the following script:
+
+Objective-C
+
+```objectivec
+Class IASDKCore = NSClassFromString(@"IASDKCore");
+SEL sharedInstanceSelector = NSSelectorFromString(@"sharedInstance");
+SEL setUserID = NSSelectorFromString(@"setUserID:");
+id sharedInstance = [IASDKCore performSelector:sharedInstanceSelector];
+
+[sharedInstance performSelector:setUserID withObject:@"User_123456"]
+```
+
+[Back to Top ⇧](#top)

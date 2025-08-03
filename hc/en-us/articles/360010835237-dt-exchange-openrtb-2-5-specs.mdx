@@ -1,0 +1,471 @@
+---
+title: "DT Exchange OpenRTB 2.5 Specs"
+---
+
+OpenRTB (Real-Time Bidding) was initially built to standardize communication between parties for blocking inventory. It has since evolved into a standardized API protocol designed to automate the real-time trading of digital media across a range of platforms, devices, and advertising solutions.
+
+DT supports OpenRTB versions 2.2, 2.3, and 2.5; older versions are incompatible. DT encourages Buyers to upgrade their integration to latest DT OpenRTB 2.5 specification to benefit from all supported parameters.
+
+This article references the [OpenRTB API Specification Version 2.5](https://www.iab.com/wp-content/uploads/2016/03/OpenRTB-API-Specification-Version-2-5-FINAL.pdf). The following sections detail the Open RTB parameters that DT supports and the associated values we send.
+
+## Bid Request Specifications
+
+| Attribute    | Always Passed | Description                                                                                                 |
+| ------------ | ------------- | ----------------------------------------------------------------------------------------------------------- |
+| `bidrequest` | Yes           | Top‑Level Object.                                                                                           |
+| `source`     | Yes           | Request source details on post‑auction decisions, *e.g.*, header bidding.                                   |
+| `regs`       | Yes           | Regulatory conditions are in effect for all impressions in this bid request.                                |
+| `imp`        | Yes           | Container for the description of a specific impression; at least 1 per request.                             |
+| `banner`     | Yes           | Details for a banner impression, including in-banner video (MRAID Video) and video companion ad (end card). |
+| `video`      | Yes           | Details for a video impression.                                                                             |
+| `audio`      | No            | Container for an audio impression.                                                                          |
+| `format`     | No            | An allowed size of a banner.                                                                                |
+| `pmp`        | Yes           | Collection of private marketplace (PMP) deals applicable to this impression.                                |
+| `deal`       | Yes           | Deal terms pertaining to this impression between a seller and buyer.                                        |
+| `app`        | Yes           | Details of the application calling for the impression.                                                      |
+| `publisher`  | Yes           | Entity that controls the content of and distributes the site or app.                                        |
+| `device`     | Yes           | Details of the device on which the content and impressions are displayed.                                   |
+| `geo`        | Yes           | Location of the device or user’s home base depending on the parent object.                                  |
+| `user`       | No            | Human user of the device; audience for advertising.                                                         |
+| `seatbid`    | Yes           | Collection of bids made by the bidder on behalf of a specific seat.                                         |
+| `bid`        | Yes           | An offer to buy a specific impression under certain business terms.                                         |
+
+## Object: BidRequest
+
+| Attribute | Always Passed | Description                                                                                                                                                                             |
+| --------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| []()`id`  | Yes           | Unique ID of the bid request, provided by the exchange.                                                                                                                                 |
+| []()`imp` | Yes           | Array of Imp objects representing the impressions offered. At least 1 Imp object is required.                                                                                           |
+| `app`     | Yes           | Details via an App object about the publisher’s app.                                                                                                                                    |
+| `device`  | Yes           | Details via a Device object about the user’s device to which the impression will be delivered.                                                                                          |
+| `user`    | Yes           | Details via a User object about the human user of the device.                                                                                                                           |
+| `test`    | No            | Indicator of test mode in which auctions are not billable. `0` = live mode `1` = test mode                                                                                              |
+| `at`      | Yes           | Auction type. `1` = First Price `2` = Second Price                                                                                                                                      |
+| `tmax`    | Yes           | Maximum time in milliseconds the exchange allows for bids to be received including Internet latency to avoid timeout. This value supersedes any a priori guidance from the exchange.    |
+| `cur`     | Yes           | Array of allowed currencies for bids on this bid request using ISO-4217 alpha codes. Recommended only if the exchange accepts multiple currencies.                                      |
+| `bcat`    | Yes           | Blocked advertiser categories using the IAB content categories.                                                                                                                         |
+| `badv`    | Yes           | Blocked list of advertisers by their domains.                                                                                                                                           |
+| `bapp`    | Yes           | Block list of applications by their platform-specific exchange independent application identifiers. On Android, these should be bundle or package names. On iOS, these are numeric ids. |
+| `source`  | Yes           | A `Source` object that provides data about the inventory source and which entity makes the final decision.                                                                              |
+| `regs`    | Yes           | A `Regs` object that specifies any industry, legal, or governmental regulations in force for this request.                                                                              |
+
+## Object: Source
+
+| Attribute    | Always Passed | Description                                                                                                                                                                                                                                                                                                                    |
+| ------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fd`         | Yes           | Entity responsible for the final impression sale decision. `0` = exchange `1` = upstream sourceWhen DT Exchange is running an auction from a waterfall placement or if FairBid SDK is used, DT passes `0`. When DT is running an SDK Bidding auction, DT passes `1`, as the final decision is taken by the mediation platform. |
+| `tid`        | Yes           | Transaction id that must be common across all participants in this bid request.                                                                                                                                                                                                                                                |
+| `ext.schain` | Yes           | The SupplyChain object is composed primarily of a set of nodes where each node represents a specific entity that participates in the transacting of inventory. The entire chain of nodes from beginning to end represents all entities who are involved in the direct flow of payment for inventory.                           |
+
+## Object: Source.ext.schain
+
+| Attribute             | Always Passed | Description                                                                                                                                                                                                          |
+| --------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ext.schain.ver`      | Yes           | The version of the supply chain specification in use.                                                                                                                                                                |
+| `ext.schain.complete` | Yes           | Flag indicating whether the chain contains all nodes involved in the transaction leading back to the owner of the site, app, or another medium of the inventory. `0` = no `1` = yes                                  |
+| `ext.schain.nodes`    | Yes           | Array of `SupplyChainNode` objects in the order of the chain. In a complete supply chain, the first node represents the initial advertising system and seller ID involved in the transaction. DT is always node `1`. |
+| `ext.schain.asi`      | Yes           | Canonical domain name of the SSP.                                                                                                                                                                                    |
+| `ext.schain.sid`      | Yes           | Publisher ID.                                                                                                                                                                                                        |
+| `ext.schain.hp`       | Yes           | Indicates whether this node will be involved in the flow of payment for the inventory.                                                                                                                               |
+| `ext.schain.rid`      | Yes           | The OpenRTB requestId of the request as issued by this seller.                                                                                                                                                       |
+| `omidpn`              | No            | Identifier of the Open Measurement SDK integration. The default value is `DT`.                                                                                                                                       |
+| `omidpv`              | No            | Version of the Open Measurement SDK integration.                                                                                                                                                                     |
+
+## Object: Regs
+
+| Attribute        | Always Passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `coppa`          | Yes           | Flag indicating if this request is subject to the COPPA regulations established by the USA FTC. `0` = no `1` = yes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `ext.gdpr`       | Yes           | Extension to signal whether or not the request is subject to GDPR regulations.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `ext.us_privacy` | Yes           | When available froma publisher, DT always passees this value. Use the [IAB US Privacy String Format](https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md#us-privacy-string-format).DT does not change, delete, or obfuscate any data in the bid request when the user opts-out. DT passes the U.S Privacy string to demand partners. It is the demand partner's responsibility to determine which data the CCPA allows for ad targeting purposes. For more information about CCPA, see the [CCPA Resource Page](https://www.digitalturbine.com/ccpa-resource-page/). |
+
+## Object: Imp
+
+| Attribute           | Always Passed | Description                                                                                                                                                                                                                                                                                                          |
+| ------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                | Yes           | A unique identifier for this impression within the context of the bid request.                                                                                                                                                                                                                                       |
+| `metric`            | No            | An array of metrics. These metrics can offer insight into the impression to assist with decisioning such as average recent viewability, click-through rate, etc. Each metric is identified by its type, reports the value of the metric, and optionally identifies the source or vendor measuring the value.         |
+| `banner`            | No            | A Banner object is required if this impression is offered as a banner ad opportunity.                                                                                                                                                                                                                                |
+| `video`             | No            | A Video object is required if this impression is offered as a video ad opportunity.                                                                                                                                                                                                                                  |
+| `pmp`               | No            | A PMP object containing any private marketplace deals in effect for this impression.                                                                                                                                                                                                                                 |
+| `displaymanager`    | Yes           | Name of ad mediation partner, SDK technology, or player responsible for rendering ad (typically video or mobile).                                                                                                                                                                                                    |
+| `displaymanagerver` | Yes           | Version of ad mediation partner, SDK technology, or player responsible for rendering ad.                                                                                                                                                                                                                             |
+| `instl`             | Yes           | Value indicating whether the ad is an insterstitial. `0` = ad is not an interstitial `1` = ad is interstitial or full screen                                                                                                                                                                                         |
+| `tagid`             | Yes           | An identifier for specific ad placement or ad tag is used to initiate the auction.                                                                                                                                                                                                                                   |
+| `bidfloor`          | Yes           | The minimum bid for this impression is expressed in CPM.                                                                                                                                                                                                                                                             |
+| `bidfloorcur`       | Yes           | Currency specified using ISO-4217 alpha codes.                                                                                                                                                                                                                                                                       |
+| `clickbrowser`      | Yes           | Indicates the type of browser opened upon clicking the creative in an app. `0` = embedded `1` = native                                                                                                                                                                                                               |
+| `secure`            | Yes           | Flag to indicate whether the impression requires secure HTTPS URL, creative assets, and markup. `0` = non-secure `1` = secureIf omitted, the secure state is unknown, and you should assume non-secure HTTP support.                                                                                                 |
+| `exp`               | Yes           | Number of seconds that may elapse between the auction and the actual impression. DT uses the following default Time To Live (TTL):- Rewarded: 3600 s (60 min)
+- Interstitial: 3600 s (60 min)
+- Banner: 1800 s (30 min)Publishers can also set up custom TTL. Contact your DT Account Manager for details.           |
+| `ext.brsrclk`       | Yes           | A custom extension used to force open the device's browser. When the bid request supports opening the device's external browser, DT passes `1`. For more information about implementing browsers, see [Click to Native Browser](https://developer.fyber.com/hc/en-us/articles/360010858357-Click-to-Native-Browser). |
+| `ext.dpl`           | No            | A custom extension that indicates the deep linking capability. `0` = no `1` = yes                                                                                                                                                                                                                                    |
+| `rwdd`              | Yes           | Indicates whether the user receives a reward for viewing the ad. `0` = no `1` = yes                                                                                                                                                                                                                                  |
+
+## Object: BidRequest.imp.ext.skadn
+
+| Attribute     | Always Passed | Description                                                                                                                                                                                                                                                               |
+| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `version`     | No            | Version of skadnetwork supported. Always `2.0` or higher. Dependent on both the OS version and the SDK version.With the release of SKAdNetwork 2.1, this field is deprecated in favor of the `BidRequest.imp.ext.skadn.versions` to support an array of version numbers.  |
+| `versions`    | No            | Array of strings containing the supported skadnetwork versions. Always "2.0" or higher. Dependent on both the OS version and the SDK version. For example, `["2.0", "2.1", "2.2", "3.0", "4.0"]`.                                                                         |
+| `sourceapp`   | Yes           | ID of publisher app in Apple's App Store. For example, `880047117`.                                                                                                                                                                                                       |
+| `skadnetids`  | Yes           | A subset of `SDKdNetworkItem` entries in the publisher app's `info.plist`, expressed as lowercase strings, that are relevant to the bid request. Recommended that this list not exceed 10 items. For example, `["SKAdNetwork1.skadnetwork", "SKAdNetwork2.skadnetwork"]`. |
+| `skadnetlist` | No            | An object containing the IABTL list definition.                                                                                                                                                                                                                           |
+| `skoverlay`   | No            | List of attributes (array) that should be provided on the bid response. Read more about [SKOverlay](https://developer.digitalturbine.com/hc/en-us/articles/8938168894621).                                                                                                |
+| `productpage` | No            | This attribute flags supply supporting the Custom Product Page functionality; DT passes `1` when eligible, and will not pass this field when not eligible.                                                                                                                |
+
+## Object: BidRequest.device.ext
+
+| Attribute | Always Passed | Description                                                                                                                                                |
+| --------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `atts`    | Yes           | (iOS Only) An integer passed to represent the app's app tracking authorization status. `0` = not determined `1` = restricted `2` = denied `3` = authorized |
+| `ifv`     | No            | IDFV of the device in that publisher. Listed as ifv to match ifa field format. For example, `24252409-0099-4708-BA27-EB182EC0DAEF`                         |
+
+## Object: Metric
+
+| Attribute | Always passed | Description                                                                                                                                                                                              |
+| --------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | Yes           | Type of metric being presented using exchange curated string names which should be published to bidders a priori.                                                                                        |
+| `value`   | Yes           | Number representing the value of the metric. Probabilities must be in the range 0.0–1.0.                                                                                                                 |
+| `vendor`  | Yes           | Source of the value using exchange curated string names which should be published to bidders a priori. If the exchange itself is the source (rather than a third party), DT recommends using `EXCHANGE`. |
+| `ext`     | No            | Placeholder for exchange-specific extensions to OpenRTB.                                                                                                                                                 |
+
+## Object: Banner
+
+| Attribute       | Always Passed | Description                                                                                                                                                                                             |
+| --------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`        | No            | Array of format objects representing the banner sizes permitted. If none are specified, then use of the h and w attributes is highly recommended.                                                       |
+| `w`             | Yes           | Exact width in device independent pixels (DIPS); recommended if no format objects are specified.                                                                                                        |
+| `h`             | Yes           | Exact height in device independent pixels (DIPS); recommended if no format objects are specified.                                                                                                       |
+| `btype`         | Yes           | Blocked banner ad types.                                                                                                                                                                                |
+| `battr`         | Yes           | Blocked creative attributes.                                                                                                                                                                            |
+| `pos`           | Yes           | Ad position on the screen.                                                                                                                                                                              |
+| `topframe`      | Yes           | Indicates if the banner is in the top frame instead of an iframe. `0` = no `1` = yes                                                                                                                    |
+| `mimes`         | Yes           | Content MIME types supported.                                                                                                                                                                           |
+| `expdir`        | No            | Directions in which the banner may expand.                                                                                                                                                              |
+| `api`           | Yes           | List of supported API frameworks for this impression.                                                                                                                                                   |
+| `id`            | Yes           | Unique identifier for this banner object.                                                                                                                                                               |
+| `vcm`           | No            | Relevant only for Banner objects used with a Video object in an array of companion ads. Indicates the companion banner rendering mode relative to the associated video. `0` = concurrent `1` = end-card |
+| `ext.rewarded`  | Yes           | Indicates whether rewarded playables are supported. `0` = Rewarded Playables are not supported `1` = Rewarded Playables are supported                                                                   |
+| `ext.autostore` | Yes           | Indicated whether the inventory is eligible for Auto Store.`0` = true `1` = false                                                                                                                       |
+
+## Object: Video
+
+| Attribute          | Always Passed | Description                                                                                                                        |
+| ------------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `mimes`            | Yes           | Content MIME types supported.                                                                                                      |
+| `minduration`      | Yes           | Minimum video ad duration in seconds.                                                                                              |
+| `maxduration`      | Yes           | Maximum video ad duration in seconds.                                                                                              |
+| `protocols`        | Yes           | Array of supported video protocols. DT always passes `2, 5, 3, 6, 7, 8`.                                                           |
+| `w`                | Yes           | Width of the video player in pixels.                                                                                               |
+| `h`                | Yes           | Height of the video player in pixels.                                                                                              |
+| `startdelay`       | Yes           | Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll ad placements. DT always passes `0` for pre-roll.        |
+| `placement`        | Yes           | Placement type for the impression. DT always passes `5` for interstitial video.                                                    |
+| `plcmt`            | Yes           | Placement (video) type for the impression. DT always passes `3` for interstitial and rewarded placement type.                      |
+| `linearity`        | No            | Indicates if the impression must be linear, nonlinear, etc. DT always passes `1` for linear video.                                 |
+| `skip`             | Yes           | Indicates whether the player allows the video to be skipped. `0` = no `1` = yes                                                    |
+| `skipmin`          | No            | Videos of total duration greater than this number of seconds can be skippable. Only applicable if the ad is skippable.             |
+| `skipafter`        | No            | Number of seconds a video must play before skipping is enabled; only applicable if the ad is skippable.                            |
+| `battr`            | Yes           | Blocked creative attributes.                                                                                                       |
+| `maxbitrate`       | No            | Maximum bit rate in Kbps.                                                                                                          |
+| `playbackmethod`   | Yes           | Playback methods that may be in use. DT always respects the user's device settings. DT always passes `5` for fullscreen video.     |
+| `playbackend`      | Yes           | The event that causes playback to end. DT always passes `1`.                                                                       |
+| `pos`              | Yes           | Ad position on screen. DT always passes `7` for fullscreen.                                                                        |
+| `companionad`      | Yes           | An array of Banner objects if companion ads are available.                                                                         |
+| `api`              | Yes           | List of supported API frameworks for this impression.                                                                              |
+| `companiontype`    | Yes           | Supported VAST companion ad types. DT always supports `1` (static), `2` (HTML), and `3` (iframe) when companionad is supported.    |
+| `ext.rewarded`     | Yes           | DT always passes this custom extension for video requests. `0` = Non-rewarded `1` = Rewarded                                       |
+| `ext.mraidendcard` | Yes           | DT always passes this custom extension for video requests. `0` = MRAID end card is not supported `1` = MRAID end card is supported |
+| `ext.autostore`    | Yes           | Indicates whether the inventory is eligible for Auto Store. `0` = false `1` = true (default)                                       |
+| `ext.dualendcard`  | No            | Indicates whether the inventory is eligible for Dual End Card. `0` = false `1` = true                                              |
+
+## Object: PMP
+
+| Attribute        | Always Passed | Description                                                                                                                                                                    |
+| ---------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `privateauction` | Yes           | Indicator of auction eligibility to seats named in the Direct Deals object. `0` = all bids are accepted `1` = bids are restricted to the deals specified and the terms thereof |
+| `deals`          | Yes           | Array of Deal objects that convey the specific deals applicable to this impression.                                                                                            |
+
+## Object: Deal
+
+| Attribute  | Always Passed | Description                                                                                                                                                                                                                                          |
+| ---------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`       | Yes           | A unique identifier for the PMP deal                                                                                                                                                                                                                 |
+| `bidfloor` | Yes           | Minimum bid for this impression expressed in CPM                                                                                                                                                                                                     |
+| `at`       | Yes           | Optional override of the overall auction type of the bid request. `1` = First Price `2` = Second Price Plus `3` = the value passed in bidfloor is the agreed upon deal price.Additional auction types can be defined by the exchange.                |
+| `wseat`    | Yes           | Whitelist of buyer seats (e.g., advertisers, agencies) allowed to bid on this deal. IDs of seats and the buyer’s customers to which they refer must be coordinated between bidders and the exchange a priori. Omission implies no seat restrictions. |
+
+## Object: App
+
+| Attribute         | Always Passed | Description                                                                                                                                                                                                                                         |
+| ----------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`              | Yes           | Exchange-specific id.                                                                                                                                                                                                                               |
+| `name`            | Yes           | App name (may be aliased at the publisher's request).                                                                                                                                                                                               |
+| `bundle`          | No            | A platform-specific application identifier intended to be unique to the app and independent of the exchange. On Android, this should be a bundle or package name, *e.g.*, `com.foo.mygame`. On iOS, this is typically a numeric ID or app store ID. |
+| `domain`          | No            | Domain of the app.                                                                                                                                                                                                                                  |
+| `storeurl`        | No            | App Store URL for an installed app.                                                                                                                                                                                                                 |
+| `cat`             | Yes           | Array of IAB content categories of the app.                                                                                                                                                                                                         |
+| `ver`             | Yes           | Application version.                                                                                                                                                                                                                                |
+| `privacypolicy`   | Yes           | Indicates if the app has a privacy policy. `0` = no `1` = yes                                                                                                                                                                                       |
+| `paid`            | No            | Indicates whether app is the free or paid version. `0` = app is free version `1` = app is a paid version                                                                                                                                            |
+| `publisher`       | Yes           | Details about the Publisher of the app.                                                                                                                                                                                                             |
+| `ext.devuserid`   | No            | A developer's own persistent unique user identifier.                                                                                                                                                                                                |
+| `ext.storecat`    | No            | Google Play and Apple App Store category definitions. For example, `Games`.                                                                                                                                                                         |
+| `ext.storesubcat` | No            | Google Play and Apple App Store Sub-game category definitions. The array is always capped at 3 strings.                                                                                                                                             |
+| `ext.fmwname`     | No            | A string value describing if the app is using the unity or native framework, listed as `unity` or `native`.                                                                                                                                         |
+| `ext.apilevel`    | No            | (Android only) An integer value that specifies the API level supported.                                                                                                                                                                             |
+
+## Object: Publisher
+
+| Attribute | Always Passed | Description                                                 |
+| --------- | ------------- | ----------------------------------------------------------- |
+| `id`      | Yes           | Exchange-specific publisher id.                             |
+| `name`    | Yes           | Publisher name (may be aliased at the publisher’s request). |
+| `domain`  | No            | Highest level domain of the publisher.                      |
+
+## Object: Device
+
+| Attribute           | Always Passed | Description                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ua`                | Yes           | Browser user agent string that informs about device data.                                                                                                                                                                                                                                                                                                                          |
+| `dnt`               | Yes           | Standard “Do Not Track” flag as set in the header by the browser. `0` = tracking is unrestricted `1` = do not track                                                                                                                                                                                                                                                                |
+| `lmt`               | No            | Commercially endorsed *Limit Ad Tracking* signal (e.g., iOS, Android). `0` = tracking is unrestricted `1` = tracking must be limited per commercial guidelines                                                                                                                                                                                                                     |
+| `ip`                | Yes           | IPv4 address closest to device. Example, 86.179.150.0                                                                                                                                                                                                                                                                                                                              |
+| `ipv6`              | No            | IP address closest to device as IPv6.                                                                                                                                                                                                                                                                                                                                              |
+| `devicetype`        | Yes           | The general type of device.                                                                                                                                                                                                                                                                                                                                                        |
+| `make`              | No            | Device make.                                                                                                                                                                                                                                                                                                                                                                       |
+| `model`             | No            | Device model.                                                                                                                                                                                                                                                                                                                                                                      |
+| `os`                | No            | Device operating system.                                                                                                                                                                                                                                                                                                                                                           |
+| `osv`               | No            | Device operating system version.                                                                                                                                                                                                                                                                                                                                                   |
+| `hwv`               | No            | Hardware version of the device.                                                                                                                                                                                                                                                                                                                                                    |
+| `h`                 | Yes           | Physical height of the screen in pixels.                                                                                                                                                                                                                                                                                                                                           |
+| `w`                 | Yes           | Physical width of the screen in pixels.                                                                                                                                                                                                                                                                                                                                            |
+| `ppi`               | No            | Screen size as pixels per linear inch.                                                                                                                                                                                                                                                                                                                                             |
+| `pxratio`           | No            | The ratio of physical pixels to device-independent pixels.                                                                                                                                                                                                                                                                                                                         |
+| `js`                | Yes           | Support for JavaScript. `0` = no `1` = yes                                                                                                                                                                                                                                                                                                                                         |
+| `language`          | Yes           | Browser language using ISO-639-1-alpha-2.                                                                                                                                                                                                                                                                                                                                          |
+| `carrier`           | No            | Carrier or ISP using exchange curated string names which should be published to bidders a priority.                                                                                                                                                                                                                                                                                |
+| `connectiontype`    | Yes           | Network connection.                                                                                                                                                                                                                                                                                                                                                                |
+| `ifa`               | No            | Clear (not hashed) device identifier.                                                                                                                                                                                                                                                                                                                                              |
+| `ext.inputLanguage` | No            | A string array containing the languages setup on the user's device keyboard.                                                                                                                                                                                                                                                                                                       |
+| `ext.ifv`           | No            | (iOS only). A persistent unique identifier for each app on a device that identifies the device to the app's vendor. The value of this property is the same for apps that come from the same vendor running on the same device. A different value is returned for apps on the same device that come from different vendors, and for apps on different devices regardless of vendor. |
+| `ext.atts`          | No            | (iOS only) An integer passed to represent the app's app. tracking authorisation status. `0` = not determined `1` = restricted `2` = denied `3` = authorized                                                                                                                                                                                                                        |
+| `ext.inputlanguage` | No            | A string array containing the languages setup on the user's device keyboard. Country codes are passed in the string array.                                                                                                                                                                                                                                                         |
+| `ext.diskspace`     | No            | An integer value describing the available disk space on the device in megabytes, where "18201" = device has 18201 MB of available disk space. MB will be rounded up and passed as a whole number to align with Apple's data user and user privacy.                                                                                                                                 |
+| `ext.totaldisk`     | No            | An integer value describing the total disk space on the device in megabytes, where "63989" = 63989 MB of total disk space. MB will be rounded up and passed as a whole number to align with Apple's data use and user privacy.                                                                                                                                                     |
+| `ext.ringmute`      | No            | (Android only) An integer value describing the device sound setting during time of ad request describing if sound is set to ring or mute. `0` = ring `1` = mute                                                                                                                                                                                                                    |
+| `ext.charging`      | No            | An integer value describing if the device is connected to a charger. `0` = unplugged `1` = plugged into power outlet                                                                                                                                                                                                                                                               |
+| `ext.bluetooth`     | No            | A boolean value indicating if the device is connected to bluetooth. `0` = not connected via bluetooth `1` = connected via bluetooth                                                                                                                                                                                                                                                |
+| `ext.headset`       | Yes           | A boolean value indicating if the device is connected to a wired headset. `0` = no wired headset is connected `1` = device is connected to any wired headset                                                                                                                                                                                                                       |
+| `ext.batterylevel`  | No            | An integer passed describing percentage of battery charge remaining on the user's device, segmented into buckets. `1` = less than 5% `2` = 9-5% `3` = 21-10% `4` = 39-25% `5` = 54-40% `6` = 69-55% `7` = 84-70% `8` = 100-85%                                                                                                                                                     |
+| `ext.batterysaver`  | No            | A boolean value indicating if battery saver (*Low Power Mode* on iOS) has been enabled. `0` = battery saver not enabled `1` = battery saver enabled                                                                                                                                                                                                                                |
+| `ext.darkmode`      | No            | A boolean value indicating if dark mode is enabled on the device. `0` = dark mode not enabled `1` = dark mode enabled                                                                                                                                                                                                                                                              |
+| `ext.airplane`      | No            | (Android only) A boolean value indicating if airplane mode is enabled. `0` = airplane mode not enabled `1` = airplane mode enabled                                                                                                                                                                                                                                                 |
+| `ext.dnd`           | No            | (Android only) A boolean value indicating if do not disturb setting is enabled. `0` = do not disturb not enabled `1` = do not disturb enabled                                                                                                                                                                                                                                      |
+
+## Object: Geo
+
+| Attribute   | Always Passed | Description                                                                                                                                                                                                  |
+| ----------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `lat`       | No            | Latitude from –90.0° to +90.0°, where negative is south.                                                                                                                                                     |
+| `lon`       | No            | Longitude from –180.0° to +180.0°, where negative is west.                                                                                                                                                   |
+| `type`      | No            | Source of location data; recommended when passing lat/lon.                                                                                                                                                   |
+| `accuracy`  | No            | Estimated location accuracy in meters; recommended when lat/lon are specified and derived from the location service on a device.                                                                             |
+| `lastfix`   | No            | The number of seconds since this geolocation fix was established. Note that devices may cache location data across multiple fetches. Ideally, this value should be from the time the actual fix was taken.   |
+| `ipservice` | No            | Service or provider used to determine geolocation from IP address if applicable.                                                                                                                             |
+| `country`   | Yes           | Country code using ISO-3166-1-alpha-3.                                                                                                                                                                       |
+| `region`    | No            | Region code using ISO-3166-2; 2-letter state code if USA.                                                                                                                                                    |
+| `city`      | No            | City using United Nations Code for Trade & Transport Locations. For more information about UN codes, see Appendix A of the [OpenRTB Specification version 2.5](/hc/en-us/article_attachments/4408893382545). |
+| `zip`       | No            | The home zip or postal code of the user.                                                                                                                                                                     |
+| `utcoffset` | No            | Local time as the number +/– of minutes from UTC.                                                                                                                                                            |
+| `dma`       | Yes           | Maxmind DMA code based on IP.                                                                                                                                                                                |
+| `metro`     | Yes           | Maxmind Metro code based on IP.                                                                                                                                                                              |
+
+## Object: User
+
+| Attribute           | Always Passed | Description                                                                                                                                                                                          |
+| ------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| yob                 | No            | Year of birth as a 4-digit integer.                                                                                                                                                                  |
+| gender              | No            | Gender. `M` = male `F` = female `O` = known to be other, i.e., omitted is unknown                                                                                                                    |
+| ext.consent         | Yes           | Extension to signal whether or not the user subject to GDPR regulations has given consent.                                                                                                           |
+| ext.impdepth        | No            | The count of impressions for a specific placement type in a given app session. The impression depth is reset once the session ends.                                                                 |
+| ext.sessionduration | No            | The total duration of a time a user has spent so far in a specific app session expressed in seconds. For example, a user has been playing Word Game for 45 seconds.                                 |
+| ext.lastbundle      | No            | (iOS only) The last app bundle the user saw on the previous impression in a given session per placement type.                                                                                        |
+| ext.lastadomain     | No            | The last advertiser domain the user saw on the previous impression in a given session per placement type.                                                                                            |
+| ext.clickrate       | No            | The percentage of clicks or impressions per user per placement type over a given number of impressions. For example, 5 represents a 5% CTR.                                                          |
+| ext.lastclick       | No            | VAST specific. A boolean value indicating if the user skipped the video on the last impression in a given session, where `1` = user skipped                                                          |
+| ext.lastclicktype   | No            | VAST Specific. An integer value indicating what part of the video the user clicked on. `0` = no click `1` = ClickThrough `2` = CompanionClickThrough                                                 |
+| ext.completionrate  | No            | For Rewarded and Video placement types, the percentage of completions or impressions per user per placement type for a given number of impressions. For example, 70 indicates a 70% completion rate. |
+
+## Bid Response Specifications
+
+When replying to a bid request for a Rewarded Playable ad, you must include specific values in your bid response. For more information about what to include in your response, see [Responding with a Rewarded Playable Ad (Bid Response)](https://developer.digitalturbine.com/hc/en-us/articles/10382910367644-DT-Exchange-Ad-Creative-Types-#h_01H9MPNK5NMK4BA3N5Q3C6TV7T).
+
+## Object: BidResponse
+
+| Attribute     | Required | Description                                                                                      |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `id`          | Yes      | The bid response id must be the same as the bid request ID. They are used for tracking purposes. |
+| []()`seatbid` | Yes      | Array of seatbid objects. A bid must contain one or more seatbid objects.                        |
+| `bid`         | No       | Bidder generated response ID for logging and tracking purposes.                                  |
+| `cur`         | No       | Bid currency using ISO-4217 alpha codes. USD is the only supported currency on DT.               |
+
+## Object: SeatBid
+
+| Attribute | Required | Description                                                                                                                                                                     |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bid`     | Yes      | Array of one or more Bid objects ([Section 4.2.3](/hc/en-us/article_attachments/4408893382545)) each related to an impression. Multiple bids can relate to the same impression. |
+| `seat`    | Yes      | ID of the buyer seat, *e.g.*, advertiser, agency, etc. on whose behalf this bid is made.                                                                                        |
+
+
+
+## Object: Bid
+
+| Attribute            | Required | Description                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                 | Yes       | Bidder generated bid ID for logging/tracking purposes.                                                                                                                                                                                                                                                                                                                                    |
+| `impid`              | Yes       | ID of the [`Imp` object](#object-imp-0-8) in the related bid request.                                                                                                                                                                                                                                                                                                                     |
+| `price`              | Yes       | Bid price expressed as CPM although the actual transaction is for a unit impression only.                                                                                                                                                                                                                                                                                                 |
+| []()`nurl`           | No        | Win notice URL called by the exchange if the bid wins (not necessarily indicative of a delivered, viewed, or billable ad); optional means of serving ad markup. Substitution macros ([Section 4.4](/hc/en-us/article_attachments/4408893382545)) may be included in both the URL and optionally returned markup.                                                                          |
+| `burl`               | Yes       | Billing notice URL called by the exchange when a winning bid becomes billable based on exchange-specific business policy (e.g., typically delivered, viewed, etc.). May include substitution macros ([Section 4.4](/hc/en-us/article_attachments/4408893382545)).                                                                                                                         |
+| `lurl`               | No        | Loss notice URL called by the exchange when a bid is known to have been lost. May include substitution macros ([Section 4.4](/hc/en-us/article_attachments/4408893382545)). Exchange-specific policy may preclude support for loss notices or the disclosure of winning clearing prices resulting in `${AUCTION_PRICE}` macros being removed, *i.e.*, replaced with a zero-length string. |
+| `adm`                | Yes       | Optional means of conveying ad markup in case the bid wins; supersedes the win notice if markup is included in both. May include substitution macros ([Section 4.4](/hc/en-us/article_attachments/4408893382545)).                                                                                                                                                                        |
+| `adomain`            | Yes       | Advertiser domain for block list checking, *e.g.*, “xyzco.com”. This can be an array in the case of rotating creatives. Exchanges can mandate that only one domain is allowed.                                                                                                                                                                                                            |
+| `bundle`             | No        | A platform-specific application identifier intended to be unique to the app and independent of the exchange. On Android, this is the bundle or package name, *e.g.*, `com.foo.mygame`. On iOS, it is a numeric ID.                                                                                                                                                                        |
+| `iurl`               | No        | URL without cache-busting to an image that is representative of the content of the campaign for ad quality/safety checking.                                                                                                                                                                                                                                                               |
+| `cid`                | Yes       | Campaign ID to assist with ad quality checking; the collection of creatives for which iurl should be representative.                                                                                                                                                                                                                                                                      |
+| `crid`               | Yes       | Creative ID to assist with ad quality checking.                                                                                                                                                                                                                                                                                                                                           |
+| `cat`                | No        | IAB content categories of the creative. Refer to List 5.1 of the [OpenRTB Specification version 2.5](/hc/en-us/article_attachments/4408893382545).                                                                                                                                                                                                                                        |
+| `attr`               | No        | Set of attributes describing the creative.                                                                                                                                                                                                                                                                                                                                                |
+| `dealid`             | No        | If this bid pertains to a private marketplace direct deal, this is a reference to the [`deal.id`](#object-deal-0-16) from the bid request.                                                                                                                                                                                                                                                |
+| `ext.crtype`         | No        | Custom extension used to identify the [type of ad markup](#01H8GF5TQ8FYQPVCWFZYHSE3AS) with which the DSP responds.                                                                                                                                                                                                                                                                       |
+| `ext.skadn`          | No        | Extension to submit the click data and signature to [SKAdNetwork](#h_01J1WXP4TBQM80VBG15C9M43AC) for attribution.                                                                                                                                                                                                                                                                         |
+| `ext.autostore`      | No        | Indicates whether DTX should enable automatically displaying the Store. `0` = false `1` = trueFor more information about displaying the Store, see[AutoStore](https://developer.digitalturbine.com/hc/en-us/articles/11846217613085-Auto-Store).                                                                                                                                        |
+| `ext.autostoreclick` | No        | Indicates whether DT Exchange should fire click trackers when displaying the Store. `0` = false `1` = true; For more information about options when displaying the Store, see[AutoStore](https://developer.digitalturbine.com/hc/en-us/articles/11846217613085-Auto-Store).                                                                                                             |
+| `ext.clicktrackers`  | No       | Array of click trackers to be fired by DT Exchange SDK for the autoclick feature. This is not relevant for VAST ads.                                                                                                                                                                                                                                                                      |
+| `ext.dualendcard`    | No        | Indicates whether DTX should render the Dual End Card. `0` = false `1` = true                                                                                                                                                                                                                                                                                                             |
+
+
+
+
+
+## Bid.ext.crtype
+
+| Ad Format            | Values on Bid Response          |
+| -------------------- | ------------------------------- |
+| `HTML Ads`           | HTML                            |
+| `MRAID`              | MRAID 1.0, MRAID 2.0, MRAID 3.0 |
+| `VAST`               | VAST 2.0, VAST 3.0              |
+| `Playables`          | Playable                        |
+| `Rewarded Playables` | Playable                        |
+| `Rewarded Video`     | VAST 2.0, VAST 3.0              |
+| `MRAID Video`        | Null                            |
+
+## Bid.ext.skadn (SKAdNetwork)
+
+| Attribute       | Required | Description                                                                                                                                                                                                                                                                                                                                            |
+| --------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `version`       | Yes       | Version of SKAdNetwork desired. Must be 2.0 or above.                                                                                                                                                                                                                                                                                                  |
+| `network`       | No        | Ad network identifier used in signature. This should match one of the items in the [`skadnetids`](#object-bidrequest-imp-ext-skadn-0-9) array in the request, *e.g.*, `dsp1.skadnetwork`.                                                                                                                                                              |
+| `campaign`      | No        | Campaign ID compatible with Apple's spec. As of version 2.0, this should be an integer between 1 and 100, expressed as a string, *e.g.*, `45`.                                                                                                                                                                                                         |
+| `itunesitem`    | No        | ID of advertiser's app in Apple's app store. This should match `BidResponse.seatbid.bid.bundle`.                                                                                                                                                                                                                                                       |
+| `fidelities`    | No        | Supports multiple fidelity types introduced in SKAdNetwork2.2, *e.g.*, `880047117`.                                                                                                                                                                                                                                                                   |
+| `nonce`         | No        | A unique ID for each ad response. Refer to Apple's documentation for[proper UUID format](https://developer.apple.com/documentation/storekit/skstoreproductparameteradnetworknonce).With the release of SKAdNetwork2.2, this field is deprecated in favor of `BidResponse.seatbid.bid.ext.dkadn.fidelities.nonce`, *e.g.*, `beeeb65e-b3de-02420004"`. |
+| `sourceapp`     | No        | ID of publisher's app in Apple's app store. This should match `BidRequest.imp.ext.skad.sourceapp`, *e.g.*, `123456789`.                                                                                                                                                                                                                                |
+| `timestamp`     | No        | Unix time (in milliseconds) string used at the time of signature.With the release of SKAdNetwork2.2, this field is deprecated in favor of `BidResponse.seatbid.bid.ext.skadn.fidelities.timestamp` to support multiple fidelity-types, *e.g.*, `1594406341`.                                                                                          |
+| `signature`     | No        | SKAdNetwork signature as specified by Apple.With the release of SKAdNetwork2.2, this field is deprecated in favor of the `BidResponse.seatbid.bid.ext.skadn.fidelities.signature` to support multiple fidelity-types, *e.g.*, `MEQCIEQZRRyMyUXg==`.                                                                                                   |
+| `skoverlay`     | No        | SKOverlay auto present support.                                                                                                                                                                                                                                                                                                                        |
+| `productpageid` | No        | Product Page id to direct to on click.                                                                                                                                                                                                                                                                                                                 |
+
+## Bid.ext.skadn.skoverlay (SKOverlay)
+
+| Attribute      | Required | Description                                                                                                                                             |
+| -------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `present`      | Yes      | Denotes whether DTX should present the SKOverlay. `0` = do not present the SKOverlay `1` = present the SKOverlay                                        |
+| `dismissible`  | No       | Denotes whether the overlay should be dismissable by the user. `0` = not dismissable `1` = dismissable                                                  |
+| `delay`        | No       | Delay in seconds (`0`‑`60`) before showing the overlay.                                                                                                 |
+| `pos`          | No       | Position of the overlay. `0` = bottom `1` = bottom raised                                                                                               |
+| `endcarddelay` | No       | Delay in seconds (`0`‑`60`) before showing the overlay on top of the end card. If you do not want to show the overlay on top of the end card, use `‑1`. |
+| `autoclose`    | No       | Time in seconds (`0`‑`60`) to automatically dismiss the endcard.                                                                                        |
+| `ext`          | No       | Placeholder for exchange-specific extensions to OpenRTB, *e.g.*, `{}`.                                                                                  |
+
+## Bid.ext.fidelities
+
+| Attribute   | Required | Description                                                                                                                                                                                           |
+| ----------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fidelity`  | Yes      | The fidelity-type of the attribution to track.                                                                                                                                                        |
+| `nonce`     | Yes      | An ID unique to each ad response. Refer to Apple's documentation for the [proper UUID format requirements](https://developer.apple.com/documentation/storekit/skstoreproductparameteradnetworknonce). |
+| `timestamp` | Yes      | Unix time (in milliseconds) string used at the time of signature.                                                                                                                                     |
+| `signature` | Yes      | SKAdNetwork signature as specified by Apple.                                                                                                                                                          |
+
+## Enumerated Lists
+
+## IAB Categories
+
+For the complete list, including the sub categories, see Table 5.1 of the [OpenRTB 2.3](https://www.iab.com/wp-content/uploads/2015/05/OpenRTB_API_Specification_Version_2_3_1.pdf).
+
+| Value   | Description                  |
+| ------- | ---------------------------- |
+| `IAB1`  | Arts & Entertainment         |
+| `IAB2`  | Automotive                   |
+| `IAB3`  | Business                     |
+| `IAB4`  | Careers                      |
+| `IAB5`  | Education                    |
+| `IAB6`  | Family & Parenting           |
+| `IAB7`  | Health & Fitness             |
+| `IAB8`  | Food & Drink                 |
+| `IAB9`  | Hobbies & Interests          |
+| `IAB10` | Home & Garden                |
+| `IAB11` | Law, Government and Politics |
+| `IAB12` | News                         |
+| `IAB13` | Personal Finance             |
+| `IAB14` | Society                      |
+| `IAB15` | Science                      |
+| `IAB16` | Pets                         |
+| `IAB17` | Sports                       |
+| `IAB18` | Style & Fashion              |
+| `IAB19` | Technology & Computing       |
+| `IAB20` | Travel                       |
+| `IAB21` | Real Estate                  |
+| `IAB22` | Shopping                     |
+| `IAB23` | Religion & Spirituality      |
+| `IAB24` | Uncategorized                |
+| `IAB25` | Non-Standard Content         |
+| `IAB26` | Illegal Content              |
+
+## Creative Attributes Table
+
+The following attributes are from the Table 5.3 of the [OpenRTB 2.3 Specifications](https://www.iab.com/wp-content/uploads/2015/05/OpenRTB_API_Specification_Version_2_3_1.pdf).
+
+| Value | Description                                                 |
+| ----- | ----------------------------------------------------------- |
+| `1`   | Audio Ad (Auto Play).                                       |
+| `2`   | Audio Ad (User Initiated.)                                  |
+| `3`   | Expandable (Automatic).                                     |
+| `4`   | Expandable (User initiated‑Click).                          |
+| `5`   | Expandable (User initiated‑Rollover).                       |
+| `6`   | In banner video ad (Auto play).                             |
+| `7`   | In banner video ad (User initiated).                        |
+| `8`   | Pop, *i.e.*, *Over Under* or *Upon Exit*.                   |
+| `9`   | Provocative or suggestive imagery.                          |
+| `10`  | Shaky, flashing, flickering, extreme animation, or smileys. |
+| `11`  | Surveys.                                                    |
+| `12`  | Text only.                                                  |
+| `13`  | User Interactive, *i.e.*, embedded games.                   |
+| `14`  | Windows dialog or alert style.                              |
+| `15`  | Has audio on/off button.                                    |
+| `16`  | Ad can be skipped,*i.e.*, skip button on preroll video.     |
+
+## API Frameworks Table
+
+The following attibutes are from the Table 5.3 of the [OpenRTB Specification version 2.5](/hc/en-us/article_attachments/4408893382545).
+
+| Value | Description |
+| ----- | ----------- |
+| `3`   | MRAID-1     |
+| `4`   | ORMMA       |
+| `5`   | MRAID-2     |
+| `7`   | OMID-1      |
+
+[Back to Top ⇧](#top)

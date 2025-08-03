@@ -1,0 +1,120 @@
+---
+title: "Api/V1/Report"
+---
+
+Use the `ap1/v1/report` endpoint to request DT Offer Wall report data.
+
+| Host URL | `https://reporting.fyber.com/api/v1/report/`             |
+| -------- | -------------------------------------------------------- |
+| Method   | `POST`                                                   |
+| Endpoint | `/api/v1/report`                                         |
+| Headers  | `Content-Type: application/json` `Authorization: Bearer` |
+| Params   | `format csv`                                             |
+
+## JSON Request Body for Filtered Data
+
+The following sample JSON request body is for a DT Offer Wall report on Publisher Revenue, Publisher ARPU, Offer Impressions, Offer Clicks, and OFW Unique Users from October 15, 2023, through October 31, 2023. The `.csv` file contains data only for the USA, Canada, and Germany and is grouped by date and country.
+
+**Body: raw (application/JSON)**
+
+```json
+{
+        "source": "event",
+        "dateRange": {
+          "start": "2023-10-15",
+          "end": "2023-10-31"
+        },
+        "metrics": [
+          "Publisher Revenue",
+          "Publisher ARPU",
+          "Offer Impressions",
+          "Offer Clicks",
+          "OFW Unique Users"
+        ],
+        "splits": [
+          "Country"
+        ],
+        "filters": [
+          {
+            "dimension": "Country",
+            "values": [
+              "UNITED STATES",
+              "CANADA",
+              "GERMANY"
+            ]
+          }
+        ]
+}
+```
+
+If no splits or filters are required, their value should be an empty array. However, `source`, `dateRange`, and **metrics** must include a value. For example:
+
+**JSON**
+
+```json
+{
+          "source": "event",
+          "dateRange": {
+              "start": "2023-10-15",
+              "end": "2023-10-31"
+          },
+          "metrics": [
+              "Offer Impressions"
+          ],
+          "splits": [],
+          "filters": []
+}
+```
+
+| PARAMETER         | TYPE   | STATUS   | DESCRIPTION                                                                                                                                                                               |
+| ----------------- | ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `source`          | string | Required | The type of data report: `performance` or `event`. The `source` must be lowercase.                                                                                                        |
+| `dateRange`       | array  | Required | The time span that the report should cover. The maximum date range is 90 days. Invalid dates result in an empty report.                                                                   |
+| `dateRange.start` | string | Required | Start of the date range for the report. The generated report includes metrics for the specified start date. Requirements: earlier or equal to end date, specified in `YYYY-MM-DD` format. |
+| `dateRange.end`   | string | Required | End of the date range for the report. The generated report includes metrics for the specified end date. Requirements: not a future date, specified in `YYYY-MM-DD` format.                |
+| `metrics`         | array  | Required | The type of data (metric) to include in the report. Specify at least one metric.                                                                                                          |
+| `splits`          | array  | Required | Dimensions by which to group data into sections.                                                                                                                                          |
+| `filters`         | array  | Required | Dimensions by which you can filter report data.                                                                                                                                           |
+| `reportFormat`    | string | Required | File type for the generated report.                                                                                                                                                       |
+
+## Report Request Responses
+
+The following code samples show both successful and unsuccessful report request responses.
+
+## Successful Report Request Response
+
+```json
+{
+        "id": "7b98b6d2-87d2-4547-91a2-87382dffe098",
+        "url": "https://storage.googleapis.com/.../25ad6998-a52b-4a81-a707-7d1609c03c78.csv"
+}
+```
+
+| RESPONSE PARAMETER | TYPE   | DESCRIPTION                                                                               |
+| ------------------ | ------ | ----------------------------------------------------------------------------------------- |
+| `id`               | string | Unique identifier for the generated report. May be used to troubleshoot reporting errors. |
+| `url`              | string | URL to poll until the report is populated. Valid for three hours.                         |
+
+## Unsuccessful Report Request Response
+
+```json
+{
+        "error": "invalid_token"
+}
+```
+
+## Report Request Error Codes
+
+The table below shows the main errors indicating an unsuccessful response.
+
+| HTTP ERROR CODE             | Error                   | Description                                                                                                  |
+| --------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 401 Unauthorized            | invalid\_token          | Authorization token error due to scenarios like a missing or invalid token or header, or a disabled account. |
+| 400 Bad\_Request            | invalid\_format         | Invalid file format. Only `.csv` is supported.                                                               |
+| 400 Bad\_Request            | invalid\_query          | Invalid values for report parameters. Ensure correct format.                                                 |
+| 400 Bad\_Request            | invalid\_source         | Unsupported source type.                                                                                     |
+| 500 Internal\_Server\_Error | internal\_server\_error | Reporting API server connection error.                                                                       |
+
+
+
+[Back to Top ⇧](#top)

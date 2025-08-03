@@ -1,0 +1,36 @@
+---
+title: "ATS Configuration For DT Exchange SDK"
+---
+
+App Transport Security (ATS) Settings is an Apple security feature that enforces HTTPS connections for encrypted and secure data transmission. However, many advertising networks and partners still rely on HTTP connections to optimize performance and maximize revenue. For this reason, Digital Turbine recommends enabling HTTP for your app.
+
+In Xcode, this is defined by **Allow Arbitrary Downloads** property, which you can set either from the property list editor or by directly editing the content of the `Info.plist` file.
+
+## Enabling HTTP Connections from Property List Editor
+
+In Xcode property list editor, make sure that **Allow Arbitrary Downloads **property under **App Transport Security Settings** is set to `YES`. If necessary, see instructions at [Xcode Help on editing property lists](https://help.apple.com/xcode/mac/current/#/dev3f399a2a6).
+
+<Frame caption="Screenshot 2024-12-19 at 15.29.31.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17569698267676" />
+</Frame>
+
+## Enabling HTTP Connections by Editing the `Info.plist` File
+
+#### Note
+
+In the `Info.plist` file, the **Allow Arbitrary Downloads** property is represented by `NSAllowsArbitraryLoads` key. For more information, see [Apple developer documentation on NSAllowsArbitraryLoads key](https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity/nsallowsarbitraryloads).
+
+To enable HTTP connections, copy and paste the following code snippet in the `Info.plist` file of your Xcode project:
+
+XML
+
+```html
+
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+   <true/>
+</dict>
+```
+
+[Back to Top ⇧](#top)

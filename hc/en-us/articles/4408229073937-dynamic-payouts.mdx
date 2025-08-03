@@ -1,0 +1,111 @@
+---
+title: "Dynamic Payouts"
+---
+
+Dynamic Payouts allow survey providers to offer variable rewards for completed surveys within a single session. DT adjusts payout amounts dynamically, which encourages users to complete multiple surveys and improves engagement and campaign performance.
+
+## Setting Up a Dynamic Payout Campaign
+
+To create a Dynamic Payout Campaign:
+
+1. Create a [new campaign](https://developer.digitalturbine.com/hc/en-us/articles/360010956637-Campaign-Setup).
+2. Select **Survey Completion** from the **Campaign Type** drop-down list.
+3. Select the **Dynamic payout enabled** checkbox in the **Budget** area.
+
+<Frame caption="2025-01-05_11-09-10.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17834261052316" />
+</Frame>
+
+4. Enter the required values in the **Budget** and **Campaign Customizations** areas.
+
+#### Note
+
+The default bid set or micro-bidding bids must equal the total sum of the Advertiser's commission (their full payout).
+
+5. Click **Next**.\
+   The **Tracking** tab appears.
+6. Copy the URL from the **Postback URL Template **field and incorporate it into your tracking provider, as described in [Generating and Implementing the Session Token (CPID)](#h_01FHCZSFERXHMD1Z7V69AXM9HC).
+
+<Frame caption="2025-01-05_12-33-40.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17834222086940" />
+</Frame>
+
+#### Important
+
+Dynamic Payouts allow the Advertiser to manage all surveys within a single campaign. You can include additional countries in the **Location Targeting** area on the **Targeting** tab and use [Micro Bidding](/hc/en-us/articles/360015933297) to adjust your bids
+
+The survey language updates automatically with the `[[CountryCode]]` macro when you enable localization.
+
+## Generating and Implementing the Session Token (CPID)
+
+The CPID (Conversion Postback ID) is a unique token that securely tracks survey completions in web campaigns. The CPID combines unique identifiers, applies a secure hash, and transmits the values through a postback URL.\
+Follow these steps and refer to the required values to implement the CPID:
+
+1. Navigate to **Account→Security Tokens**and copy the `Dynamic Payout Token`in the DT ACP Edge Console.
+
+<Frame caption="2025-01-06_11-04-46.jpg">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/17834261056412" />
+</Frame>
+
+2. Concatenate the `ClickID`and the `Nonce`.\
+   Ensure the `ClickID`appears first in the concatenation, followed by the `Nonce`.
+3. Calculate the HMAC-SHA256 hash hexdigest of `ClickID`+`Nonce`, using the `Dynamic Payout Token` as the HMAC secret.
+4. Use the hashed output as your `CPID`.
+5. Send the `ClickID`, `Nonce` and the `CPID` parameters in the **Postback URL** callback.
+
+#### CPID Values
+
+| Value            | Description                                         | Postback Field          |
+| ---------------- | --------------------------------------------------- | ----------------------- |
+| `ClickID`        | Identifies the user's action or click event.        | `subid=`                |
+| `Dynamic Payout` | 32 bytes of random data, hex-encoded.               | Not included in the URL |
+| `Nonce`          | A random value generated uniquely for each request. | `nonce=`                |
+
+## Ruby Example for Session Token
+
+Step 1: DT creates the `Dynamic Payout Token`.
+
+**Ruby**
+
+```javascript
+require 'securerandom'
+advertiser_secret = SecureRandom.hex(32)
+```
+
+Step 2: The Advertiser creates a `CPID`.
+
+**Ruby**
+
+```php
+#nonce can be created however you choose provided it's url safe
+nonce = SecureRandom.urlsafe_base64(48)
+
+require 'openssl'
+cpid = OpenSSL::HMAC.hexdigest(
+  OpenSSL::Digest.new('sha256'),
+  advertiser_secret,
+  "#{click_id}#{nonce}"
+)
+```
+
+Step 3: Send `ClickID`, `Nonce`, and `CPID` as part of the callback.
+
+**Ruby**
+
+```ruby
+uri = URI(
+   "#{FYBER_URI}/actions/v2?#{query_params}" \
+   "&subid=#{click_id}" \
+   "&nonce=#{nonce}" \
+   "&cpid=#{cpid}"
+)
+Net::HTTP.get(uri)
+```
+
+## Country Code Macro
+
+Campaigns automatically translate based on the device's language and country code. For example, if `geo=US` (country code) and `lanuage=ES`(device language), the campaign and its description appear in Spanish (or the relevant language).
+
+Use the `[[CountryCode]]` macro in your Click URL to include the country code and dynamically determine the campaign language on your platform or system.
+
+[Back to Top ⇧](#top)

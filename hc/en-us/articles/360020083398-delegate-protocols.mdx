@@ -1,0 +1,393 @@
+---
+title: "Delegate Protocols"
+---
+
+Global Ad Unit Video Content HTML/MRAID
+
+## Global Ad Delegate Protocol
+
+Implement the`IAGlobalAdDelegate`methods to receive the global SDK callback(s).
+
+## Assigning the Delegate Implementor
+
+To assign the delegate implementor use the following:
+
+<CodeGroup>
+
+```objectivec undefined
+IASDKCore.sharedInstance.globalAdDelegate = <implementor>;
+```
+
+</CodeGroup>
+
+<CodeGroup>
+
+```objectivec undefined
+IASDKCore.sharedInstance.globalAdDelegate = self;
+```
+
+</CodeGroup>
+
+[Impression Level Data](https://developer.digitalturbine.com/hc/en-us/articles/360010834117-Impression-Level-Data)
+
+## Implementing the Unit Delegate Methods
+
+#### Important
+
+`IAParentViewControllerForUnitController:unitController`is a required delegate method.\
+When an ad transits to full-sreen, IASDK will need to get a "parent" view controller, and this method will be invoked. If it is not implemented, the app will crash with an exception, intentionally, to show that there is a required method implementation is missing.
+
+This delegate method is required to get a client-side view controller to present modal views, such as in-app browser, storekit controller, MRAID expand, etc. In this method, a desired view controller should be returned by the client side. In most cases it will be the same view controller that presents an ad.
+
+## Parent View Controller
+
+`IAParentViewControllerForUnitController:`\
+Parent view controller evaluation from a publisher, in order to render ads in full-screen / modal mode.\
+Example:
+
+<CodeGroup>
+
+```objectivec undefined
+- (UIViewController * _Nonnull)IAParentViewControllerForUnitController:(IAUnitController * _Nullable)unitController {
+  return self; // in case 'self' is a UIViewController subclass;
+}
+```
+
+</CodeGroup>
+
+All other delegate methods of this protocol (interface) are optional.
+
+## User Click
+
+`IAAdDidReceiveClick:`\
+This method will be invoked when user clicks an ad:
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAAdDidReceiveClick:(IAUnitController * _Nullable)unitController {
+  NSLog(@"ad did click");
+}
+```
+
+</CodeGroup>
+
+## Ad Impression
+
+`IAAdWillLogImpression:`\
+This method will be invoked when ad is rendered and visible:
+
+## Ad Impression Method
+
+```objectivec
+- (void)IAAdWillLogImpression:(IAUnitController * _Nullable)unitController {
+  NSLog(@"ad impression");
+}
+```
+
+## Future Fullscreen Transition Notification
+
+`IAUnitControllerWillPresentFullscreen:`\
+This means that the transition to fullscreen mode will be performed.
+
+## Transition Notification
+
+```objectivec
+- (void)IAUnitControllerWillPresentFullscreen:(IAUnitController * _Nullable)unitController {
+  NSLog(@"ad will present fullscreen");
+}
+```
+
+Notification of Performed Fullscreen Transition
+
+`IAUnitControllerDidPresentFullscreen:`\
+This means the transition to fullscreen already performed.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAUnitControllerDidPresentFullscreen:(IAUnitController * _Nullable)unitController {
+  NSLog(@"ad did present fullscreen");
+}
+```
+
+</CodeGroup>
+
+## Future Transition from Fullscreen Notification
+
+`IAUnitControllerWillDismissFullscreen:`\
+This means that the transition from fullscreen mode will happen.
+
+## Future Fullscreen Transition
+
+```objectivec
+(void)IAUnitControllerWillDismissFullscreen:(IAUnitController * _Nullable)unitController {
+  NSLog(@"ad will dismiss fullscreen");
+}
+```
+
+## Notification of Performed Transition from Fullscreen Mode
+
+`IAUnitControllerDidDismissFullscreen:`\
+This means that the transition from fullscreen mode already performed.
+
+## Successfully Performed Transition
+
+```objectivec
+(void)IAUnitControllerDidDismissFullscreen:(IAUnitController *_Nullable)unitController {
+  NSLog(@"ad did dismiss fullscreen");
+}
+```
+
+## Opening an External App Notification
+
+`IAUnitControllerWillOpenExternalApp:`\
+This is a notification that your app will move to the background, and an external app such as Safari, the App Store, or a Universal link-supported app will open.
+
+## Notifying of Opening an External App
+
+```objectivec
+(void)IAUnitControllerWillOpenExternalApp:(IAUnitController *_Nullable)unitController {
+  NSLog(@"ad will open external app");
+}
+```
+
+## Implementing Video Content Delegate Methods
+
+All video delegate methods are optional.
+
+## Video Completion Event
+
+`IAVideoCompleted:`\
+This is invoked on video completion.
+
+## Invoked on Completion
+
+```objectivec
+- (void)IAVideoCompleted:(IAVideoContentController * _Nullable)contentController {
+  NSLog(@"video completed");
+}
+```
+
+## Interruption Event
+
+`videoInterruptedWithError:`\
+If a video started to play (which means the ad was already received), but the buffer became empty for some reason, and it didn't refill.
+
+## An Interrupted Event
+
+```objectivec
+- (void)IAVideoContentController:(IAVideoContentController * _Nullable)contentController videoInterruptedWithError:(NSError * _Nonnull)error {
+  NSLog(@"video interrupted");
+}
+```
+
+## Video Duration Received
+
+`videoDurationUpdated:`
+
+## Video Duration
+
+```objectivec
+(void)IAVideoContentController:(IAVideoContentController * _Nullable)contentController videoDurationUpdated:(NSTimeInterval)videoDuration {
+  NSLog(@"video duration updated");
+}
+```
+
+## Progress Tracking
+
+`videoProgressUpdatedWithCurrentTime:totalTime:`\
+The delegate method is invoked each time the video has played after a certain amount of milliseconds of the video.
+
+```objectivec
+(void)IAVideoContentController:(IAVideoContentController *_Nullable)contentController videoProgressUpdatedWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime {
+  NSLog(@"video progress updated");
+}
+```
+
+## Implementing the MRAID Content Delegate Methods
+
+All HTML / MRAID delegate methods are optional.
+
+## MRAID Resize Event (Future)
+
+`MRAIDAdWillResizeToFrame:`\
+This will be in invoked on MRAID Resize command, before the ad transformation.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAMRAIDContentController:(IAMRAIDContentController * _Nullable)contentController MRAIDAdWillResizeToFrame:(CGRect)frame {
+    NSLog(@"MRAIDAdWillResizeToFrame");
+    self.isMRAIDResize = YES; // a way to distinct in 'collapse', whether was resize or expand;
+    
+    if (!self.adView.translatesAutoresizingMaskIntoConstraints) { // a way to distinct the work with constraints;
+        // ok, we are working with constraints, if so -> it is publisher responsibility to treat MRAID:RESIZE:
+        //
+        // 1. remove existing constraints from adView (in this method);
+        // 2. set new constraints, satisfying the received frame ('MRAIDAdDidResizeToFrame' method);
+        //
+        // note: that if you are not working with constraints, the adView will treat all the needed sizes, but you will need to setup other UI in current view controller, according to adView's new frame;
+        // note: MRAID:EXPAND is MODAL, so no need to implement the same work;
+        [self.adView removeFromSuperview]; // remove self.view <--> adView constraints;
+    }
+  
+  // the rest of work is implemented inside the 'MRAIDAdDidResizeToFrame:' method;
+}
+```
+
+</CodeGroup>
+
+## MRAID Resize Event (Happened)
+
+`MRAIDAdDidResizeToFrame:`\
+This will be in invoked on MRAID Resize completion.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAMRAIDContentController:(IAMRAIDContentController * _Nullable)contentController MRAIDAdDidResizeToFrame:(CGRect)frame {
+    NSLog(@"MRAIDAdDidResizeToFrame");
+    
+    // means we are working with constraints;
+    if (!self.adView.translatesAutoresizingMaskIntoConstraints) {
+        [self.viewUnitController showAdInParentView:self.view]; // add once again to view, because was removed previously in order to remove constraints;
+        
+        // if so, it is on publisher responsibility to set up a new consrtraints:
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeLeading
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self.view
+                                      attribute:NSLayoutAttributeLeading
+                                     multiplier:1
+                                       constant:frame.origin.x]];
+        
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self.view
+                                      attribute:NSLayoutAttributeTop
+                                     multiplier:1
+                                       constant:frame.origin.y]];
+        
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeWidth
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:nil
+                                      attribute:NSLayoutAttributeWidth
+                                     multiplier:1
+                                       constant:frame.size.width]];
+        
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeHeight
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:nil
+                                      attribute:NSLayoutAttributeHeight
+                                     multiplier:1
+                                       constant:frame.size.height]];
+    } else {
+        // working with 'frame',
+        // set up your UI according to adView's new frame;
+    }
+}
+```
+
+</CodeGroup>
+
+## MRAID Expand Event (Future)
+
+`MRAIDAdWillExpandToFrame:`\
+This will be in invoked on MRAID Expand command, before the ad transformation.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAMRAIDContentController:(IAMRAIDContentController * _Nullable)contentController MRAIDAdWillExpandToFrame:(CGRect)frame {
+    NSLog(@"MRAIDAdWillExpandToFrame");
+    
+    self.isMRAIDResize = NO; // add this boolean flag to properties, in order to distinct whether 'collapse' event (when it will be invoked) is after 'resize' or after 'expand';
+}
+```
+
+</CodeGroup>
+
+## MRAID Expand Event (Happened)
+
+`MRAIDAdDidExpandToFrame:`\
+This will be in invoked on MRAID Expand completion event.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAMRAIDContentController:(IAMRAIDContentController * _Nullable)contentController MRAIDAdDidExpandToFrame:(CGRect)frame {
+    NSLog(@"MRAIDAdDidExpandToFrame");
+}
+```
+
+</CodeGroup>
+
+## MRAID Collapse Event (Future)
+
+`IAMRAIDContentControllerMRAIDAdWillCollapse:`\
+This will be in invoked on MRAID Collapse command, before the ad transformation.
+
+<CodeGroup>
+
+```objectivec undefined
+NSLog(@"IAMRAIDContentControllerMRAIDAdWillCollapse");
+    
+    // if we are working with constraints AND there was resize before (not expand):
+    if (!self.adView.translatesAutoresizingMaskIntoConstraints && self.isMRAIDResize) {
+        // the same as in 'MRAIDAdWillResizeToFrame';
+        [self.adView removeFromSuperview];
+    }
+```
+
+</CodeGroup>
+
+## MRAID Collapse Event (Happened)
+
+`IAMRAIDContentControllerMRAIDAdDidCollapse:`\
+This will be in invoked on MRAID Collapse completion.
+
+<CodeGroup>
+
+```objectivec undefined
+- (void)IAMRAIDContentControllerMRAIDAdDidCollapse:(IAMRAIDContentController * _Nullable)contentController {
+    NSLog(@"IAMRAIDContentControllerMRAIDAdDidCollapse");
+    
+    // if we are working with constraints AND there was resize before (not expand):
+    if (!self.adView.translatesAutoresizingMaskIntoConstraints && self.isMRAIDResize) {
+        // restore everything as it was before resize (in case it is resize):
+        [self.viewUnitController showAdInParentView:self.view];
+        
+        // adding centerX constraint
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeCenterX
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self.view
+                                      attribute:NSLayoutAttributeCenterX
+                                     multiplier:1
+                                       constant:0]];
+        
+        // adding top constraint
+        [self.view addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.adView
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self.view
+                                      attribute:NSLayoutAttributeTop
+                                     multiplier:1
+                                       constant:0]];
+    }
+}
+```
+
+</CodeGroup>
+
+[Back to Top ⇧](#top)

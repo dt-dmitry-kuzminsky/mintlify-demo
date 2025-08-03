@@ -1,0 +1,92 @@
+---
+title: "Response And Error Handling"
+---
+
+Ignite Services Client SDK supports multiple approaches for receiving responses from the DT Server. This flexibility adds redundancy to ensure Host Apps can properly capture event statuses and manage their unique business needs. A Host App can either register a broadcast receiver to receive pre-defined Ignite action string or use the `IIgniteServiceCallback` interface.
+
+## Ignite Installer Broadcast Action
+
+To receive installation results, Host Apps can register a broadcast receiver to receive status updates. Use the following fully qualified name of the broadcast receiver with calls to asynchronous APIs:
+
+`Broadcast action: com.digitalturbine.ignite.service.action.STATUS_CHANGED`
+
+## Installation Status Codes
+
+DT sends installation status to the application which initiates the installation. For example, if both HostApp-A and HostApp-B both register to receive the broadcast, and HostApp-A installs TargetApp-1, only HostApp-A receives the status updates for the installation of TargetApp-1. HostApp-B does not receive any status updates for the installation of TargetApp-1.
+
+The installation status includes the following information:
+
+* `TASK_ID`
+* `PACKAGE_ID`
+* `PACKAGE_NAME`
+* `STATUS` (see status codes below)
+* `STATUS_MESSAGE`
+* `NONCE`
+
+| INSTALLATION STATUS MESSAGE   | CODE | DESCRIPTION                                                                                                                |
+| ----------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------------- |
+| `STATUS_SUCCESS`              | `0`  | Target APK installation complete.                                                                                          |
+| `STATUS_FAILURE`              | `1`  | Target APK installation failed.                                                                                            |
+| `STATUS_FAILURE_BLOCKED`      | `2`  | Target APK installation was prohibited by device policy or another app such as a package verifier.                         |
+| `STATUS_FAILURE_ABORTED`      | `3`  | Target App installation stopped by device user either by declining requested permissions or abandoning the session.        |
+| `STATUS_FAILURE_INVALID`      | `4`  | Target APK installation failed because it was malformed, corrupt, mismatched or incorrectly signed (failed SHA-256 check). |
+| `STATUS_FAILURE_STORAGE`      | `5`  | Target APK installation failed because the device has insufficient storage capacity.                                       |
+| `STATUS_FAILURE_CONFLICT`     | `6`  | Target APK installation failed because it conflicts with another package already on the device.                            |
+| `STATUS_FAILURE_INCOMPATIBLE` | `7`  | Target APK installation failed because it is not compatible with device features (hardware or software).                   |
+| `STATUS_PROGRESS`             | `8`  | Target APK installation in progress.                                                                                       |
+| `DOWNLOAD_STARTED`            | `9`  | Target APK download started.                                                                                               |
+| `DOWNLOAD_FINISHED`           | `10` | Target APK download complete.                                                                                              |
+| `INSTALLATION_STARTED`        | `11` | Target APK installation started.                                                                                           |
+
+## Task Info Status Codes
+
+For more information about the status codes returned by the `getTaskInfo` method, see [Track Task Status](/hc/en-us/articles/9861904404764).
+
+## Ignite Service Response Callback
+
+```php
+interface IResponseCallback {
+    /**
+     * Called when response is successful
+     *
+     * @param result result of the operation of the type [R]
+     */
+    fun onSuccess(result: R)
+
+    /**
+     * Called when any error occurred during communication
+     *
+     * @param error error description of the type [E]
+     */
+    fun onError(error: E)
+
+    /**
+     * Called when Ignite notifies about the task progress
+     *
+     * @param progress contains [Progress] provided by Ignite
+     */
+    fun onProgress(progress: P) {
+        // Do nothing by default
+    }
+
+    /**
+     * Called when Ignite started task execution
+     *
+     * @param taskInfo contains any task info provided by Ignite [TaskInfo]
+     */
+    fun onStart(taskInfo: TaskInfo) {
+        // Do nothing by default
+    }
+
+    /**
+     * Called when Ignite scheduled task execution
+     *
+     * @param taskInfo contains any task info provided by Ignite [TaskInfo]
+     */
+    fun onScheduled(taskInfo: TaskInfo) {
+        // Do nothing by default
+    }
+    }
+```
+
+[Back to Top ⇧](#top)

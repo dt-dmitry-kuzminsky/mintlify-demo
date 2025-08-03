@@ -1,0 +1,1089 @@
+---
+title: "DT Exchange Android Changelog"
+---
+
+## Version 8.3.7
+
+14 April 2025
+
+***
+
+**Improvements:**
+
+* Playable full-screen ads improvements
+* VAST Companion improvements
+* Removed AppSetId collection
+
+**Fixed:**
+
+* Crash related to a certain scenario of VAST ads: `java.lang.IllegalStateException: The specified child already has a parent. You must call removeView() on the child's parent first`
+* Crash related to webview on certain devices: `java.lang.NullPointerException: Attempt to invoke interface method'java.lang.String org.chromium.content_public.browser.WebContents.getUrl()' on a null object reference`
+* Various stability fixes
+
+## Version 8.3.6
+
+9 February 2025
+
+***
+
+**New:**
+
+* Enhanced VAST ads experience
+
+**Improvements:**
+
+* Ad rendering in edge-to-edge mode on Android 15 devices
+
+**Fixed:**
+
+* Various stability fixes
+
+## Version 8.3.5
+
+14 January 2025
+
+***
+
+**Fixed:**
+
+* Fixed usage of Android Advertising ID to be compliant with [Google Play Ads policy](https://support.google.com/googleplay/android-developer/answer/9857753#)
+
+## Version 8.3.4
+
+25 December 2024
+
+***
+
+**Improvements:**
+
+* Improved display ads rendering
+* Improved full-screen ads rendering
+
+**Fixed:**
+
+* An issue with redirect URLs that contain `FYBER_OPEN_BROWSER`
+* Encoding issue with tracking events in `iframe` and GIF `endcards`
+* Possible memory leak
+* Possible crash related to `play-services-ads-identifier:18.2.0` on devices running Android 7 and earlier
+* Various stability fixes and improvements
+
+## Version 8.3.3
+
+5 November 2024
+
+***
+
+**Fixed:\
+**
+
+* Possible `ClassCastException` crash related to loading VAST ads in Waterfall
+
+## Version 8.3.2
+
+21 October 2024
+
+***
+
+**New:**
+
+* Added support for Android Privacy Sandbox - [Topics API](https://developers.google.com/privacy-sandbox/private-advertising/topics/android):
+  ```html
+  <uses-permission android:name="android.permission.ACCESS_ADSERVICES_TOPICS" />
+  ```
+* Added support for Android Privacy Sandbox - [Attribution Reporting API](https://developers.google.com/privacy-sandbox/private-advertising/attribution-reporting/android):
+  ```html
+  <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
+  ```
+* Added support for [AppSetId](https://developer.android.com/design-for-safety/privacy-sandbox/reference/adservices/appsetid/AppSetId) collection
+* Added support for VAST “skip” tracking event
+* Update targetSdkVersion to 35
+* Set Java source and target compatibility to 1.8 (Java 8)
+
+**Improvements:**
+
+* VAST companion UX improvements
+
+**Fixed:**
+
+* Various stability fixes and improvements
+
+## Version 8.3.1
+
+22 August 2024
+
+***
+
+**Improvements:**
+
+* Improved viewability detection of banner ads
+
+## Version 8.3.0
+
+25 July 2024
+
+***
+
+**New:**
+
+* Added support for resource-less companion click tracking
+* Added support for DV360 with Admob v23+
+* Updated OMSDK to v1.5.0
+* Removed setKeywords API (deprecated since v8.0.0)
+* Added support for reading TCF purpose consent values
+
+**Improvements:**
+
+* VAST video UX improvements
+
+**Fixed:**
+
+* Various stability fixes and improvements
+
+## Version 8.2.7
+
+9 April 2024
+
+***
+
+**New:**
+
+* Added support for reading TCF v2 consent values
+* Added support for muteVideo API for rewarded placements
+
+**Improvements:**
+
+* Added enhancements for DSA support
+
+**Fixed:**
+
+* Various stability fixes and improvements
+
+## Version 8.2.6
+
+13 February 2024
+
+***
+
+**Fixed:**
+
+* Various stability fixes and improvements
+
+## Version 8.2.5
+
+14 December 2023
+
+***
+
+**New:**
+
+* Updated OMSDK to v1.4.9
+
+**Fixed:**
+
+* Improved handling of WebView crashes
+* Fixed Possible memory leak
+* Various stability fixes and improvements
+
+## Version 8.2.4
+
+5 September 2023
+
+***
+
+**New**:
+
+* Added support for VAST V3 progress tracking events
+* Updated OMSDK to v1.4.8
+
+**Improvements**:
+
+* Ads loading improvements
+
+**Fixed**:
+
+* Possible crash and init error related to 3rd party SDK
+* Possible ANR related to video UI
+* Various stability fixes and improvements
+
+## Version 8.2.3
+
+4 April 2023
+
+***
+
+**New**:
+
+* Support Android 13 Predictive Back
+* Stop collecting GPS data
+
+**Fixed**:
+
+* Crash related to Google Mobile Ads SDK v22.0.0
+* Various stability fixes and improvements
+
+## Version 8.2.2
+
+14 February 2023
+
+***
+
+**New**:
+
+* Support for HTML Video within OMSDK
+* Update OMSDK to v1.4.2
+* Improved rendering logic for brand campaigns
+
+**Fixed**:
+
+* Various stability fixes and improvements
+
+## Version 8.2.1
+
+15 November 2022
+
+***
+
+**New**:
+
+* Added [API](https://developer.digitalturbine.com/hc/en-us/articles/360010822437#google-play-families-ads-api-0-13) support for child audience\
+  `InneractiveAdManager.currentAudienceIsAChild()`
+
+- Pending features for Google’s Designed for Families program
+- DT Exchange ad identifier icon (i)
+
+**Fixed**:
+
+* Muted Strict Mode violation related to app context
+* Various stability fixes and improvements
+
+## Version 8.2.0
+
+29 August 2022
+
+***
+
+**New**:
+
+* Added support for integration with DT Ignite SDK
+
+**Fixed**:
+
+* Various stability fixes and improvements
+
+## Version 8.1.5
+
+27 June 2022
+
+***
+
+**Fixed**:
+
+* Wrong package prefixes in the minified SDK which may have caused conflicts with other minified packages in the hosting app
+
+## Version 8.1.4
+
+15 June 2022
+
+***
+
+**New**:
+
+* Added new API and support for LGPD (Brazilian GDPR)
+
+**Fixed**:
+
+* Fixed a possible ANR related to device input languages
+* Various stability fixes and improvements
+* Fixed conflict with 3rd party SDK
+
+**Improvements**:
+
+* Update OMSDK to 1.3.30
+
+## Version 8.1.3
+
+27 February 2022
+
+***
+
+**Fixed**:
+
+* Possible ANR related to OM SDK initialization
+* Crash related to a 3rd party SDK that overrides our network stack and causes a failure when parsing ad response
+
+**Improvements**:
+
+* Removed old media cache which had an open localhost socket listening on a random high port. As such, having a localhost exception role in the network security config is no longer required.
+* Various stability fixes and improvements
+
+## Version 8.1.2
+
+30 December 2021
+
+***
+
+**Fixed:**
+
+* Crash related to showing Interstitial Ads on tablets
+
+## Version 8.1.1
+
+29 December 2021
+
+***
+
+**New**:
+
+* Support for OMSDK v1.3.28
+
+**Fixed**:
+
+* Click issue with fullscreen ads calling MRAID expand command
+* Rendering issue after refresh in Unity
+* Various crashes related to OMSDK
+* Various stability fixes and improvements
+
+## Version 8.1.0
+
+4 November 2021
+
+***
+
+**New**:
+
+* Added support for (Open Measurement) OMSDK v1.3.25
+
+**Fixed**:
+
+* Possible ANR caused by `getActiveNetworkInfo`
+* Miscellaneous stability improvements
+
+## Version 8.0.0
+
+18 October 2021
+
+***
+
+**New**:
+
+* Added support for SDK Bidding
+
+**Improvements**:
+
+* Unified SDK kits and core modules into a single library. The library name is:
+
+  `marketplace-sdk`
+
+  #### Note
+
+  This replaces the previous versions dependency, and is mandatory for the integration.
+
+  In build.gradle
+
+  ```java
+  def fyberMarketplaceVersion = '8.0.0'
+
+  dependencies {
+   // ...
+  implementation "com.fyber:marketplace-sdk:${fyberMarketplaceVersion}"
+  // ...
+  }
+  ```
+
+**Fixed**:
+
+* Internal SDK race condition that caused a crash
+* Crash related to low memory on device
+* Various improvements and bug fixes
+
+**Deprecated and API Updates**:
+
+* API moved from InneractiveAdRequest to InneractiveAdManager to be globally supported for all ad requests
+
+* `InneractiveAdRequest UserParams:`
+
+  ```java
+  @Deprecated
+  public void setUserParams(InneractiveUserConfig userParams)
+  @Deprecated
+  public InneractiveUserConfig getUserParams()
+  ```
+
+  Please use the following in InneractiveAdManager:
+
+  ```java
+  public static void setUserParams(InneractiveUserConfig userParams)
+  public static InneractiveUserConfig getUserParams()
+  ```
+
+* `InneractiveAdRequest Keywords`
+
+  ```java
+  @Deprecated
+  public void setKeywords(String keywords)
+  @Deprecated
+  public String getKeywords()
+  ```
+
+  Please use the following in InneractiveAdManager:
+
+  ```java
+  @Deprecated
+  public static void setKeywords(String keywords)
+  @Deprecated
+  public static String getKeywords()
+  ```
+
+* The support for Keywords is about to be completely removed, therefore it is also deprecated in InneractiveAdManager
+
+* For muting support, the following has changed:
+  ```java
+  InneractiveAdRequest MuteVideo
+  @Deprecated
+  public void setMuteVideo(boolean muteVideo)
+  @Deprecated
+  public boolean getMuteVideo()
+  ```
+
+* And is replaced with InneractiveAdManager:
+
+  ```java
+  public static void setMuteVideo(boolean muteVideo)
+  public static boolean getMuteVideo()
+  ```
+
+## Version 7.8.4
+
+17 August 2021
+
+***
+
+**New**:
+
+* Added support for DV360 SCAR integration for full screen ads
+* **Important API change**: To display full screen ads, pass activity to `InneractiveFullscreenUnitController show method`:
+  ```java
+  public void show(Activity activity)
+  ```
+* Added a new API to determine if location API is used in the SDK. Default value is set to true
+  ```java
+  InneractiveAdManager.setUseLocation(boolean useLocation)
+  ```
+
+**Improvements**:
+
+* Loading time of playable ads
+* Made improvements to ad load time for apps using SafeDK
+
+**Fixed**:
+
+* Ignore MRAID expand command in full screen ads
+* Various improvements and bug fixes
+
+## Version 7.8.3
+
+09 June 2021
+
+***
+
+**New**:
+
+* Rewarded Videos longer than 30 seconds will now be accepted on Fyber Marketplace and a skip button will be displayed at the 30-second mark
+
+**Fixed**:
+
+* Rare internal SDK race condition that caused no impression callback to be invoked in VAST creatives
+* Possible ANR related to GMS QueryInfo
+* Bug that caused some image end cards in full screen ads to not display
+* MRAID open errors will now include a proper error message
+* spot.isReady() will now properly return true when a SCAR API Banner is ready to render
+* Stability and Crash issues fixed
+
+**Improvements**:
+
+* Removed VPAID support
+* SDK will no longer crash when calling bind() on an Ad View instance which returned isReady() equals false
+
+## Version 7.8.2
+
+18 March 2021
+
+***
+
+**Improvements**:
+
+* Added support for DV360 SCAR integration for banners
+* Updated support for MoPub's latest Adapter version 5.16.0
+* Updated support for AdMob's latest Adapter version 19.7.0
+* Updated SDK maven repository to maven-central
+
+## Version 7.8.1
+
+11 February 2021
+
+***
+
+**New**:
+
+* Enhanced video skippability enforcement mechanism
+* Enhanced user experience with larger video button controls on tablets
+
+**Fixed**:
+
+* Improved handling of deeplink URLs
+* Crash related to memory allocation
+* Various bug fixes
+
+## Version 7.8.0
+
+19 January 2021
+
+***
+
+**New**:
+
+* Added additional Contextual parameters and improved the infrastructure
+* Redesigned our network stack implementation with significant improvements. Impacts all network communications (i.e ad requests, tracking events, and more)
+* Ignore unsupported spots ad requests (i.e. support videos only for Interstitial and Rewarded)
+* Increased Target APIs to Android 10, to meet Google Play’s [Target API Level Requirements](https://support.google.com/googleplay/android-developer/answer/113469#targetsdk)
+
+**Fixed**:
+
+* Various crashes related to MRAID and VPAID
+* Crash in Mopub Banner Adpater
+* Issue where video player icons were cropped on some devices
+* Miscellaneous improvements and stability fixes
+
+## Version 7.7.4
+
+26 November 2020
+
+***
+
+**Fixed**:
+
+* Fixed a crash in banners when calling bindView for a webview which crashed
+
+## Version 7.7.3
+
+01 November 2020
+
+***
+
+**New**:
+
+* Added support for the mute API in FairBid
+
+**Fixed**:
+
+* Deployed a patch to prevent the SDK crashing when a publisher accidentally requested an interstitial placement using an adview integration, in rare cases.
+
+## Version 7.7.2
+
+14 October 2020
+
+***
+
+**Fixed**:
+
+* Issue in the video player which might cause the Marketplace SDK to crash in certain rare scenarios
+
+## Version 7.7.1
+
+7 October 2020
+
+***
+
+**New**:
+
+* Added new internal testing capabilities to monitor and optimize for faster ad load times
+* User interface updates targeting increased user engagement
+* * (Video CTA now lists “Install Now” instead of “Visit Us”)
+  * For full screen display ads, users are now taken back to the ad after visiting the destination page, previously the ad was dismissed
+  Added support for granular click tracking on end cards (CompanionClickTracking) and support for multiple CompanionClickTrack elements
+* Added additional VAST functionality that improves click tracking and helps mitigate accidental clicks
+
+**Fixed**:
+
+* Fix for MRAID currentPosition in rotations
+* Fixed an issue where our banner click handler may fail
+* Misc. improvements and stability fixes
+
+## Version 7.7.0
+
+25 August 2020
+
+***
+
+**New**:
+
+* Added a new API for passing the developer’s own user ID - “InneractiveAdManager.setUserId(String)”. We recommend using this API to improve buyers ability to target and frequency cap. For details, click[here](https://marketplace-supply.fyber.com/docs/integrating-android).
+* Added support for VAST 3.0`CompanionClickTracking`
+
+**Fixed**:
+
+* MRAID 2.0 now properly populates the getCurrentPosition method
+* Stability and performance improvements
+
+**Notes**:
+
+* New privacy-oriented Contextual Targeting parameters
+
+## Version 7.6.1
+
+06 August 2020
+
+***
+
+**New Features**:
+
+* Ads will be invalidated when expired. For more information, click[here](/hc/en-us/articles/360010833957-Integrating-Full-Screen-Ads).
+* Added support for testing Rewarded Placement Types in the test app
+
+**Fixed**:
+
+* When a bad App ID is entered, in some situations, the SDK has had issues recovering when a correct one is inserted in the same session
+* An anti-virus product named “Zoner” has falsely flagged the SDK as containing “HTML.RefreshScript” using an heuristic detection method, We have adjusted the relevant code to remove any doubt.
+* Fraud detection now works on HTML End Cards
+* Various stability fixes and improvements
+
+**Updates**:
+
+* When a VAST contains a mix of VPAID and regular media files, VPAID will now be in the lowest priority
+* Improved VAST End Card logic (filtering of sizes)
+* FairBid bridge now supports the new rewarded display format and the isReady/available methods
+* Demand Test app now includes a better log collector for debugging remote issues
+* Test app now shows a logger instead of toast messages
+
+## Version 7.6.0
+
+12 July 2020
+
+***
+
+**Features**:
+
+* New ad format! Added support for Rewarded Playables, which is configured under the existing Rewarded Placement Type
+  * Added a new rewarded completion callback for fullscreen unit controllers. For more information on implementation, click[here](https://marketplace-supply.fyber.com/docs/listening-request-fullscreen)
+* Improved click handling for interstitial display Ad Units
+* Improved the look and feel of the fail-safe close button
+
+**Fixed**:
+
+* Unified the timing of the close and back button with iOS across all placement types
+* Minor stability and performance improvements
+
+## Version 7.5.4
+
+21 May 2020
+
+***
+
+**Updates**:
+
+* Newer user experience for full screen ads - as these now take advantage of immersive mode to render on the whole screen
+* SDK initialized callback. For more details, click[here](https://marketplace-supply.fyber.com/docs/integrating-android#initialization-callback).
+* The SDK now takes advantage of the “onRenderProcessGone” WebViewClient API to avoid WebView related crashes. In such, the SDK will invoke the appropriate “onAdEnteredErrorState” callback with a “WebViewRendererProcessHasGoneError” object.
+
+**Fixed**:
+
+* Improved the SDK handling of invalid VAST End cards:
+
+  * When the content of an end card is empty
+  * The SDK will attempt to reload the end cards upon failure
+  * Invalid / Erroneous file extension and mime-types such as case-insensitive “JPG”
+
+* Banner refresh logic has been slightly adjusted to refresh banners when app resumes from background
+
+* Video ads loading logic has been adjusted for better performance.
+
+* Miscellaneous bug fixes and stability improvements
+
+## Version 7.5.3
+
+29 March 2020
+
+***
+
+**Updates**:
+
+* The minimum Android API version is set to 16 (Android OS 4.1, Jelly Bean)
+
+**Fixed**:
+
+* Potential crash when calling webview getSettings API
+* The onInneractiveFailedAdRequest wasn’t called when a banner spot was used to load full-screen ad
+* Additional stability fixes and improvements
+* Deep Links of type "intent" with a fallback URL will open the fallback URL, if the target application is not installed on the device
+
+
+
+## Version 7.5.2
+
+27 February 2020
+
+***
+
+**Updates**:
+
+* * * * The CCPA Setter renamed to 'setUSPrivacyString'
+      * Support added for CompanionClickTracking
+      * Fullscreen activity now requires hardware acceleration. No developer action required
+      * Improved deep link handling
+      * New ‘video load timeout’ reason code added in the failure callback
+
+**Fixed**:
+
+* * * * Additional stability fixes and improvements
+
+
+
+## Version 7.5.0
+
+14 January 2020
+
+***
+
+**Updates**:
+
+* * * * New “static” ad[impression level revenue](https://marketplace-supply.fyber.com/docs/impression-level-data)data callback which allows to receive information regarding all impressions being shown with the Marketplace SDK
+      * New API for setting a[CCPA](https://marketplace-supply.fyber.com/docs/integrating-android#section-ccpa)(us\_privacy) string
+      * VPAID is now supported in the mute API
+      * When hosting activity has a launch mode of “singleTask” ads displayed will now properly dismiss when required
+
+**Fixed**:
+
+* * * * Click logic has been revised
+      * Fixed a crash related to the cancelling of ad requests in very particular timings.
+      * Fixed a potential crash in the video cache mechanism
+      * Stability and performance improvements
+
+
+
+## Version 7.4.1
+
+18 December 2019
+
+***
+
+**Updates**:\
+Removed the GSON dependency
+
+**Fixed**:
+
+* * * * Crash in debug mode due to removal of GSON
+      * Crash when the Spot is destroyed while the Ad is being loaded
+
+
+
+## Version 7.4.0
+
+9 December 2019
+
+***
+
+**Updates**:
+
+* * * * Using ExoPlayer for rendering VAST ads
+      * New optional API - start interstitial video ads muted for apps with sound settings off (except for rewarded video ad unit)
+
+**Fixed**:
+
+* * * * Improved rendering of full screen html ads
+      * Improved handling of Google Play click URLs inside the ad
+      * Interstitial ads cannot be dismissed before given an opportunity to be visible to the user
+      * Full screen interstitials display ads are not scrollable
+      * Intent scheme is properly sent to the operating system
+      * The SDK will no longer send ad requests when only the core kit is being used.
+      * Fixed a possible ANR on devices running Android 5.x
+      * Renamed a package which was possibly conflicting with other open source package names.
+      * Fixed a possible class cast exception when requesting ads
+
+**Adapters**:
+
+* * * * Mopub adapter - fixed a possible memory leak
+
+## Version 7.3.4
+
+September 2019
+
+***
+
+**Updates**:
+
+* * * * Removed legacy dead code - “dispatchTouchEvent” is no longer present in the SDK
+
+**Fixed**:
+
+* * * * Possible issue causing certain display ads not to load
+      * A situation where the OS might null point the SDK with invalid Location object
+      * Issue in the MoPub Adapter where a non-existent method was referenced
+
+
+
+## Version 7.3.3
+
+August 2019
+
+***
+
+**Updates**:
+
+* * * * Support for Smartlink+: A deep linking scheme allowing advertisers to provide a fallback URL, if the destination of the deep link cannot be found on the device. This scheme also allows the attachment of appropriate click trackers to both the primary URL and the fallback URL. Click[here](https://fyber-marketplace.fyber.com/docs/smartlink)for more information.
+      * Support for native browser scheme: A new option for advertisers to notify the Fyber SDK that the click URL should be opened in the native browser of the device and not in the built-in browser of the SDK. This is an additional option to the current method of using a URL suffix. Click[here](https://fyber-marketplace.fyber.com/docs/click-to-native-browser)for more information.
+      * *New*Mopub custom event adapters, distributed via maven.*please note - adapter class names have changed*for more information please see[here](https://developer.inner-active.com/docs/mediation-and-android#Mopub)
+
+**Fixed**:
+
+* * * * Issue where in some rare cases user agent extraction might have caused an ANR
+      * Issues related to VPAID - improved back button support and which enables proper end card delay.
+      * Improved VAST parsing
+      * Issue where banners would refresh every time visibility changed, regardless of refresh counters.
+      * Time Accuracy (TACC) is now sent correctly.
+      * Miscellaneous bug fixes and improvements
+
+
+
+## Version 7.3.2
+
+July 2019
+
+***
+
+**Updates**
+
+* * * * New GDPR Consent String API
+
+**Fixed**
+
+* * * * Various stability and performance issues
+
+
+
+## Version 7.3.1
+
+May 2019
+
+***
+
+**Fixed**
+
+* * * * Various stability and performance issues
+
+
+
+## Version 7.3.0
+
+May 2019
+
+***
+
+**Updates**\
+Deeplinks
+
+* * * * Support for Intent\
+        Video (VAST) End-Card Experience and Design
+      * The default end-card now has new design and experience
+      * The "Replay" button has been removed from the Fyber Marketplace default end-card
+      * The new “Download” button for Fyber Marketplace end-cards, when clicking an action, has a downloadable link for Google Play Store (instead of a "Visit Us" button)
+      * End-card phones’ notch support
+
+Video (VAST) End-Card Optimizations
+
+* * * * Displaying end-card when video is stuck and cannot be completed
+      * End-card selection optimization
+      * Always show end-card after ad skip
+      * Display Fyber default end-card if there is no ad end-card
+
+Playable Ads
+
+* * * * Playable ads certification on SDK
+
+Developer Experience
+
+* * * * It is now possible to use the "ads-identifier" library rather than including the admob dependency
+
+VPAID
+
+* * * * Rewarded ad would not be skippable using the Android "Back" button
+
+Mediating the SDK
+
+* * * * Adapter update for AdMob 17.1
+
+**Fixed**
+
+* * * * MRaid bridge fixes - orientation, generic communication
+      * WebView crash fixed
+      * Crash fix for NullPointerException on checkCallingOrSelfPermission()
+
+**Deprecated**
+
+* * * * "onPlayerError" callback
+      * Fyber Marketplace’s Native Ad Kit (ia-native-kit)
+
+
+
+## Version 7.2.2
+
+April 2019
+
+***
+
+**Updates**
+
+* * * * MoPub adapter update for MoPub SDK v5.4.1 and above.
+
+
+
+## Version 7.2.1
+
+January 2019
+
+***
+
+**Updates**
+
+* * * * New*Use Secure Connections*API -\
+        Today, publishers may set their app connections to be secured. With SDK v7.2.1, publishers can now set their SDK connections be secured separately from their app connection secure level with a new SDK API:\
+        *useSecureConnections (boolean isSecured)*\
+        The default value is false\
+        Once*isSecured*is set to*true*, Display or VAST ads will have secured connections. If ad’s Display HTML or VAST were not set to be secured successfully, the SDK will drop the ad (black screen for HTML ads and a VAST error for VAST ads).\
+        Error callback :*onInneractiveFailedAdRequest (adspot,”Non secure content detected”)*
+      * *Breaking changes*- new interface method`onAdEnteredErrorState`has been added to the`*AdEventsListener`interfaces. Currently, This method will be invoked once MRAID VIDEO Display ads have entered an error state (for example - when an MRAID video has not started playing after a short while).\
+        In such cases, The SDK Will take care of presenting the user with a close button over the ad and this callback will be called.
+
+**Fixed**
+
+* * * * Potential crash was resolved.
+
+
+
+## Version 7.2.0
+
+January 2019
+
+***
+
+**Updates**
+
+* * * * Support MRAID end-cards for video Interstitial ad
+      * Support uniform Skippability: For video interstitials, any video that is 15s or shorter will be non-skippable. Videos 16s or longer will be skippable usually after 5s (or otherwise set by the publisher)
+      * Extended support for MRAID video in Interstitial Display ad
+
+**Fixed**
+
+* * * * NPE (NullPointerException) for long press on webView was resolved
+      * Improved video rendering (VAST) : resolved several important bugs including cases where video playback is interrupted soon after it begins
+      * Addressed an additional ad auto-redirect scenario that uses mraid.open()
+
+
+
+## Version 7.1.7
+
+September 2018
+
+***
+
+**Updates**
+
+* * * * Secured ad requests when disabling cleartext traffic
+      * Ads now respect CUTOUT settings for android P
+
+**Fixed**
+
+* * * * Endcard disappearing upon coming back to app
+
+
+
+## Version 7.1.6
+
+July 2018
+
+***
+
+**Fixed**
+
+* * * * Crash resulted in two subsequent calls to show an ad
+
+
+
+## Version 7.1.5
+
+May 2018
+
+***
+
+**Updates**
+
+* * * * GDPR Consent API
+
+
+
+## Version 7.1.4
+
+May 2018
+
+***
+
+**Updates**
+
+* * * * Fixed bug on AdMob adapter
+      * Fixed various stability and performance issues
+
+
+
+## Version 7.1.3
+
+***
+
+**Updates**
+
+* * * * Added support for viewability measurement from VPAID
+      * Updated minimum supported Android API version to 15 (ICS)
+      * Improved stability and performance of VPAID
+      * Support VAST 3.0 "closeLinear" event
+      * Bug fixes
+
+
+
+## Version 7.1.1
+
+November 2017
+
+***
+
+**Fixed**
+
+* * * * Added support for using a legacy SDK (v6) and VAMP SDK (v7) on the same application (The package name for the SDK have changed to com.fyber.inneractive.sdk)
+      * Supply an API to dismiss an Interstitial by the Publisher
+      * Fixed VPaid bugs
+      * Fixed various stability and performance issues
+
+
+
+## Version 7.1.0
+
+November 2017
+
+***
+
+**Updates**
+
+* * * * Added support for using legacy SDK (v6) and SDK v7 in the same application (The package name for the SDK have changed to com.fyber.inneractive.sdk)
+      * Added new API for closing an Interstitial Ad
+
+**Fixed**
+
+* * * * Performance and stability
+
+<Info>
+### Note
+
+Android SDK versions 5.0.1 - 7.0.5 have now been deprecated. To view the Changelog for these SDKs, click[here](https://developer.fyber.com/hc/en-us/articles/360010934358-Deprecated-SDKs-Android-).
+
+</Info>
+
+
+
+[Back to Top ⇧](#top)

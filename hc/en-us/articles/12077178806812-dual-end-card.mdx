@@ -1,0 +1,35 @@
+---
+title: "Dual End Card"
+---
+
+A Dual End Card is a personalized extension of the ad campaign that gives users a final opportunity to engage with it. The DT Exchange generates it from the bundle information from the open RTB bid, which includes the app name and icon.
+
+DSPs can implement this feature and set the `dualendcard` attribute in the `BidResponse.seatbid.bid.ext`, which sends it for eligible traffic.
+
+## BidRequest.imp.video.ext
+
+| **ATTRIBUTE** | **DESCRIPTION**                                                                                    | **TYPE** |
+| ------------- | -------------------------------------------------------------------------------------------------- | -------- |
+| `dualendcard` | Indicates whether the inventory is eligible for a Dual End Card. (1 = true, 0 = false; default: 1) | Integer  |
+
+## BidReqsponse.seatbid.bid.ext
+
+| **ATTRIBUTE** | **DESCRIPTION**                                                                    | **TYPE** |
+| ------------- | ---------------------------------------------------------------------------------- | -------- |
+| `dualendcard` | Indicates whether DTX renders the Dual End Card. (1 = true, 0 = false; default: 1) | Integer  |
+
+## FAQ
+
+**How will DT Exchange know which store product to show?**
+
+To enable a Dual End Card, DSPs must provide the store listing ID of the app under the `BidResponse.seatbid.bid.bundle`.
+
+**In which cases will the Dual End Card be displayed?**
+
+DT Exchange displays the Dual End Card when the user does not click on an ad video or completion.
+
+**How are click tracking and destination handled?**
+
+DT Exchange uses `CompanionClickThrough` and `CompanionClickTracking` from the displayed creative end card to track clicks and destinations.
+
+[Back to Top ⇧](#top)

@@ -1,0 +1,371 @@
+---
+title: "DT Offer Wall Advertiser Management API"
+---
+
+## Introduction
+
+The DT Offer Wall Advertiser Management API allows users to to update their application bids automatically, through a GraphQL endpoint. This feature is intended for programmatic access only and is not available through ACP Edge console, other than to obtain the token.
+
+## Authentication and Obtaining API Token
+
+Every request to the DT Offer Wall Advertiser Management API must be authenticated with an API token. This token identifies the advertiser account.
+
+To Create an API Token:
+
+1. Log-in to your ACP Edge account, [here](https://acp-edge.fyber.com/).
+
+2. On the side-bar menu, click Account to open the Account window\
+   <Frame caption="mceclip0.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/6339064250013/mceclip0.png" />
+   </Frame>
+
+3. Click the **Security Tokens** tab
+
+   [<Frame caption="mceclip1.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/6339065295133/mceclip1.png" />
+   </Frame> ](/hc/article_attachments/4419640458385/Screen_Shot_2022-02-03_at_14.44.02.png)
+
+4. Click <Frame caption="mceclip2.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/6339110022557/mceclip2.png" />
+   </Frame>
+
+5. Select which token you want to create.\
+   Click Management API Token\
+   <Frame caption="mceclip3.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/6339122254237/mceclip3.png" />
+   </Frame>
+
+6. Click <Frame caption="mceclip4.png">
+     <img src="https://developer.digitalturbine.com/hc/article_attachments/6339124043165/mceclip4.png" />
+   </Frame> [](/hc/article_attachments/4408841763345/Screen_Shot_2021-10-12_at_14.44.17.png)
+
+#### Note
+
+It is important to keep a copy of your token, as it is displayed only once when it is generated.
+
+## Authentication
+
+To authenticate your GraphQL query, set `x-api-key` HTTP header with the token, for example:
+
+```
+x-api-key: 7H3r3i5n05XXXn0NlYm47XXX
+```
+
+The API itself is available under
+
+```javascript
+https://acp-edge-api.fyber.com/graphql
+```
+
+## Request
+
+Use the following code to perform **bulk update bids and campaign activation**.
+
+**GraphQL Query**
+
+```php
+mutation campaignBulkBidsManage(
+  $offerCmsId: ID!,
+$offerEnabled: Boolean,
+  $bidsList: [OfferCampaignBulkUpdateBidItemInput!]!
+) {
+  offerCampaignBulkUpdateBids(
+    input: {
+      offerCmsId: $offerCmsId, 
+      bidsList: $bidsList
+    }
+  ) {
+   errors
+ }
+}
+```
+
+**GraphQL Variables**
+
+```json
+{
+	"offerCmsId": "12",        "offerEnabled":true,
+	"bidsList": [
+          {
+              "applicationId": "5",
+              "bid": "1.1",
+              "countryCode": "DE",
+              "dailyBudget": "2.3"
+          }, {
+              "bid": "3.14"
+          }
+     ]
+}
+```
+
+* `offerCmsId` (required) This is an Campaign ID in the old “CMS” format. You can see it on the ACP Edge Dashboard interface, next to the campaign name. Alternatively, you can use one of the many campaign queries and include the cmsId field to get it back in the response (see the "Query offer" section below).
+
+<Frame caption="mceclip5.png">
+  <img src="https://developer.digitalturbine.com/hc/article_attachments/6339169277725/mceclip5.png" />
+</Frame>[](/hc/article_attachments/4408841987729/Screen_Shot_2021-10-12_at_14.54.02.png)
+
+* **`offerEnabled`**(optional, boolean)** - If set to true it enables an offer, if set to false it disables it. If not provided, offer status is not changed.**
+* **`bidsList`** (required, array) - An array of bids which can be updated in bulk. Every element of the array can contain up to four options. Two of them are used to filter matching bids, two others - to set desired parameters. All elements are matched against top `offerCmsId`. This meaning that a bulk update can be used for one campaign only, per request.\
+  List item options are:
+* **`applicationId`** (Optional, string) - Filtering Option. Only applications with a given “CMS” ID are used for bulk updates. You can find this ID on the ACP Edge Dashboard interface, next to application name (Micro Bidding panel).
+* **`SupplyApplicationsList`** Query and include the cmsId field to get it back in the response.[   <Frame caption="mceclip6.png">
+    <img src="https://developer.digitalturbine.com/hc/article_attachments/6339316111773/mceclip6.png" />
+  </Frame>](/hc/article_attachments/4408842041105/Screen_Shot_2021-10-12_at_14.58.57.png)
+
+- **`countryCode`** (Optional, string) - **Filtering option**. ISO 3166-1 alfa-2 (two letters) compatible country code. Only bids set for this country are updated. You can see the country ISO code for any country by calling a CountriesList query.
+- **`bid`** (Optional, string) - **Setter option**. The bid value which is set for all matching applications and/or country codes or the top level offer. This field be can be set in a two ways:
+- As a string representing float value (i.e. `"2.71"`), by setting a bid to that value
+- As a word "**`default`**", which means using a default value for the country (which can be a default value for an offer)
+- **`dailyBudget`** (Optional, string) - Setter option. Daily budget which is set on a matching offer or country. This field can be set in a two ways:
+- As a string representing float value (i.e. **`"2.71"`**), or
+- As a word **`"default"`**, which means to use default value for the country or application
+
+## Validation
+
+To ensure data integrity remains intact, a few validation of bidsList element are performed, before any destructive action takes place:
+
+* Either **`bid`** or **`dailyBudget`** has to be set specifically for application or can be set both for offer/countries
+* A **`bid`** cannot be set to "default" when no **`countryCode`** is set
+* A **`dailyBudget`** cannot be set alongside with **`applicationId`**
+* An **`applicationId`** cannot be set without **`countryCode`**
+* A **`countryCode`** must be targeted by an offer campaign associated with **`offerCmsId`**
+* An **`applicationId`** must be targeted by an offer campaign associated with **`offerCmsId`**
+* A **`dailyBudget`** cannot be set for both offer campaign and country code (it also applies, if the offer already has a daily budget configured).
+
+## Examples
+
+**HTTP**
+
+```bash
+POST /graphql HTTP/1.1
+Content-Type: application/json
+X-Api-Key: 7H3r3i5n05P00n0NlYm47RIX
+Host: acp-edge-api.fyber.com
+Content-Length: 399
+
+{"query":"mutation campaignBulkBidsManage($offerCmsId: ID!, 
+$offerEnabled: Boolean, $bidsList: 
+[OfferCampaignBulkUpdateBidItemInput!]!) 
+{\n offerCampaignBulkUpdateBids(input: {offerCmsId: 
+$offerCmsId, offerEnabled: $offerEnabled, bidsList: $bidsList}) 
+{\n errors\n }\n}\n","variables":{"offerCmsId":"12",
+"offerEnabled":true,"bidsList":[{"applicationId":"5","bid":"1.1",
+"countryCode":"DE"},{"bid":"3.14"}]},"operationName":
+"campaignBulkBidsManage"}
+```
+
+**curl**
+
+```swift
+curl --request POST \
+--url https://acp-edge-api.fyber.com/graphql \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: 7H3r3i5n05P00n0NlYm47RIX' \
+--data '{"query":"mutation campaignBulkBidsManage($offerCmsId: ID!, 
+$offerEnabled: Boolean, $bidsList: 
+[OfferCampaignBulkUpdateBidItemInput!]!) 
+{\n offerCampaignBulkUpdateBids(input: {offerCmsId: $offerCmsId, 
+offerEnabled: $offerEnabled, bidsList: $bidsList}) 
+{\n errors\n }\n}\n","variables":{"offerCmsId":"12",
+"offerEnabled":true,"bidsList":[{"applicationId":"5","bid":"1.1",
+"countryCode":"DE"},{"bid":"3.14"}]},"operationName":
+"campaignBulkBidsManage"}'
+```
+
+**GO**
+
+```swift
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+	url := "https://acp-edge-api.fyber.com/graphql"
+
+	payload:=strings.NewReader(`{"query":"mutation 
+campaignBulkBidsManage($offerCmsId: ID!, $offerEnabled: 
+Boolean, $bidsList: [OfferCampaignBulkUpdateBidItemInput!]!) 
+{\\n offerCampaignBulkUpdateBids(input: {offerCmsId: 
+$offerCmsId, offerEnabled: $offerEnabled, bidsList: $bidsList}) 
+{\\n  errors\\n }\\n}\\n","variables":{"offerCmsId":"12",
+"offerEnabled":true,"bidsList":[{"applicationId":"5","bid":"1.1",
+"countryCode":"DE"},{"bid":"3.14"}]},"operationName":
+"campaignBulkBidsManage"}`)
+
+	req, _ := http.NewRequest("POST", url, payload)
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("x-api-key", "7H3r3i5n05P00n0NlYm47RIX")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+}
+```
+
+**Java**
+
+```swift
+HttpResponse<String> response =
+Unirest.post("https://acp-edge-api.fyber.com/graphql")
+       .header("Content-Type", "application/json")
+       .header("x-api-key", "7H3r3i5n05P00n0NlYm47RIX")
+       .body("{\"query\":\"mutation campaignBulkBidsManage
+($offerCmsId: ID!, $offerEnabled: Boolean, $bidsList: 
+[OfferCampaignBulkUpdateBidItemInput!]!) 
+{\\n offerCampaignBulkUpdateBids(input: {offerCmsId: 
+$offerCmsId, offerEnabled: $offerEnabled, bidsList: 
+$bidsList}) {\\n errors\\n }\\n}\\n\",\"variables\":{\
+"offerCmsId\":\"12\",\"offerEnabled\":true,\"bidsList\
+":[{\"applicationId\":\"5\",\"bid\":\"1.1\",\"countryCode\
+":\"DE\"},{\"bid\":\"3.14\"}]},\
+"operationName\":\"campaignBulkBidsManage\"}")
+       .asString();
+```
+
+********node.js********
+
+```swift
+const http = require("http");
+
+const options = {
+  "method": "POST",
+  "hostname": "acp-edge-api.fyber.com",
+  "path": "/graphql",
+  "headers": {
+	"Content-Type": "application/json",
+	"x-api-key": "7H3r3i5n05P00n0NlYm47RIX"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+	chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+	const body = Buffer.concat(chunks);
+	console.log(body.toString());
+  });
+});
+
+req.write("{\"query\":\"mutation campaignBulkBidsManage($offerCmsId: 
+ID!, $offerEnabled: Boolean, $bidsList: 
+[OfferCampaignBulkUpdateBidItemInput!]!) 
+{\\n offerCampaignBulkUpdateBids(input: {offerCmsId: 
+$offerCmsId, offerEnabled: $offerEnabled, bidsList: $bidsList}) {
+\\n errors\\n }\\n}\\n\",\"variables\":{\"offerCmsId\":\"12\",\
+"offerEnabled\":true,\"bidsList\":[{\"applicationId\":\"5\",
+\"bid\":\"1.1\",\"countryCode\":\"DE\"},{\"bid\":\"3.14\"}]},
+\"operationName\":\"campaignBulkBidsManage\"}");
+req.end();
+```
+
+********Ruby********
+
+```swift
+require 'uri'
+require 'net/http'
+
+url = URI('https://acp-edge-api.fyber.com/graphql')
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Post.new(url)
+request['Content-Type'] = 'application/json'
+request['x-api-key'] = ‘7H3r3i5n05P00n0NlYm47RIX’
+request.body = '{"query":"mutation campaignBulkBidsManage($offerCmsId: 
+ID!, $offerEnabled: Boolean, $bidsList: 
+[OfferCampaignBulkUpdateBidItemInput!]!) 
+{\n offerCampaignBulkUpdateBids(input: {offerCmsId: $offerCmsId, 
+offerEnabled: $offerEnabled, bidsList: $bidsList}) {\n errors\n 
+}\n}\n","variables":{"offerCmsId":"12","offerEnabled":true,"bidsList"
+:[{"applicationId":"5","bid":"1.1","countryCode":"DE"},{"bid":"3.14"}]},
+"operationName":\"campaignBulkBidsManage"}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+## Query Offer
+
+In addition, you can run queries to receive attributes from an offer, as well as other related records. Below is an example:
+
+**GraphQL Query**
+
+```bash
+
+query ($offerId: ID!, $offerCmsId: ID!) {
+  offerCampaign(id: $offerId, cmsId: $offerCmsId) {
+    id
+    cmsId
+    name
+    enabled
+    bid
+    title
+    startDate
+    endDate
+    countryGroupBudgets
+    ...locationTargetingFields
+    ...countryGroupFields
+  }
+}
+
+fragment locationTargetingFields on OfferCampaign {
+  locationTargeting {
+    countryCodes
+    global
+  }
+}
+
+fragment countryGroupFields on OfferCampaign {
+  countryGroups {
+    id
+    countryCodes
+    bid
+    capping {
+      dailyBudget
+    }
+    ...applicationBidFields
+  }
+}
+
+fragment applicationBidFields on CountryGroup {
+  applicationBids {
+    id
+    bid
+  }
+}
+```
+
+#### Note
+
+Fragments are added only for brevity. The full GraphQL query, with all associations nested can also be used.
+
+**GraphQL Variables**
+
+```json
+{
+  "offerId": "1",
+  "offerCmsId": "1234"
+}
+```
+
+* `cmsId` (optional, required if **id** is not used) - This an offer ID in old “CMS” format. You can see it on the ACP Edge Dashboard interface, next to the offer name.
+* `id` (optional, required if **cmsId** is not used) - An offer ID. You can extract it from the edit/view offer URL. For example, for https\://acp-edge.fyber.com/editOffer/1234 - 1234 is an id.
+
+#### Note
+
+If both **cmsId** and **id** are given, an error is displayed.
+
+[Back to Top ⇧](#top)
