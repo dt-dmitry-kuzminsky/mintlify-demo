@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { XMLParser } from 'fast-xml-parser';
 
 // --- Configuration ---
 const XML_URL = 'https://storage.googleapis.com/gcs-fairbid-sdk-assets-prod-useast1/fairbid-sdk/adapters_list.xml';
 
 // --- Helper Component for Ad Type Icons ---
-// This component displays a checkmark or a cross based on the support status.
 const AdTypeIcon = ({ supported }) => {
   const isSupported = supported === 'yes';
   const icon = isSupported ? '✔️' : '❌';
@@ -25,31 +23,57 @@ const AdaptersTable = () => {
         setLoading(true);
         const response = await fetch(XML_URL);
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const xmlText = await response.text();
 
-        // Configure parser to handle attributes
-        const parser = new XMLParser({
-          ignoreAttributes: false,
-          attributeNamePrefix: "@_"
-        });
-        const parsedData = parser.parse(xmlText);
+        // --- NATIVE XML PARSING LOGIC ---
+        // 1. Use the browser's built-in DOMParser
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
 
-        // Extract the adapter list from the parsed object
-        const adapterList = parsedData['dev-portal-configs']?.adapters?.adapter || [];
+        // 2. Check for parsing errors
+        const parseError = xmlDoc.querySelector("parsererror");
+        if (parseError) {
+          throw new Error("Failed to parse XML.");
+        }
+
+        // 3. Select all 'adapter' elements
+        const adapterNodes = xmlDoc.querySelectorAll("adapter");
+
+        // 4. Map over the nodes to extract data into a plain JavaScript array
+        const adapterList = Array.from(adapterNodes).map(node => {
+          // Helper to get an attribute value, returns null if not found
+          const getAttr = (attrName) => node.getAttribute(attrName);
+          
+          // Helper to get version from a platform sub-element
+          const getVersion = (platformId) => node.querySelector(`${platformId}-platform`)?.getAttribute('version') || 'N/A';
+
+          return {
+            name: getAttr('name'),
+            androidVersion: getVersion('android'),
+            iosVersion: getVersion('ios'),
+            biddingSupport: getAttr('programmatic-support'),
+            rewardedVideo: getAttr('rewarded-video-support'),
+            interstitial: getAttr('interstitial-support'),
+            banner: getAttr('banner-support'),
+            mrec: getAttr('mrec-support'),
+            guideLink: node.querySelector('integration-guide-link')?.textContent || ''
+          };
+        });
+        
         setAdapters(adapterList);
 
       } catch (e) {
-        console.error("Failed to fetch or parse XML data:", e);
-        setError("Failed to load adapter data. Please check the console for more details.");
+        console.error("Failed to fetch or process XML data:", e);
+        setError("Failed to load adapter data. Please check the console for details.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+  }, []); // Empty dependency array ensures this effect runs only once
 
   if (loading) {
     return <p>Loading adapter data...</p>;
@@ -76,29 +100,21 @@ const AdaptersTable = () => {
         <tbody>
           {adapters.map((adapter, index) => (
             <tr key={index} style={{ borderBottom: '1px solid #ddd' }}>
-              <td style={{ padding: '12px', border: '1px solid #ddd' }}><strong>{adapter['@_name']}</strong></td>
-              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter['android-platform']?.['@_version'] || 'N/A'}</td>
-              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter['ios-platform']?.['@_version'] || 'N/A'}</td>
-              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter['@_programmatic-support'] === 'yes' ? 'Yes' : 'No'}</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}><strong>{adapter.name}</strong></td>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter.androidVersion}</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter.iosVersion}</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{adapter.biddingSupport === 'yes' ? 'Yes' : 'No'}</td>
               <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                  <div title="Rewarded Video">
-                    <AdTypeIcon supported={adapter['@_rewarded-video-support']} /> RV
-                  </div>
-                  <div title="Interstitial">
-                    <AdTypeIcon supported={adapter['@_interstitial-support']} /> INT
-                  </div>
-                  <div title="Banner">
-                    <AdTypeIcon supported={adapter['@_banner-support']} /> BAN
-                  </div>
-                   <div title="MREC">
-                    <AdTypeIcon supported={adapter['@_mrec-support']} /> MREC
-                  </div>
+                  <div title="Rewarded Video"><AdTypeIcon supported={adapter.rewardedVideo} /> RV</div>
+                  <div title="Interstitial"><AdTypeIcon supported={adapter.interstitial} /> INT</div>
+                  <div title="Banner"><AdTypeIcon supported={adapter.banner} /> BAN</div>
+                  <div title="MREC"><AdTypeIcon supported={adapter.mrec} /> MREC</div>
                 </div>
               </td>
               <td style={{ padding: '12px', border: '1px solid #ddd' }}>
-                {adapter['integration-guide-link'] ? (
-                  <a href={adapter['integration-guide-link']} target="_blank" rel="noopener noreferrer">
+                {adapter.guideLink ? (
+                  <a href={adapter.guideLink} target="_blank" rel="noopener noreferrer">
                     View Guide
                   </a>
                 ) : (
